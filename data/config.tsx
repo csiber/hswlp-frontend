@@ -8,8 +8,8 @@ import { Logo } from './logo'
 const siteConfig = {
   logo: Logo,
   seo: {
-    title: 'Saas UI',
-    description: 'The React component library for startups',
+    title: 'HSWLP',
+    description: 'White-label felhőalapú szoftverek viszonteladók számára',
   } as NextSeoProps,
   termsUrl: '#',
   privacyUrl: '#',
@@ -29,34 +29,25 @@ const siteConfig = {
       },
       {
         label: 'Login',
-        href: '/login',
+        href: 'https://app.hswlp.hu/login',
       },
       {
-        label: 'Sign Up',
-        href: '/signup',
+        label: 'Get Started',
+        href: 'https://app.hswlp.hu/register',
         variant: 'primary',
       },
     ],
   },
   footer: {
-    copyright: (
-      <>
-        Built by{' '}
-        <Link href="https://twitter.com/Pagebakers">Eelco Wiersma</Link>
-      </>
-    ),
+    copyright: '© 2025 HSWLP – Minden jog fenntartva.',
     links: [
       {
-        href: 'mailto:hello@saas-ui.dev',
-        label: 'Contact',
-      },
-      {
-        href: 'https://twitter.com/saas_js',
-        label: <FaTwitter size="14" />,
-      },
-      {
-        href: 'https://github.com/saas-js/saas-ui',
+        href: 'https://github.com/hswlp',
         label: <FaGithub size="14" />,
+      },
+      {
+        href: 'mailto:info@hswlp.hu',
+        label: 'Email',
       },
     ],
   },

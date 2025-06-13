@@ -1,30 +1,23 @@
 import * as React from 'react'
 
 const faq = {
-  title: 'Frequently asked questions',
-  // description: '',
+  title: 'Gyakori kérdések',
   items: [
     {
-      q: 'How many products can I use Saas UI Pro for?',
-      a: (
-        <>
-          The single license can be used for one commercial application or SaaS
-          product and unlimited internal tools. You can buy as many licenses as
-          you need. <br /> The unlimited license does not have any restrictions.
-        </>
-      ),
+      q: 'Mi az a HSWLP?',
+      a: 'Egy white-label platform, amellyel saját márkás felhőszolgáltatásokat indíthatsz.',
     },
     {
-      q: 'Can I use Saas UI Pro for client work?',
-      a: "Yes, that's totally up to you, as long as it fits the license you purchase.",
+      q: 'Mit jelent a white-label?',
+      a: 'Azt, hogy a szolgáltatásokat saját logóval és domainnel kínálhatod ügyfeleidnek.',
     },
     {
-      q: 'Can I use Saas UI Pro for Open Source projects?',
-      a: 'No currently not. A large part of Saas UI is already released under MIT license. We try to give back to the community as much as possible.',
+      q: 'Milyen technológiát használ a platform?',
+      a: 'Modern konténeralapú megoldásokat alkalmazunk, hogy a lehető legjobb teljesítményt biztosítsuk.',
     },
     {
-      q: 'Does Saas UI include Figma, Sketch or other design files?',
-      a: 'No, Saas UI does not include any design assets. Maintaining design resources costs a lot of extra effort. We believe small teams can move much faster by designing directly in code, with help of Storybooks.',
+      q: 'Kell hozzá technikai tudás?',
+      a: 'Nem szükséges mély technikai ismeret, a kezelőfelület végigvezet a beállításokon.',
     },
   ],
 }

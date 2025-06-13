@@ -1,113 +1,50 @@
 import { HStack, Text } from '@chakra-ui/react'
 
 export default {
-  title: 'Pricing for every stage',
-  description:
-    'Pay once and get life-time access to our high quality components.',
+  title: 'Csomagok',
+  description: 'Válassz igényeid szerint',
   plans: [
     {
-      id: 'oss',
-      title: 'Open Source',
-      description: 'Basic compoents, perfect to get started.',
-      price: 'Free',
+      id: 'start',
+      title: 'Start',
+      description: 'Alapcsomag induláshoz',
+      price: '2 990 Ft/hó',
       features: [
-        {
-          title: 'MIT License',
-        },
-        {
-          title: 'Authentication (Clerk/Supabase/Magic)',
-        },
-        {
-          title: 'Form (react-hook-form)',
-        },
-        {
-          title: 'Modals manager',
-        },
-        {
-          title: 'Hotkeys',
-        },
-        {
-          title: 'Web3 components',
-        },
-        {
-          title: 'And much more...',
-        },
+        { title: '1 projekt' },
+        { title: 'Korlátozott támogatás' },
       ],
       action: {
-        href: '#',
+        href: 'https://app.hswlp.hu/register?plan=start',
+        label: 'Regisztráció',
       },
     },
     {
-      id: 'bootstrap',
-      title: 'Bootstrap',
-      description: 'Complete frontend stack for bootstrappers and small teams.',
-      price: 'Free',
+      id: 'pro',
+      title: 'Pro',
+      description: 'Növekvő vállalkozásoknak',
+      price: '5 990 Ft/hó',
       isRecommended: true,
       features: [
-        {
-          title: 'One project',
-        },
-        {
-          title: 'One developer',
-        },
-        {
-          title: 'Advanced components',
-        },
-        {
-          title: 'Multiple themes',
-        },
-        {
-          title: 'Next.js and Electron boilerplates',
-        },
-        {
-          title: 'Private discord community',
-        },
-        {
-          title: '1 year of updates',
-        },
-        null,
-        {
-          title: 'Private beta access',
-          iconColor: 'green.500',
-        },
+        { title: 'Korlátlan projekt' },
+        { title: 'E-mail támogatás' },
       ],
       action: {
-        href: 'https://appulse.gumroad.com/l/saas-ui-pro-pre-order?variant=Single%20license',
+        href: 'https://app.hswlp.hu/register?plan=pro',
+        label: 'Regisztráció',
       },
     },
     {
-      id: 'startup',
-      title: 'Startup',
-      description: 'Unlimited license for growing teams.',
-      price: (
-        <HStack>
-          <Text textDecoration="line-through" fontSize="sm" color="gray.400">
-            €999,-
-          </Text>
-          <Text>€499,-</Text>
-        </HStack>
-      ),
+      id: 'reseller',
+      title: 'Reseller',
+      description: 'Viszonteladóknak',
+      price: '14 990 Ft/hó',
       features: [
-        {
-          title: 'Unlimited projects',
-        },
-        {
-          title: 'Unlimited developers',
-        },
-        {
-          title: '1 year of updates',
-        },
-        {
-          title: 'Everything from Bootstrap',
-        },
-        null,
-        {
-          title: 'Private beta access',
-          iconColor: 'green.500',
-        },
+        { title: 'Saját márka' },
+        { title: 'Prémium támogatás' },
       ],
       action: {
-        href: 'https://appulse.gumroad.com/l/saas-ui-pro-pre-order?variant=Unlimited%20license',
+        href: 'https://app.hswlp.hu/register?plan=reseller',
+        label: 'Regisztráció',
       },
     },
   ],
