@@ -1,15 +1,12 @@
-# Saas UI - Next.js - landing page.
+# HSWLP - white-label SaaS hosting
 
-This is a free Next.js landing page template based on https://saas-ui.dev.
-Feel free to submit any feature requests. If you use this template please share what you've built [on Twitter](https://twitter.com/saas_js) 🚀.
-
-**[View demo](https://saas-ui-nextjs-landing-page.netlify.app/)**
+Ez a projekt a HSWLP statikus marketing oldala, amely bemutatja white-label SaaS hoszting megoldásunkat viszonteladók számára.
 
 ## Tech
 
 - Next.js (App router)
 - Chakra UI
-- Saas UI
+- Saas UI komponensek
 - Typescript
 
 ## Features
@@ -38,11 +35,9 @@ You can start editing the page by modifying `pages/index.tsx`. The page auto-upd
 
 Configuration files to edit basic site information, add testimonials, faq and pricing table can be found in `/data`.
 
-## Learn More
+## További információk
 
-Find out more about Saas UI.
-
-- [Saas UI Documentation](https://saas-ui.dev/docs).
+A projekt Next.js alapokra épül, Chakra UI és Saas UI komponensekkel.
 
 To learn more about Next.js, take a look at the following resources:
 
