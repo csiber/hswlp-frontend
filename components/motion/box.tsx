@@ -16,3 +16,4 @@ export const MotionBox = chakra(motion.div, {
   // Csak a Framer Motion által használt propokat továbbítjuk
   shouldForwardProp: (prop) => isValidMotionProp(prop) || shouldForwardProp(prop),
 })
+
