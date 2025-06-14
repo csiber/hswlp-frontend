@@ -136,7 +136,7 @@ const HeroSection: React.FC = () => {
                     />
                   }
                 >
-                  Dem\xF3 megtekint\xE9se
+                  Demó megtekintése
                 </ButtonLink>
               </ButtonGroup>
             </FallInPlace>
