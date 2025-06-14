@@ -95,15 +95,14 @@ const HeroSection: React.FC = () => {
             px="0"
             title={
               <FallInPlace>
-                Ind\xEDtsa el saj\xE1t
-                <Br /> SaaS szolg\xE1ltat\xE1s\xE1t
+                Indítsa el saját
+                <Br /> SaaS szolgáltatását
               </FallInPlace>
             }
             description={
               <FallInPlace delay={0.4} fontWeight="medium">
-                A HSWLP white-label hostinget, domainkezel\xE9st \xE9s statikus
-                oldal gener\xE1l\xE1st biztos\xEDt.\x20
-                Fejlett \xFCgyf\xE9lmenedzsmenttel seg\xEDtj\xFCk \xD6nt.
+                A HSWLP white-label hostinget, domainkezelést és statikus oldal
+                generálást biztosít. Fejlett ügyfélmenedzsmenttel segítjük Önt.
               </FallInPlace>
             }
           >
@@ -113,8 +112,12 @@ const HeroSection: React.FC = () => {
               </HStack>
 
               <ButtonGroup spacing={4} alignItems="center">
-                <ButtonLink colorScheme="primary" size="lg" href="/signup">
-                  Regisztr\xE1ci\xF3
+                <ButtonLink
+                  colorScheme="primary"
+                  size="lg"
+                  href="https://hswlp.csumpinet.hu/"
+                >
+                  Regisztráció
                 </ButtonLink>
                 <ButtonLink
                   size="lg"
@@ -171,30 +174,30 @@ const HeroSection: React.FC = () => {
         pt="20"
         features={[
           {
-            title: 'Saj\xE1t m\xE1rkan\xE9v',
+            title: 'Saját márkanév',
             icon: FiSmile,
-            description: 'Teljesen testreszabhat\xF3 fel\xFClet.',
+            description: 'Teljesen testreszabható felület.',
             iconPosition: 'left',
             delay: 0.6,
           },
           {
-            title: 'Domain kezel\xE9s',
+            title: 'Domain kezelés',
             icon: FiSliders,
-            description: 'Egyszer\xFBen regisztr\xE1lhat \xE9s kezelhet domaineket.',
+            description: 'Egyszerűen regisztrálhat és kezelhet domaineket.',
             iconPosition: 'left',
             delay: 0.8,
           },
           {
             title: 'Statikus oldalak',
             icon: FiGrid,
-            description: 'Automatikus gener\xE1l\xE1s \xE9s hosztol\xE1s.',
+            description: 'Automatikus generálás és hosztolás.',
             iconPosition: 'left',
             delay: 1,
           },
           {
-            title: '\xDCgyf\xE9lkezel\xE9s',
+            title: 'Ügyfélkezelés',
             icon: FiThumbsUp,
-            description: 'Fejlett admin fel\xFCletek \xE9s integr\xE1ci\xF3k.',
+            description: 'Fejlett admin felületek és integrációk.',
             iconPosition: 'left',
             delay: 1.1,
           },
@@ -213,16 +216,16 @@ const HighlightsSection = () => {
       <HighlightsItem colSpan={[1, null, 2]} title="Gyors indulás">
         <VStack alignItems="flex-start" spacing="8">
           <Text color="muted" fontSize="xl">
-            P\xE1r kattint\xE1ssal elind\xEDthatja saj\xE1t m\xE1rk\xE1s SaaS
-            szolg\xE1ltat\xE1s\xE1t. A HSWLP automatikusan kezeli a domaineket
-            \xE9s a statikus oldalak publik\xE1l\xE1s\xE1t.
+            Pár kattintással elindíthatja saját márkás SaaS szolgáltatását. A
+            HSWLP automatikusan kezeli a domaineket és a statikus oldalak
+            publikálását.
           </Text>
         </VStack>
       </HighlightsItem>
-      <HighlightsItem title="Biztons\xE1gos alapok">
+      <HighlightsItem title="Biztonságos alapok">
         <Text color="muted" fontSize="lg">
-          Modern infrastrukt\xFAr\xE1ra \xE9p\xEDt\xFCnk, hogy \xD6n az
-          \xFCzletre koncentr\xE1lhasson.
+          Modern infrastruktúrára építünk, hogy Ön az üzletre
+          koncentrálhasson.
         </Text>
       </HighlightsItem>
       <HighlightsTestimonialItem
@@ -240,8 +243,8 @@ const HighlightsSection = () => {
         title="Minden egy helyen"
       >
         <Text color="muted" fontSize="lg">
-          A HSWLP integr\xE1lt \xFCgyf\xE9lkezel\xE9st \xE9s sk\xE1l\xE1zhat\xF3
-          hostingot ny\xFAjt az \xF6n v\xE1llalkoz\xE1s\xE1nak.
+          A HSWLP integrált ügyfélkezelést és skálázható hostingot nyújt az Ön
+          vállalkozásának.
         </Text>
       </HighlightsItem>
     </Highlights>
@@ -259,14 +262,14 @@ const FeaturesSection = () => {
           textAlign="left"
           as="p"
         >
-          Teljes megold\xE1s
-          <Br /> SaaS szolg\xE1ltat\xE1sokhoz
+          Teljes megoldás
+          <Br /> SaaS szolgáltatásokhoz
         </Heading>
       }
       description={
         <>
-          A HSWLP minden eszk\xF6zt biztos\xEDt a saj\xE1t m\xE1rk\xE1s
-          szolg\xE1ltat\xE1s ind\xEDt\xE1s\xE1hoz.
+          A HSWLP minden eszközt biztosít a saját márkás szolgáltatás
+          indításához.
         </>
       }
       align="left"
@@ -276,37 +279,37 @@ const FeaturesSection = () => {
         {
           title: 'Automatikus deploy',
           icon: FiBox,
-          description: 'A statikus oldalakat \xE9s alkalmaz\xE1sokat automatikusan publik\xE1ljuk.',
+          description: 'A statikus oldalakat és alkalmazásokat automatikusan publikáljuk.',
           variant: 'inline',
         },
         {
-          title: 'API integr\xE1ci\xF3k',
+          title: 'API integrációk',
           icon: FiLock,
-          description: 'K\xF6nnyed kapcsol\xF3d\xE1s saj\xE1t rendszereihez.',
+          description: 'Könnyed kapcsolódás saját rendszereihez.',
           variant: 'inline',
         },
         {
           title: 'Rugalmas csomagok',
           icon: FiSearch,
-          description: 'V\xE1lassza ki az \xD6nnek megfelel\xF5 el\xF5fizet\xE9si szintet.',
+          description: 'Válassza ki az Önnek megfelelő előfizetési szintet.',
           variant: 'inline',
         },
         {
-          title: 'Szem\xE9lyre szabhat\xF3 fel\xFClet',
+          title: 'Személyre szabható felület',
           icon: FiUserPlus,
-          description: 'Saj\xE1t m\xE1rk\xE1j\xE1t helyezheti el minden oldalon.',
+          description: 'Saját márkáját helyezheti el minden oldalon.',
           variant: 'inline',
         },
         {
-          title: 'Val\xF3sidej\xFB statisztik\xE1k',
+          title: 'Valósidejű statisztikák',
           icon: FiFlag,
-          description: 'K\xF6vesse nyomon szolg\xE1ltat\xE1sai teljes\xEDtm\xE9ny\xE9t.',
+          description: 'Kövesse nyomon szolgáltatásai teljesítményét.',
           variant: 'inline',
         },
         {
-          title: 'Professzion\xE1lis t\xE1mogat\xE1s',
+          title: 'Professzionális támogatás',
           icon: FiTrendingUp,
-          description: 'Csapatunk seg\xEDt a bevezet\xE9sben \xE9s az \xFCzemeltet\xE9sben.',
+          description: 'Csapatunk segít a bevezetésben és az üzemeltetésben.',
           variant: 'inline',
         },
       ]}

@@ -29,23 +29,27 @@ const siteConfig = {
       },
       {
         label: 'Bejelentkezés',
-        href: '/login',
+        href: 'https://hswlp.csumpinet.hu/auth/login',
       },
       {
         label: 'Regisztráció',
-        href: '/signup',
+        href: 'https://hswlp.csumpinet.hu/auth/register',
         variant: 'primary',
       },
     ],
   },
   footer: {
     copyright: (
-      <>Készítette a HSWLP csapat</>
+      <>© {new Date().getFullYear()} PromNET - Polyák Csaba E.V.</>
     ),
     links: [
       {
-        href: 'mailto:info@hswlp.hu',
+        href: 'mailto:info@promnet.hu',
         label: 'Kapcsolat',
+      },
+      {
+        href: '/impresszum',
+        label: 'Impresszum',
       },
       {
         href: 'https://twitter.com/saas_js',
