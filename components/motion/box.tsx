@@ -1,5 +1,9 @@
-import { ChakraProps, chakra } from '@chakra-ui/react'
-import { HTMLMotionProps, motion } from 'framer-motion'
+import {
+  ChakraProps,
+  chakra,
+  shouldForwardProp,
+} from '@chakra-ui/react'
+import { HTMLMotionProps, isValidMotionProp, motion } from 'framer-motion'
 
 export interface MotionBoxProps
   extends Omit<HTMLMotionProps<'div'>, 'children' | 'style'>,
@@ -7,4 +11,9 @@ export interface MotionBoxProps
   children?: React.ReactNode
 }
 
-export const MotionBox = motion.create(chakra.div)
+// Chakra elemet kombináljuk a Framer Motionnal
+export const MotionBox = chakra(motion.div, {
+  // Csak a Framer Motion által használt propokat továbbítjuk
+  shouldForwardProp: (prop) => isValidMotionProp(prop) || shouldForwardProp(prop),
+})
+
