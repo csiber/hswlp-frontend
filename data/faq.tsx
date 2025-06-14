@@ -1,30 +1,24 @@
 import * as React from 'react'
 
 const faq = {
-  title: 'Frequently asked questions',
+  title: 'Gyakori k\xE9rd\xE9sek',
   // description: '',
   items: [
     {
-      q: 'How many products can I use Saas UI Pro for?',
-      a: (
-        <>
-          The single license can be used for one commercial application or SaaS
-          product and unlimited internal tools. You can buy as many licenses as
-          you need. <br /> The unlimited license does not have any restrictions.
-        </>
-      ),
+      q: 'Mit k\xEDn\xE1l a HSWLP?',
+      a: 'Teljes k\xF6r\xFB white-label SaaS hosting megold\xE1st, amelyet saj\xE1t m\xE1rkan\xE9ven \xE9rt\xE9kes\xEDthet.',
     },
     {
-      q: 'Can I use Saas UI Pro for client work?',
-      a: "Yes, that's totally up to you, as long as it fits the license you purchase.",
+      q: 'Hogyan m\xFBk\xF6dik a domain regisztr\xE1ci\xF3?',
+      a: 'A platformon kereszt\xFCl egyszer\xFBen regisztr\xE1lhat \xE9s kezelhet domaineket.',
     },
     {
-      q: 'Can I use Saas UI Pro for Open Source projects?',
-      a: 'No currently not. A large part of Saas UI is already released under MIT license. We try to give back to the community as much as possible.',
+      q: 'T\xE1mogatja-e a statikus oldalak gener\xE1l\xE1s\xE1t?',
+      a: 'Igen, a rendszer automatikusan elk\xE9sz\xEDti \xE9s hosztolja a statikus tartalmakat.',
     },
     {
-      q: 'Does Saas UI include Figma, Sketch or other design files?',
-      a: 'No, Saas UI does not include any design assets. Maintaining design resources costs a lot of extra effort. We believe small teams can move much faster by designing directly in code, with help of Storybooks.',
+      q: 'Van lehet\xF5s\xE9g \xFCgyfelek menedzsel\xE9s\xE9re?',
+      a: 'Be\xE9p\xEDtett \xFCgyf\xE9lkezel\xF5 modul seg\xEDti az el\xF5fizet\xE9sek \xE9s felhaszn\xE1l\xF3k kezel\xE9s\xE9t.',
     },
   ],
 }

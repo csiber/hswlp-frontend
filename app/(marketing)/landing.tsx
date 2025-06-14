@@ -60,8 +60,8 @@ import pricing from '#data/pricing'
 import testimonials from '#data/testimonials'
 
 export const metadata: Metadata = {
-  title: 'Saas UI Landingspage',
-  description: 'Free SaaS landingspage starter kit',
+  title: 'HSWLP',
+  description: 'White-label SaaS hosting viszonteladóknak',
 }
 
 
@@ -95,15 +95,15 @@ const HeroSection: React.FC = () => {
             px="0"
             title={
               <FallInPlace>
-                Build beautiful
-                <Br /> software faster
+                Ind\xEDtsa el saj\xE1t
+                <Br /> SaaS szolg\xE1ltat\xE1s\xE1t
               </FallInPlace>
             }
             description={
               <FallInPlace delay={0.4} fontWeight="medium">
-                Saas UI is a <Em>React component library</Em>
-                <Br /> that doesn&apos;t get in your way and helps you <Br />{' '}
-                build intuitive SaaS products with speed.
+                A HSWLP white-label hostinget, domainkezel\xE9st \xE9s statikus
+                oldal gener\xE1l\xE1st biztos\xEDt.\x20
+                Fejlett \xFCgyf\xE9lmenedzsmenttel seg\xEDtj\xFCk \xD6nt.
               </FallInPlace>
             }
           >
@@ -114,7 +114,7 @@ const HeroSection: React.FC = () => {
 
               <ButtonGroup spacing={4} alignItems="center">
                 <ButtonLink colorScheme="primary" size="lg" href="/signup">
-                  Sign Up
+                  Regisztr\xE1ci\xF3
                 </ButtonLink>
                 <ButtonLink
                   size="lg"
@@ -133,7 +133,7 @@ const HeroSection: React.FC = () => {
                     />
                   }
                 >
-                  View demo
+                  Dem\xF3 megtekint\xE9se
                 </ButtonLink>
               </ButtonGroup>
             </FallInPlace>
@@ -171,33 +171,30 @@ const HeroSection: React.FC = () => {
         pt="20"
         features={[
           {
-            title: 'Accessible',
+            title: 'Saj\xE1t m\xE1rkan\xE9v',
             icon: FiSmile,
-            description: 'All components strictly follow WAI-ARIA standards.',
+            description: 'Teljesen testreszabhat\xF3 fel\xFClet.',
             iconPosition: 'left',
             delay: 0.6,
           },
           {
-            title: 'Themable',
+            title: 'Domain kezel\xE9s',
             icon: FiSliders,
-            description:
-              'Fully customize all components to your brand with theme support and style props.',
+            description: 'Egyszer\xFBen regisztr\xE1lhat \xE9s kezelhet domaineket.',
             iconPosition: 'left',
             delay: 0.8,
           },
           {
-            title: 'Composable',
+            title: 'Statikus oldalak',
             icon: FiGrid,
-            description:
-              'Compose components to fit your needs and mix them together to create new ones.',
+            description: 'Automatikus gener\xE1l\xE1s \xE9s hosztol\xE1s.',
             iconPosition: 'left',
             delay: 1,
           },
           {
-            title: 'Productive',
+            title: '\xDCgyf\xE9lkezel\xE9s',
             icon: FiThumbsUp,
-            description:
-              'Designed to reduce boilerplate and fully typed, build your product at speed.',
+            description: 'Fejlett admin fel\xFCletek \xE9s integr\xE1ci\xF3k.',
             iconPosition: 'left',
             delay: 1.1,
           },
@@ -213,51 +210,19 @@ const HighlightsSection = () => {
 
   return (
     <Highlights>
-      <HighlightsItem colSpan={[1, null, 2]} title="Core components">
+      <HighlightsItem colSpan={[1, null, 2]} title="Gyors indulás">
         <VStack alignItems="flex-start" spacing="8">
           <Text color="muted" fontSize="xl">
-            Get started for free with <Em>30+ open source components</Em>.
-            Including authentication screens with Clerk, Supabase and Magic.
-            Fully functional forms with React Hook Form. Data tables with React
-            Table.
+            P\xE1r kattint\xE1ssal elind\xEDthatja saj\xE1t m\xE1rk\xE1s SaaS
+            szolg\xE1ltat\xE1s\xE1t. A HSWLP automatikusan kezeli a domaineket
+            \xE9s a statikus oldalak publik\xE1l\xE1s\xE1t.
           </Text>
-
-          <Flex
-            rounded="full"
-            borderWidth="1px"
-            flexDirection="row"
-            alignItems="center"
-            py="1"
-            ps="8"
-            pe="2"
-            bg="primary.900"
-            _dark={{ bg: 'gray.900' }}
-          >
-            <Box>
-              <Text color="yellow.400" display="inline">
-                yarn add
-              </Text>{' '}
-              <Text color="cyan.300" display="inline">
-                @saas-ui/react
-              </Text>
-            </Box>
-            <IconButton
-              icon={hasCopied ? <FiCheck /> : <FiCopy />}
-              aria-label="Copy install command"
-              onClick={onCopy}
-              variant="ghost"
-              ms="4"
-              isRound
-              color="white"
-            />
-          </Flex>
         </VStack>
       </HighlightsItem>
-      <HighlightsItem title="Solid foundations">
+      <HighlightsItem title="Biztons\xE1gos alapok">
         <Text color="muted" fontSize="lg">
-          We don&apos;t like to re-invent the wheel, neither should you. We
-          selected the most productive and established tools in the scene and
-          build Saas UI on top of it.
+          Modern infrastrukt\xFAr\xE1ra \xE9p\xEDt\xFCnk, hogy \xD6n az
+          \xFCzletre koncentr\xE1lhasson.
         </Text>
       </HighlightsItem>
       <HighlightsTestimonialItem
@@ -272,43 +237,12 @@ const HighlightsSection = () => {
       </HighlightsTestimonialItem>
       <HighlightsItem
         colSpan={[1, null, 2]}
-        title="Start your next idea two steps ahead"
+        title="Minden egy helyen"
       >
         <Text color="muted" fontSize="lg">
-          We took care of all your basic frontend needs, so you can start
-          building functionality that makes your product unique.
+          A HSWLP integr\xE1lt \xFCgyf\xE9lkezel\xE9st \xE9s sk\xE1l\xE1zhat\xF3
+          hostingot ny\xFAjt az \xF6n v\xE1llalkoz\xE1s\xE1nak.
         </Text>
-        <Wrap mt="8">
-          {[
-            'authentication',
-            'navigation',
-            'crud',
-            'settings',
-            'multi-tenancy',
-            'layouts',
-            'billing',
-            'a11y testing',
-            'server-side rendering',
-            'documentation',
-            'onboarding',
-            'storybooks',
-            'theming',
-            'upselling',
-            'unit testing',
-            'feature flags',
-            'responsiveness',
-          ].map((value) => (
-            <Tag
-              key={value}
-              variant="subtle"
-              colorScheme="purple"
-              rounded="full"
-              px="3"
-            >
-              {value}
-            </Tag>
-          ))}
-        </Wrap>
       </HighlightsItem>
     </Highlights>
   )
@@ -325,16 +259,14 @@ const FeaturesSection = () => {
           textAlign="left"
           as="p"
         >
-          Not your standard
-          <Br /> dashboard template.
+          Teljes megold\xE1s
+          <Br /> SaaS szolg\xE1ltat\xE1sokhoz
         </Heading>
       }
       description={
         <>
-          Saas UI Pro includes everything you need to build modern frontends.
-          <Br />
-          Use it as a template for your next product or foundation for your
-          design system.
+          A HSWLP minden eszk\xF6zt biztos\xEDt a saj\xE1t m\xE1rk\xE1s
+          szolg\xE1ltat\xE1s ind\xEDt\xE1s\xE1hoz.
         </>
       }
       align="left"
@@ -342,71 +274,39 @@ const FeaturesSection = () => {
       iconSize={4}
       features={[
         {
-          title: '#components.',
+          title: 'Automatikus deploy',
           icon: FiBox,
-          description:
-            'All premium components are available on a private NPM registery, no more copy pasting and always up-to-date.',
+          description: 'A statikus oldalakat \xE9s alkalmaz\xE1sokat automatikusan publik\xE1ljuk.',
           variant: 'inline',
         },
         {
-          title: 'Starterkits.',
+          title: 'API integr\xE1ci\xF3k',
           icon: FiLock,
-          description:
-            'Example apps in Next.JS, Electron. Including authentication, billing, example pages, everything you need to get started FAST.',
+          description: 'K\xF6nnyed kapcsol\xF3d\xE1s saj\xE1t rendszereihez.',
           variant: 'inline',
         },
         {
-          title: 'Documentation.',
+          title: 'Rugalmas csomagok',
           icon: FiSearch,
-          description:
-            'Extensively documented, including storybooks, best practices, use-cases and examples.',
+          description: 'V\xE1lassza ki az \xD6nnek megfelel\xF5 el\xF5fizet\xE9si szintet.',
           variant: 'inline',
         },
         {
-          title: 'Onboarding.',
+          title: 'Szem\xE9lyre szabhat\xF3 fel\xFClet',
           icon: FiUserPlus,
-          description:
-            'Add user onboarding flows, like tours, hints and inline documentation without breaking a sweat.',
+          description: 'Saj\xE1t m\xE1rk\xE1j\xE1t helyezheti el minden oldalon.',
           variant: 'inline',
         },
         {
-          title: 'Feature flags.',
+          title: 'Val\xF3sidej\xFB statisztik\xE1k',
           icon: FiFlag,
-          description:
-            "Implement feature toggles for your billing plans with easy to use hooks. Connect Flagsmith, or other remote config services once you're ready.",
+          description: 'K\xF6vesse nyomon szolg\xE1ltat\xE1sai teljes\xEDtm\xE9ny\xE9t.',
           variant: 'inline',
         },
         {
-          title: 'Upselling.',
+          title: 'Professzion\xE1lis t\xE1mogat\xE1s',
           icon: FiTrendingUp,
-          description:
-            '#components and hooks for upgrade flows designed to make upgrading inside your app frictionless.',
-          variant: 'inline',
-        },
-        {
-          title: 'Themes.',
-          icon: FiToggleLeft,
-          description:
-            'Includes multiple themes with darkmode support, always have the perfect starting point for your next project.',
-          variant: 'inline',
-        },
-        {
-          title: 'Generators.',
-          icon: FiTerminal,
-          description:
-            'Extend your design system while maintaininig code quality and consistency with built-in generators.',
-          variant: 'inline',
-        },
-        {
-          title: 'Monorepo.',
-          icon: FiCode,
-          description: (
-            <>
-              All code is available as packages in a high-performance{' '}
-              <Link href="https://turborepo.com">Turborepo</Link>, you have full
-              control to modify and adjust it to your workflow.
-            </>
-          ),
+          description: 'Csapatunk seg\xEDt a bevezet\xE9sben \xE9s az \xFCzemeltet\xE9sben.',
           variant: 'inline',
         },
       ]}
