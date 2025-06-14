@@ -5,8 +5,11 @@ export default function Page() {
   return (
     <>
       <Head>
-        <title>Saas UI Landingspage</title>
-        <meta name="description" content="Free SaaS landingspage starter kit" />
+        <title>HSWLP - Saját márkás SaaS hoszting</title>
+        <meta
+          name="description"
+          content="White-label SaaS hoszting megoldás viszonteladóknak"
+        />
       </Head>
       <LandingPage />
     </>

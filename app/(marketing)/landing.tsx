@@ -229,14 +229,12 @@ const HighlightsSection = () => {
         </Text>
       </HighlightsItem>
       <HighlightsTestimonialItem
-        name="Renata Alink"
-        description="Founder"
+        name="Polyák Csaba"
+        description="Fejlesztő"
         avatar="/static/images/avatar.jpg"
         gradient={['pink.200', 'purple.500']}
       >
-        “Saas UI helped us set up a beautiful modern UI in no time. It saved us
-        hundreds of hours in development time and allowed us to focus on
-        business logic for our specific use-case from the start.”
+        "A HSWLP segített gyorsan és biztonságosan elindítani saját márkás szolgáltatásomat, így csak az üzletre kellett figyelnem."
       </HighlightsTestimonialItem>
       <HighlightsItem
         colSpan={[1, null, 2]}
