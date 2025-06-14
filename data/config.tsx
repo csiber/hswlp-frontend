@@ -8,8 +8,8 @@ import { Logo } from './logo'
 const siteConfig = {
   logo: Logo,
   seo: {
-    title: 'Saas UI',
-    description: 'The React component library for startups',
+    title: 'HSWLP',
+    description: 'White-label SaaS hosting viszonteladóknak',
   } as NextSeoProps,
   termsUrl: '#',
   privacyUrl: '#',
@@ -17,22 +17,22 @@ const siteConfig = {
     links: [
       {
         id: 'features',
-        label: 'Features',
+        label: 'Funkciók',
       },
       {
         id: 'pricing',
-        label: 'Pricing',
+        label: 'Árazás',
       },
       {
         id: 'faq',
-        label: 'FAQ',
+        label: 'GYIK',
       },
       {
-        label: 'Login',
+        label: 'Bejelentkezés',
         href: '/login',
       },
       {
-        label: 'Sign Up',
+        label: 'Regisztráció',
         href: '/signup',
         variant: 'primary',
       },
@@ -40,15 +40,12 @@ const siteConfig = {
   },
   footer: {
     copyright: (
-      <>
-        Built by{' '}
-        <Link href="https://twitter.com/Pagebakers">Eelco Wiersma</Link>
-      </>
+      <>Készítette a HSWLP csapat</>
     ),
     links: [
       {
-        href: 'mailto:hello@saas-ui.dev',
-        label: 'Contact',
+        href: 'mailto:info@hswlp.hu',
+        label: 'Kapcsolat',
       },
       {
         href: 'https://twitter.com/saas_js',
@@ -61,30 +58,27 @@ const siteConfig = {
     ],
   },
   signup: {
-    title: 'Start building with Saas UI',
+    title: 'Kezdje el a HSWLP használatát',
     features: [
       {
         icon: FiCheck,
-        title: 'Accessible',
-        description: 'All components strictly follow WAI-ARIA standards.',
+        title: 'Saját márkanév',
+        description: 'Teljesen személyre szabható felület.',
       },
       {
         icon: FiCheck,
-        title: 'Themable',
-        description:
-          'Fully customize all components to your brand with theme support and style props.',
+        title: 'Domain regisztráció',
+        description: 'Könnyedén kezelheti ügyfelei domaineit.',
       },
       {
         icon: FiCheck,
-        title: 'Composable',
-        description:
-          'Compose components to fit your needs and mix them together to create new ones.',
+        title: 'Statikus oldal generálás',
+        description: 'Automatikus build és hosztolás.',
       },
       {
         icon: FiCheck,
-        title: 'Productive',
-        description:
-          'Designed to reduce boilerplate and fully typed, build your product at speed.',
+        title: 'Ügyfélmenedzsment',
+        description: 'Fejlett eszközök felhasználói kiszolgálásához.',
       },
     ],
   },
