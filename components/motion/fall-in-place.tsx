@@ -5,7 +5,8 @@ import { MotionBox, MotionBoxProps } from './box'
 export const FallInPlace: React.FC<MotionBoxProps & { delay?: number }> = (
   props,
 ) => {
-  const { children, delay = 0.2, ...rest } = props
+  const { children, delay: delayProp, ...rest } = props
+  const delay: number = delayProp ?? 0.2
   return (
     <MotionBox
       initial={{ scale: 1, opacity: 0, translateY: '20px' }}
@@ -15,7 +16,7 @@ export const FallInPlace: React.FC<MotionBoxProps & { delay?: number }> = (
         ease: 'easeOut',
         duration: 2,
         delay,
-      }}
+      } as any}
       {...rest}
     >
       {children}
