@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import appsData from "@/data/apps.json";
-import { AppCard, AppInfo } from "@/components/app-card";
+import { AppInfo } from "@/components/app-card";
+import AppsClient from "./apps.client";
 
 interface AppsData {
   categories: { id: string; name: string }[];
@@ -14,11 +15,5 @@ export const metadata: Metadata = {
 
 export default function AppsPage() {
   const { apps } = appsData as AppsData;
-  return (
-    <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 p-4">
-      {apps.map(app => (
-        <AppCard key={app.slug} app={app} />
-      ))}
-    </div>
-  );
+  return <AppsClient apps={apps} />;
 }
