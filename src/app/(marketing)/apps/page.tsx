@@ -9,8 +9,9 @@ interface AppsData {
 }
 
 export const metadata: Metadata = {
-  title: "Apps",
-  description: "All available apps",
+  title: "HSWLP Apps – All Projects",
+  description:
+    "Discover all official apps built on the HSWLP platform. Shell apps, Pages, VR worlds and more.",
 };
 
 export default function AppsPage() {

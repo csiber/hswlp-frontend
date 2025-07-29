@@ -19,6 +19,8 @@ const TYPE_ICONS: Record<AppInfo["type"], string> = {
   pages: "\uD83E\uDDE9", // 🧩
   vr: "\uD83D\uDD76\uFE0F", // 🕶️
   nas: "\uD83E\uDDF1", // 🧱
+  tools: "\uD83D\uDD27", // 🛠️
+  creative: "\uD83C\uDFA8", // 🎨
 };
 
 interface AppsData {
