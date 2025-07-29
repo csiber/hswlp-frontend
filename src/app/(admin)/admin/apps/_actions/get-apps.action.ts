@@ -6,7 +6,7 @@ import { requireAdmin } from "@/utils/auth";
 import { z } from "zod";
 import { sql } from "drizzle-orm";
 import { appTable } from "@/db/schema";
-import { PAGE_SIZE_OPTIONS } from "../admin-constants";
+import { PAGE_SIZE_OPTIONS } from "../../admin-constants";
 
 const getAppsSchema = z.object({
   page: z.number().min(1).default(1),

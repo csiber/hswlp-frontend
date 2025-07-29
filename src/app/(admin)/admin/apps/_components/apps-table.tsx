@@ -7,7 +7,7 @@ import { getAppsAction } from "../_actions/get-apps.action";
 import { deleteAppAction } from "../_actions/delete-app.action";
 import { useServerAction } from "zsa-react";
 import { toast } from "sonner";
-import { PAGE_SIZE_OPTIONS } from "../admin-constants";
+import { PAGE_SIZE_OPTIONS } from "../../admin-constants";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { AppForm } from "./form";
