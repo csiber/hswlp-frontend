@@ -1,8 +1,10 @@
 import { Metadata } from "next";
-import { Hero } from "@/components/landing/hero";
-import { Features } from "@/components/landing/features";
-import { FAQ } from "@/components/landing/faq";
 import { SITE_NAME, SITE_DESCRIPTION } from "@/constants";
+import { Hero } from "@/components/home/hero";
+import { Introduction } from "@/components/home/introduction";
+import { Categories } from "@/components/home/categories";
+import { FeaturedApps } from "@/components/home/featured-apps";
+import { CallToAction } from "@/components/home/cta";
 
 export const metadata: Metadata = {
   title: SITE_NAME,
@@ -13,8 +15,10 @@ export default function Home() {
   return (
     <main>
       <Hero />
-      <Features />
-      <FAQ />
+      <Introduction />
+      <Categories />
+      <FeaturedApps />
+      <CallToAction />
     </main>
   );
 }
