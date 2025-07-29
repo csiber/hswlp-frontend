@@ -11,6 +11,6 @@ export const onRequestPost: PagesFunction = async ({ request, env }) => {
   const token = await new SignJWT({ id: results[0].id })
     .setProtectedHeader({ alg: "HS256" })
     .setExpirationTime("1d")
-    .sign(new TextEncoder().encode(env.JWT_SECRET));
+    .sign(new TextEncoder().encode((env as any).JWT_SECRET));
   return new Response(JSON.stringify({ token }), { headers: { "Content-Type": "application/json" } });
 };

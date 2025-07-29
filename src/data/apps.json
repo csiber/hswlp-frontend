@@ -9,31 +9,55 @@
       "name": "Ice Tasks",
       "slug": "ice-tasks",
       "description": "Organize your tasks with icy precision.",
+      "tagline": "Manage tasks easily with an icy touch.",
       "status": "active",
       "type": "shell",
       "category": ["productivity"],
       "logo_url": "/icons/ice.svg",
-      "featured": true
+      "featured": true,
+      "tech": ["Cloudflare Workers", "D1", "R2"],
+      "features": ["Task lists", "Real-time sync", "Offline support"],
+      "shell_required": true,
+      "media": ["/screenshots/ice-tasks-1.png", "/screenshots/ice-tasks-2.png"],
+      "author": "HSWLP Team",
+      "github_url": "https://github.com/hswlp/ice-tasks",
+      "release_date": "2024-01-10"
     },
     {
       "name": "Puzzle Chat",
       "slug": "puzzle-chat",
       "description": "Talk and play puzzles with friends.",
+      "tagline": "Chat while solving puzzles.",
       "status": "dev",
       "type": "pages",
       "category": ["fun"],
       "logo_url": "/icons/puzzle.svg",
-      "featured": true
+      "featured": true,
+      "tech": ["Cloudflare Pages", "WebSockets"],
+      "features": ["Group chat", "Puzzle mini-games"],
+      "shell_required": false,
+      "media": ["/screenshots/puzzle-chat-1.png"],
+      "author": "HSWLP Team",
+      "github_url": "https://github.com/hswlp/puzzle-chat",
+      "release_date": "2024-03-05"
     },
     {
       "name": "Shades VR",
       "slug": "shades-vr",
       "description": "Explore VR worlds with style.",
+      "tagline": "Immerse yourself in VR worlds.",
       "status": "planned",
       "type": "vr",
       "category": ["fun", "dev"],
       "logo_url": "/icons/shades.svg",
-      "featured": true
+      "featured": true,
+      "tech": ["Unity", "WebXR"],
+      "features": ["High-quality VR scenes"],
+      "shell_required": true,
+      "media": [],
+      "author": "HSWLP Team",
+      "github_url": "https://github.com/hswlp/shades-vr",
+      "release_date": "2024-05-20"
     }
   ]
 }
