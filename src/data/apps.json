@@ -12,7 +12,8 @@
       "status": "active",
       "type": "shell",
       "category": ["productivity"],
-      "logo_url": "/icons/ice.svg"
+      "logo_url": "/icons/ice.svg",
+      "featured": true
     },
     {
       "name": "Puzzle Chat",
@@ -21,7 +22,8 @@
       "status": "dev",
       "type": "pages",
       "category": ["fun"],
-      "logo_url": "/icons/puzzle.svg"
+      "logo_url": "/icons/puzzle.svg",
+      "featured": true
     },
     {
       "name": "Shades VR",
@@ -30,7 +32,8 @@
       "status": "planned",
       "type": "vr",
       "category": ["fun", "dev"],
-      "logo_url": "/icons/shades.svg"
+      "logo_url": "/icons/shades.svg",
+      "featured": true
     }
   ]
 }
