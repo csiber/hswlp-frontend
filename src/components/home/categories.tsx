@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { type Route } from "next";
 import { motion } from "framer-motion";
 
 interface Category {
@@ -26,7 +27,7 @@ export function Categories() {
               whileHover={{ scale: 1.05 }}
               className="rounded-lg border p-6 text-center bg-background transition-colors hover:bg-accent"
             >
-              <Link href={cat.href} className="flex flex-col items-center space-y-4">
+              <Link href={cat.href as Route} className="flex flex-col items-center space-y-4">
                 <span className="text-3xl">{cat.icon}</span>
                 <span className="text-lg font-semibold">{cat.name}</span>
               </Link>

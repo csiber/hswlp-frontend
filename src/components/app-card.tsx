@@ -11,12 +11,20 @@ export interface AppInfo {
   name: string;
   slug: string;
   description: string;
+  tagline?: string;
   status: "active" | "dev" | "planned";
   type: "shell" | "pages" | "vr" | "nas";
   category: string[];
   logo_url?: string;
   url?: string;
   repo_url?: string;
+  github_url?: string;
+  tech?: string[];
+  features?: string[];
+  shell_required?: boolean;
+  media?: string[];
+  author?: string;
+  release_date?: string;
   docs_url?: string;
 }
 
@@ -41,7 +49,7 @@ export function AppCard({ app }: { app: AppInfo }) {
       : app.description;
 
   return (
-    <Link href={`/apps/app/${app.slug}` as Route}>
+    <Link href={`/apps/${app.slug}` as Route}>
       <motion.div whileHover={{ scale: 1.05 }} layout>
         <Card className="cursor-pointer h-full flex flex-col justify-between">
           <CardHeader>

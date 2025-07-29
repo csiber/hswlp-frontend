@@ -7,7 +7,7 @@ export const onRequestGet: PagesFunction = async ({ request, env }) => {
   }
   try {
     const token = auth.split(" ")[1];
-    const { payload } = await jwtVerify(token, new TextEncoder().encode(env.JWT_SECRET));
+    const { payload } = await jwtVerify(token, new TextEncoder().encode((env as any).JWT_SECRET));
     return new Response(JSON.stringify({ id: payload.id }), { headers: { "Content-Type": "application/json" } });
   } catch {
     return new Response(JSON.stringify({ error: "Invalid token" }), { status: 401 });
