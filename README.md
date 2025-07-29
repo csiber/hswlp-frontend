@@ -1,57 +1,96 @@
-# HSWLP - white-label SaaS hosting
+# HSWLP:Next – Cloudflare alapú újgenerációs SaaS rendszer
 
-Ez a projekt a HSWLP statikus marketing oldala, amely bemutatja white-label SaaS hoszting megoldásunkat viszonteladók számára.
+Ez a repository a HSWLP platform `hswlp-next` nevű **új alaprendszere**, amelyre a különböző frontend rétegek (ún. **shellek**) épülnek. A rendszer teljesen Cloudflare-infrastruktúrán fut (Workers, D1, R2, KV), és készen áll SaaS alkalmazások hosztolására – külön back-end nélkül.
 
-## Tech
+Ez az alap biztosítja a következőket:
 
-- Next.js (App router)
-- Chakra UI
-- Saas UI komponensek
-- Typescript
+- Bejelentkezés, regisztráció, email hitelesítés
+- Turnstile captcha
+- Cloudflare D1 adatbázis migrációkkal
+- R2 tárhely és KV session kezelés
+- Stripe integráció és emailküldés (Resend vagy Brevo)
+- Alkalmas Cloudflare Pages és Edge funkciók kiszolgálására
 
-## Features
+---
 
-- Feature blocks
-- Testimonials
-- Pricing tables
-- Log in and Sign up pages
-- FAQ
+## Használat lokálisan
 
-## Getting Started
+1. Telepítés:
 
-First, clone this repo and run `pnpm i`
+   ```bash
+   pnpm install
+   ```
 
-To start the app run:
+2. Környezeti változók:
+
+   - Másold le a `.env.example` fájlt `.env` néven, majd töltsd ki.
+   - Ha használod: `.dev.vars.example` → `.dev.vars`
+
+3. Lokális migráció és indítás:
+
+   ```bash
+   pnpm db:migrate:dev
+   pnpm dev
+   ```
+
+4. Nyisd meg a böngészőben:
+   [http://localhost:3000](http://localhost:3000)
+
+---
+
+## Cloudflare deploy
+
+A rendszer automatikusan deployolható Cloudflare Workers-re:
 
 ```bash
-pnpm dev
+pnpm run deploy
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Ez lefuttatja az `opennext:build` és `opennextjs-cloudflare deploy` parancsokat, majd feltölti:
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+- a Worker kódot
+- statikus asseteket (R2)
+- titkos környezeti változókat (`wrangler secret put`)
+- valamint a `wrangler.json` alapján hozzárendeli:
+  - D1 adatbázist
+  - KV namespace-eket
+  - R2 bucketet
 
-## Configuration
+A `.env` fájl NEM kerül automatikusan feltöltésre – a titkos adatokat külön kell beállítani `wrangler secret put` paranccsal vagy a Cloudflare dashboardon.
 
-Configuration files to edit basic site information, add testimonials, faq and pricing table can be found in `/data`.
+---
 
-## További információk
+## Fontos konfigurációs helyek
 
-A projekt Next.js alapokra épül, Chakra UI és Saas UI komponensekkel.
+- Állandók: `src/constants.ts`
+- Email sablonok: `src/react-email/`
+- Globális CSS: `src/app/globals.css`
+- Meta adatok: `src/app/layout.tsx`
+- Wrangler config: `wrangler.json`
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Email sablonok előnézete
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+```bash
+pnpm email:dev
+```
 
-## Deploy on Vercel
+→ [http://localhost:3001](http://localhost:3001)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## A rendszer jövője
 
-## License
+A `hswlp-next` az alapja minden jövőbeli HSWLP shellnek, ideértve:
 
-MIT
+- `HSWLP:Cloud` (statikus site deploy)
+- `HSWLP:NAS` (helyi Docker stack manager)
+- `HSWLP:Dev` (fejlesztői központ)
+- `HSWLP:Store` (sablon piactér)
+- `HSWLP:Academy` (oktatási modul)
+
+Egy közös rendszer, több célra.
+Tisztán, Cloudflare-alapon.
+
+---
