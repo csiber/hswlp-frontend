@@ -307,6 +307,30 @@ export const slowRequestLogTable = sqliteTable("slow_request_log", {
   index('slow_request_log_user_idx').on(table.userId),
 ]));
 
+export const appCategoryTable = sqliteTable("app_category", {
+  slug: text().primaryKey().notNull(),
+  name: text().notNull(),
+  emoji: text(),
+  description: text(),
+});
+
+export const appTable = sqliteTable("app", {
+  id: text().primaryKey().$defaultFn(() => `app_${createId()}`).notNull(),
+  name: text().notNull(),
+  slug: text().notNull().unique(),
+  description: text(),
+  url: text(),
+  icon: text(),
+  categorySlug: text().notNull().references(() => appCategoryTable.slug),
+  type: text(),
+  featured: integer().default(0).notNull(),
+  createdAt: integer({ mode: "timestamp" }).$defaultFn(() => new Date()).notNull(),
+  updatedAt: integer({ mode: "timestamp" }).$onUpdateFn(() => new Date()).notNull(),
+}, (table) => ([
+  index('app_slug_idx').on(table.slug),
+  index('app_category_idx').on(table.categorySlug),
+]));
+
 export const teamRelations = relations(teamTable, ({ many }) => ({
   memberships: many(teamMembershipTable),
   invitations: many(teamInvitationTable),
@@ -393,6 +417,17 @@ export const slowRequestLogRelations = relations(slowRequestLogTable, ({ one }) 
   }),
 }));
 
+export const appCategoryRelations = relations(appCategoryTable, ({ many }) => ({
+  apps: many(appTable),
+}));
+
+export const appRelations = relations(appTable, ({ one }) => ({
+  category: one(appCategoryTable, {
+    fields: [appTable.categorySlug],
+    references: [appCategoryTable.slug],
+  }),
+}));
+
 export type User = InferSelectModel<typeof userTable>;
 export type PassKeyCredential = InferSelectModel<typeof passKeyCredentialTable>;
 export type CreditTransaction = InferSelectModel<typeof creditTransactionTable>;
@@ -403,3 +438,5 @@ export type TeamRole = InferSelectModel<typeof teamRoleTable>;
 export type TeamInvitation = InferSelectModel<typeof teamInvitationTable>;
 export type SlowRequestLog = InferSelectModel<typeof slowRequestLogTable>;
 export type Post = InferSelectModel<typeof postTable>;
+export type AppCategory = InferSelectModel<typeof appCategoryTable>;
+export type App = InferSelectModel<typeof appTable>;

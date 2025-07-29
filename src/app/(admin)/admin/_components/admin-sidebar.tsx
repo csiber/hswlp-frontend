@@ -38,6 +38,14 @@ const adminNavItems: NavMainItem[] = [
     icon: Users,
     isActive: true,
   },
+  {
+    title: "Apps",
+    url: "/admin/apps",
+  },
+  {
+    title: "Categories",
+    url: "/admin/categories",
+  },
 ]
 
 export function AdminSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
