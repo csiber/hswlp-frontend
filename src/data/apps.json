@@ -1,0 +1,36 @@
+{
+  "categories": [
+    { "id": "productivity", "name": "Productivity" },
+    { "id": "fun", "name": "Fun" },
+    { "id": "dev", "name": "Dev Tools" }
+  ],
+  "apps": [
+    {
+      "name": "Ice Tasks",
+      "slug": "ice-tasks",
+      "description": "Organize your tasks with icy precision.",
+      "status": "active",
+      "type": "shell",
+      "category": ["productivity"],
+      "logo_url": "/icons/ice.svg"
+    },
+    {
+      "name": "Puzzle Chat",
+      "slug": "puzzle-chat",
+      "description": "Talk and play puzzles with friends.",
+      "status": "dev",
+      "type": "pages",
+      "category": ["fun"],
+      "logo_url": "/icons/puzzle.svg"
+    },
+    {
+      "name": "Shades VR",
+      "slug": "shades-vr",
+      "description": "Explore VR worlds with style.",
+      "status": "planned",
+      "type": "vr",
+      "category": ["fun", "dev"],
+      "logo_url": "/icons/shades.svg"
+    }
+  ]
+}
