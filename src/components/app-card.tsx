@@ -12,7 +12,10 @@ export interface AppInfo {
   status: "active" | "dev" | "planned";
   type: "shell" | "pages" | "vr" | "nas";
   category: string[];
-  logo_url: string;
+  logo_url?: string;
+  url?: string;
+  repo_url?: string;
+  docs_url?: string;
 }
 
 const ICONS: Record<AppInfo["type"], string> = {
