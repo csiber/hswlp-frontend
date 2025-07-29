@@ -1,7 +1,7 @@
-export const onRequestPost: PagesFunction = async ({ request, env }) => {
+export const onRequestPost: PagesFunction<CloudflareEnv> = async ({ request, env }) => {
   const data = (await request.json()) as any;
   const { email, password } = data;
-  const db = (env as any).DB;
+  const db = env.DB;
   if (!email || !password) {
     return new Response(JSON.stringify({ error: "Missing fields" }), { status: 400 });
   }
