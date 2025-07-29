@@ -1,3 +1,4 @@
+"use client";
 import appsData from "@/data/apps.json";
 import { AppCard, AppInfo } from "@/components/app-card";
 import { motion } from "framer-motion";
