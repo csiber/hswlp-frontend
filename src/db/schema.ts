@@ -108,6 +108,29 @@ export const postTable = sqliteTable("post", {
   index('post_user_id_idx').on(table.userId),
 ]));
 
+export const APP_TYPE = {
+  SHELL: 'shell',
+  PAGES: 'pages',
+  VR: 'vr',
+} as const;
+
+export const appTypeTuple = Object.values(APP_TYPE) as [string, ...string[]];
+
+export const appTable = sqliteTable('app', {
+  ...commonColumns,
+  id: text().primaryKey().$defaultFn(() => `app_${createId()}`).notNull(),
+  name: text({ length: 255 }).notNull(),
+  slug: text({ length: 255 }).notNull(),
+  description: text({ length: 1000 }),
+  url: text({ length: 600 }),
+  icon: text({ length: 100 }),
+  category: text({ length: 100 }),
+  type: text({ enum: appTypeTuple }).notNull(),
+  featured: integer().default(0).notNull(),
+}, (table) => ([
+  index('app_slug_idx').on(table.slug),
+]));
+
 // Credit transaction types
 export const CREDIT_TRANSACTION_TYPE = {
   PURCHASE: 'PURCHASE',
@@ -403,3 +426,4 @@ export type TeamRole = InferSelectModel<typeof teamRoleTable>;
 export type TeamInvitation = InferSelectModel<typeof teamInvitationTable>;
 export type SlowRequestLog = InferSelectModel<typeof slowRequestLogTable>;
 export type Post = InferSelectModel<typeof postTable>;
+export type App = InferSelectModel<typeof appTable>;
