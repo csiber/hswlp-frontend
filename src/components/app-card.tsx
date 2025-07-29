@@ -3,6 +3,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
+import type { Route } from "next";
 import { motion } from "framer-motion";
 
 export interface AppInfo {
@@ -28,7 +29,7 @@ const ICONS: Record<AppInfo["type"], string> = {
 export function AppCard({ app }: { app: AppInfo }) {
   const icon = ICONS[app.type] || "";
   return (
-    <Link href={`/apps/${app.slug}`}> 
+    <Link href={`/apps/app/${app.slug}` as Route}>
       <motion.div whileHover={{ scale: 1.05 }}>
         <Card className="cursor-pointer h-full flex flex-col justify-between">
           <CardHeader>
