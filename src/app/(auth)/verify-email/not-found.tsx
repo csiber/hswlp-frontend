@@ -32,7 +32,7 @@ export default function NotFound() {
               asChild
             >
               <Link href="/sign-in">
-                Bejelentkezés
+                Sign In
               </Link>
             </Button>
             <Button
@@ -41,7 +41,7 @@ export default function NotFound() {
               asChild
             >
               <Link href="/">
-                  Vissza a kezdőlapra
+                  Back to home
               </Link>
             </Button>
           </div>
