@@ -1,8 +1,14 @@
 import withBundleAnalyzer from '@next/bundle-analyzer';
 import { initOpenNextCloudflareForDev } from '@opennextjs/cloudflare';
+import { AsyncLocalStorage } from 'node:async_hooks';
 
 // added by create cloudflare to enable calling `getCloudflareContext()` in `next dev`
-initOpenNextCloudflareForDev();
+// Next.js dev server might not expose AsyncLocalStorage on the global object,
+// which prevents the Cloudflare context from initializing. Explicitly set it
+// before calling the init function.
+// next.js config can export an async function. Initialize the Cloudflare
+// context before returning the configuration object.
+globalThis.AsyncLocalStorage ??= AsyncLocalStorage;
 
 
 // TODO cache-control headers don't work for static files
@@ -19,6 +25,9 @@ const nextConfig = {
   }
 };
 
-export default process.env.ANALYZE === 'true'
-  ? withBundleAnalyzer()(nextConfig)
-  : nextConfig;
+export default async () => {
+  await initOpenNextCloudflareForDev();
+  return process.env.ANALYZE === 'true'
+    ? withBundleAnalyzer()(nextConfig)
+    : nextConfig;
+};
