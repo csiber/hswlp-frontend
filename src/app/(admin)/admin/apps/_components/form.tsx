@@ -32,7 +32,13 @@ interface Props {
 export function AppForm({ app, onSuccess }: Props) {
   const form = useForm<z.infer<typeof appSchema>>({
     resolver: zodResolver(appSchema),
-    defaultValues: app || { featured: false },
+    defaultValues: app
+      ? {
+          ...app,
+          category: app.category ?? undefined,
+          featured: Boolean(app.featured),
+        }
+      : { featured: false },
   });
 
   const { execute: createApp } = useServerAction(createAppAction, {
