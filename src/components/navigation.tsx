@@ -45,7 +45,7 @@ export function Navigation() {
   const navItems: NavItem[] = [
     { name: "Home", href: "/" },
     { name: "Apps", href: "/apps" },
-    { name: "Categories", href: "/categories" },
+    { name: "Categories", href: "/categories" as Route },
     { name: "Search", href: "/search" },
     { name: "Docs", href: "/docs" },
     { name: "About", href: "/about" },

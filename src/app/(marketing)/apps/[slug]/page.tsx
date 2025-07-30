@@ -33,5 +33,5 @@ export default async function AppPage({ params }: PageProps) {
   if (app.category) {
     await getSimilarAppsAsync(app.category, slug)
   }
-  return <AppDetailPage />;
+  return <AppDetailPage app={app} />;
 }
