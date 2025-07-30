@@ -2,7 +2,6 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import Link from "next/link";
 import { motion } from "framer-motion";
 import * as Icons from "lucide-react";
 import type { LucideIcon } from "lucide-react";
@@ -10,8 +9,9 @@ import { cn } from "@/lib/utils";
 import type { App } from "@/db/schema";
 
 export function AppCard({ app }: { app: App }) {
-  const icons = Icons as Record<string, LucideIcon>;
-  const Icon = icons[app.icon] ?? Icons.AppWindow;
+  const Icon =
+    (Icons[app.icon as keyof typeof Icons] as LucideIcon | undefined) ??
+    Icons.AppWindow;
   return (
     <motion.div whileHover={{ scale: 1.05 }} layout>
       <Card className={cn("h-full flex flex-col justify-between", app.featured && "border-2 border-primary")}> 
@@ -32,9 +32,14 @@ export function AppCard({ app }: { app: App }) {
             {app.category}
           </Badge>
           {app.url && (
-            <Link href={app.url} target="_blank" rel="noopener noreferrer" className="text-sm underline">
+            <a
+              href={app.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm underline"
+            >
               Visit
-            </Link>
+            </a>
           )}
         </CardContent>
       </Card>
