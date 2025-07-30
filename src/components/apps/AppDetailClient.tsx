@@ -29,7 +29,7 @@ export default function AppDetailClient({ app }: Props) {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
-      className="space-y-6 pb-12 container mx-auto max-w-3xl"
+      className="space-y-6 pb-12 pt-20 container mx-auto max-w-3xl"
     >
       <div className="flex items-center gap-3">
         <Icon className="h-8 w-8" />
@@ -63,7 +63,7 @@ export default function AppDetailClient({ app }: Props) {
       )}
 
       {app.url && (
-        <Button asChild className="mt-4">
+        <Button asChild className="mt-4 transition-transform active:scale-95 hover:scale-100">
           <a href={app.url} target="_blank" rel="noopener noreferrer">
             Visit app
           </a>

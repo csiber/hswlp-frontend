@@ -4,10 +4,10 @@ import Fuse from "fuse.js";
 import { SearchInput } from "@/components/search/SearchInput";
 import { SearchResults, SearchResult } from "@/components/search/SearchResults";
 import type { Route } from "next";
-import { AppInfo } from "@/components/app-card";
+import type { App } from "@/db/schema";
 
 interface Props {
-  apps: AppInfo[];
+  apps: App[];
   categories: { id: string; name: string }[];
   tags: { id: string; name: string }[];
 }
@@ -22,9 +22,9 @@ export default function SearchClient({ apps, categories, tags }: Props) {
       ...apps.map(app => ({
         type: "app" as const,
         name: app.name,
-        description: app.description,
+        description: app.description ?? undefined,
         href: `/apps/${app.slug}` as Route,
-        tags: app.category,
+        tags: app.category ? [app.category] : [],
       }))
     );
 

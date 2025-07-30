@@ -1,16 +1,14 @@
 "use client";
-import appsData from "@/data/apps.json";
-import { AppCard, AppInfo } from "@/components/app-card";
 import { motion } from "framer-motion";
+import { AppCard } from "@/components/apps/AppCard";
+import type { App } from "@/db/schema";
 
-interface AppsData {
-  categories: { id: string; name: string }[];
-  apps: (AppInfo & { featured?: boolean })[];
+interface Props {
+  apps: App[];
 }
 
-export function FeaturedApps() {
-  const { apps } = appsData as AppsData;
-  const featured = apps.filter(app => app.featured).slice(0, 4);
+export function FeaturedApps({ apps }: Props) {
+  const featured = apps.filter(app => app.featured === 1).slice(0, 4);
 
   if (featured.length === 0) return null;
 
