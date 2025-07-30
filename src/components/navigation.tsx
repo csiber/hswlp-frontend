@@ -11,6 +11,7 @@ import { useSessionStore } from "@/state/session"
 import { cn } from "@/lib/utils"
 import { useNavStore } from "@/state/nav"
 import { Skeleton } from "@/components/ui/skeleton"
+import NavUserMenu from "@/components/nav-user-menu"
 import { SITE_NAME } from "@/constants"
 
 type NavItem = {
@@ -19,22 +20,9 @@ type NavItem = {
 }
 
 const ActionButtons = () => {
-  const { session, isLoading } = useSessionStore()
   const { setIsOpen } = useNavStore()
 
-  if (isLoading) {
-    return <Skeleton className="h-10 w-[80px] bg-primary" />
-  }
-
-  if (session) {
-    return null;
-  }
-
-  return (
-    <Button asChild onClick={() => setIsOpen(false)}>
-      <Link href="/sign-in">Sign In</Link>
-    </Button>
-  )
+  return <NavUserMenu onNavigate={() => setIsOpen(false)} />
 }
 
 export function Navigation() {
