@@ -5,13 +5,22 @@ import { isTurnstileEnabled } from "@/flags";
 
 export async function POST(request: Request) {
   try {
-    const { fullName, email, subject, message, captchaToken } = await request.json();
+    const { fullName, email, subject, message, captchaToken } = (await request.json()) as {
+      fullName?: string;
+      email?: string;
+      subject?: string;
+      message?: string;
+      captchaToken?: string;
+    };
 
     if (!fullName || !email || !message) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }
 
     if (await isTurnstileEnabled()) {
+      if (!captchaToken) {
+        return NextResponse.json({ error: "Invalid captcha" }, { status: 400 });
+      }
       const success = await validateTurnstileToken(captchaToken);
       if (!success) {
         return NextResponse.json({ error: "Invalid captcha" }, { status: 400 });
