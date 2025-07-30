@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -16,6 +16,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+import { Captcha } from "@/components/captcha";
 import {
   Card,
   CardContent,
@@ -24,18 +25,23 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { SiGithub as GithubIcon, SiX as XIcon, SiDiscord as DiscordIcon } from "@icons-pack/react-simple-icons";
+import { toast } from "sonner";
+import { useConfigStore } from "@/state/config";
+import { catchaSchema } from "@/schemas/catcha.schema";
 
 const formSchema = z.object({
   fullName: z.string().min(1, "Full name is required"),
   email: z.string().email("Invalid email address"),
   subject: z.string().optional(),
   message: z.string().min(1, "Message cannot be empty"),
+  captchaToken: catchaSchema,
 });
 
 type FormValues = z.infer<typeof formSchema>;
 
 export default function ContactForm() {
   const [submitted, setSubmitted] = useState(false);
+  const { isTurnstileEnabled } = useConfigStore();
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -44,13 +50,29 @@ export default function ContactForm() {
       email: "",
       subject: "",
       message: "",
+      captchaToken: "",
     },
   });
 
-  const onSubmit = (data: FormValues) => {
-    console.log("Contact form submitted", data);
-    setSubmitted(true);
-    form.reset();
+  const captchaToken = useWatch({ control: form.control, name: 'captchaToken' });
+
+  const onSubmit = async (data: FormValues) => {
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+
+      if (!res.ok) throw new Error('Failed to send');
+
+      toast.success('Message sent');
+      setSubmitted(true);
+      form.reset();
+    } catch (error) {
+      console.error(error);
+      toast.error('Failed to send message');
+    }
   };
 
   return (
@@ -127,7 +149,16 @@ export default function ContactForm() {
                     )}
                   />
 
-                  <Button type="submit" className="w-full">
+                  <Captcha
+                    onSuccess={(token) => form.setValue('captchaToken', token)}
+                    validationError={form.formState.errors.captchaToken?.message}
+                  />
+
+                  <Button
+                    type="submit"
+                    className="w-full"
+                    disabled={Boolean(isTurnstileEnabled && !captchaToken)}
+                  >
                     Send message
                   </Button>
                 </form>
