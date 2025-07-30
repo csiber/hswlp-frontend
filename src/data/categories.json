@@ -1,7 +1,0 @@
-{
-  "categories": [
-    { "id": "productivity", "name": "Productivity" },
-    { "id": "fun", "name": "Fun" },
-    { "id": "dev", "name": "Dev Tools" }
-  ]
-}

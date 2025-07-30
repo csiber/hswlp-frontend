@@ -1,9 +1,0 @@
-{
-  "tags": [
-    { "id": "cloudflare", "name": "Cloudflare" },
-    { "id": "vr", "name": "VR" },
-    { "id": "websockets", "name": "WebSockets" },
-    { "id": "unity", "name": "Unity" },
-    { "id": "workers", "name": "Workers" }
-  ]
-}

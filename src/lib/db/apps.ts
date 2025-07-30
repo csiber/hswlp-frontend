@@ -84,3 +84,45 @@ export async function getFeaturedAppsAsync(limit = 4): Promise<App[]> {
   });
 }
 
+export async function getCategories(): Promise<string[]> {
+  const db = await getDB();
+  const rows = await db
+    .selectDistinct({ category: appTable.category })
+    .from(appTable);
+  return rows
+    .map(r => r.category)
+    .filter((c): c is string => Boolean(c))
+    .sort();
+}
+
+export async function getCategoriesAsync(): Promise<string[]> {
+  const db = await getDBAsync();
+  const rows = await db
+    .selectDistinct({ category: appTable.category })
+    .from(appTable);
+  return rows
+    .map(r => r.category)
+    .filter((c): c is string => Boolean(c))
+    .sort();
+}
+
+export async function getAppsByCategory(category: string): Promise<App[]> {
+  const db = await getDB();
+  return db
+    .select()
+    .from(appTable)
+    .where(eq(appTable.category, category))
+    .orderBy(desc(appTable.createdAt));
+}
+
+export async function getAppsByCategoryAsync(
+  category: string,
+): Promise<App[]> {
+  const db = await getDBAsync();
+  return db
+    .select()
+    .from(appTable)
+    .where(eq(appTable.category, category))
+    .orderBy(desc(appTable.createdAt));
+}
+

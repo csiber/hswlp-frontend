@@ -17,7 +17,7 @@ export function AppCard({ app }: { app: App }) {
   return (
     <Link href={`/apps/${app.slug}` as Route}>
       <motion.div whileHover={{ scale: 1.05 }} layout>
-        <Card className={cn("cursor-pointer h-full flex flex-col justify-between", app.featured && "border-2 border-primary")}>
+        <Card className={cn("cursor-pointer h-full flex flex-col justify-between overflow-hidden", app.featured && "border-2 border-primary")}>
         <CardHeader>
           <div className="flex items-center gap-2">
             <Icon className="h-6 w-6" />
@@ -41,7 +41,7 @@ export function AppCard({ app }: { app: App }) {
                 e.stopPropagation();
                 window.open(app.url ?? undefined, "_blank", "noopener,noreferrer");
               }}
-              className="text-sm underline"
+              className="text-sm underline transition-transform active:scale-95 hover:scale-100"
             >
               Visit
             </button>
