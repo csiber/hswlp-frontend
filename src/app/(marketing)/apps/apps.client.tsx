@@ -11,7 +11,9 @@ export default function AppsClient({ apps }: { apps: App[] }) {
   const [category, setCategory] = useState<string>("all");
 
   const categories = useMemo(() => {
-    return Array.from(new Set(apps.map(a => a.category))).sort();
+    return Array.from(
+      new Set(apps.map(a => a.category).filter((c): c is string => Boolean(c)))
+    ).sort();
   }, [apps]);
 
   const filteredApps = useMemo(() => {

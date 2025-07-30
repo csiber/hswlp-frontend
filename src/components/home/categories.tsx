@@ -9,12 +9,12 @@ interface Category {
   icon: string;
 }
 const categories: Category[] = [
-  { name: "Shell Apps", href: "/apps/shell", icon: "🧊" },
-  { name: "Pages", href: "/apps/pages", icon: "🧩" },
-  { name: "VR", href: "/apps/vr", icon: "🕶️" },
-  { name: "NAS", href: "/apps/nas", icon: "🧱" },
-  { name: "Creative Tools", href: "/apps/creative", icon: "🎨" },
-  { name: "Utilities", href: "/apps/tools", icon: "🛠️" },
+  { name: "Shell Apps", href: "/apps/type/shell", icon: "🧊" },
+  { name: "Pages", href: "/apps/type/pages", icon: "🧩" },
+  { name: "VR", href: "/apps/type/vr", icon: "🕶️" },
+  { name: "NAS", href: "/apps/type/nas", icon: "🧱" },
+  { name: "Creative Tools", href: "/apps/type/creative", icon: "🎨" },
+  { name: "Utilities", href: "/apps/type/tools", icon: "🛠️" },
 ];
 
 export function Categories() {

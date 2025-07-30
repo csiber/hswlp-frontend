@@ -13,12 +13,12 @@ interface Category {
 }
 
 const categories: Category[] = [
-  { name: 'Shell apps', description: 'Run CLI programs in a secure container.', icon: '🧊', href: '/apps/shell' },
-  { name: 'Pages', description: 'Static sites, blogs and docs.', icon: '🧩', href: '/apps/pages' },
-  { name: 'Tools', description: 'Handy utilities for everyday use.', icon: '🛠️', href: '/apps/tools' },
-  { name: 'VR', description: 'Immersive WebXR experiences.', icon: '🕶️', href: '/apps/vr' },
-  { name: 'NAS', description: 'Store files with ease.', icon: '🧱', href: '/apps/nas' },
-  { name: 'Hosting', description: 'Deploy your own services.', icon: '🚀', href: '/apps/hosting' },
+  { name: 'Shell apps', description: 'Run CLI programs in a secure container.', icon: '🧊', href: '/apps/type/shell' },
+  { name: 'Pages', description: 'Static sites, blogs and docs.', icon: '🧩', href: '/apps/type/pages' },
+  { name: 'Tools', description: 'Handy utilities for everyday use.', icon: '🛠️', href: '/apps/type/tools' },
+  { name: 'VR', description: 'Immersive WebXR experiences.', icon: '🕶️', href: '/apps/type/vr' },
+  { name: 'NAS', description: 'Store files with ease.', icon: '🧱', href: '/apps/type/nas' },
+  { name: 'Hosting', description: 'Deploy your own services.', icon: '🚀', href: '/apps/type/hosting' },
 ]
 
 export function CategoryGrid() {
