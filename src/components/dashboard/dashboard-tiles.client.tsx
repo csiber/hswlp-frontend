@@ -87,6 +87,16 @@ export function DashboardTiles({ stats }: DashboardTilesProps) {
               <span className="text-sm font-medium text-muted-foreground">Current credits</span>
               <span className="text-xl font-bold">{stats?.currentCredits ?? 0}</span>
             </div>
+            {stats && stats.currentCredits < 100 && (
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: [0, 1, 0] }}
+                transition={{ repeat: Infinity, duration: 1.5 }}
+                className="text-sm text-yellow-600"
+              >
+                🔋 You&apos;re low on credit! Buy now or invite friends.
+              </motion.p>
+            )}
             <div className="flex items-center justify-between">
               <span className="text-sm font-medium text-muted-foreground">Active apps</span>
               <span className="text-xl font-bold">{stats?.activeApps ?? 0}</span>
