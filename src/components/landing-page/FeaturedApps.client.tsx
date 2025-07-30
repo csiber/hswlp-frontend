@@ -38,15 +38,32 @@ export default function FeaturedAppsClient({ apps }: Props) {
               whileHover={{ scale: 1.03 }}
               className="rounded-2xl border shadow-xl overflow-hidden flex flex-col bg-background"
             >
-              {app.media && app.media.length > 0 && (
-                <Image
-                  src={app.media[0]}
-                  alt={`${app.name} screenshot`}
-                  width={800}
-                  height={450}
-                  className="h-48 w-full object-cover"
-                />
-              )}
+              {(() => {
+                const media = (app as unknown as { media?: string[] }).media;
+                if (media && media.length > 0) {
+                  return (
+                    <Image
+                      src={media[0]}
+                      alt={`${app.name} screenshot`}
+                      width={800}
+                      height={450}
+                      className="h-48 w-full object-cover"
+                    />
+                  );
+                }
+                if (app.icon) {
+                  return (
+                    <Image
+                      src={app.icon}
+                      alt={`${app.name} icon`}
+                      width={800}
+                      height={450}
+                      className="h-48 w-full object-cover"
+                    />
+                  );
+                }
+                return null;
+              })()}
               <div className="p-6 flex flex-col gap-4 flex-1">
                 <div>
                   <h3 className="text-xl font-semibold">{app.name}</h3>
