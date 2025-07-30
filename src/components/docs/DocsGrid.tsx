@@ -8,29 +8,31 @@ import {
   CodeBracketIcon,
 } from "@heroicons/react/24/outline";
 
+import type { Route } from "next";
+
 const sections = [
   {
     title: "Getting Started",
     subtitle: "Start here to launch your first app on HSWLP.",
-    href: "/docs/getting-started",
+    href: "/docs/getting-started" as Route,
     icon: BookOpenIcon,
   },
   {
     title: "Shell App",
     subtitle: "Build full-stack Workers apps using D1, R2 and KV.",
-    href: "/docs/shell",
+    href: "/docs/shell" as Route,
     icon: CommandLineIcon,
   },
   {
     title: "Deploy Guide",
     subtitle: "Steps to publish your site to Cloudflare Pages.",
-    href: "/docs/deploy",
+    href: "/docs/deploy" as Route,
     icon: RocketLaunchIcon,
   },
   {
     title: "API Reference",
     subtitle: "Explore HSWLP's endpoints and integrations.",
-    href: "/docs/api",
+    href: "/docs/api" as Route,
     icon: CodeBracketIcon,
   },
 ];
