@@ -35,14 +35,16 @@ export function AppCard({ app }: { app: App }) {
             {app.category}
           </Badge>
           {app.url && (
-            <a
-              href={app.url}
-              target="_blank"
-              rel="noopener noreferrer"
+            <button
+              type="button"
+              onClick={e => {
+                e.stopPropagation();
+                window.open(app.url, "_blank", "noopener,noreferrer");
+              }}
               className="text-sm underline"
             >
               Visit
-            </a>
+            </button>
           )}
         </CardContent>
         </Card>
