@@ -78,14 +78,15 @@ export function AppCard({ app }: { app: AppInfo }) {
               {icon}
             </Badge>
             {app.repo_url && (
-              <a
-                href={app.repo_url}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={e => e.stopPropagation()}
+              <button
+                type="button"
+                onClick={e => {
+                  e.stopPropagation();
+                  window.open(app.repo_url, "_blank", "noopener,noreferrer");
+                }}
               >
                 <GithubIcon className="w-4 h-4" />
-              </a>
+              </button>
             )}
           </CardContent>
         </Card>
