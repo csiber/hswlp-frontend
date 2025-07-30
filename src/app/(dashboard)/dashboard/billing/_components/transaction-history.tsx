@@ -81,6 +81,7 @@ export function TransactionHistory() {
                   <TableHead>Type</TableHead>
                   <TableHead>Amount</TableHead>
                   <TableHead>Description</TableHead>
+                  <TableHead>Receipt</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -118,6 +119,15 @@ export function TransactionHistory() {
                           {format(new Date(transaction.expirationDate), "MMM d, yyyy")}
                         </Badge>
                       )}
+                    </TableCell>
+                    <TableCell>
+                      {transaction.type === "PURCHASE" && transaction.paymentIntentId ? (
+                        <Button asChild size="sm" variant="outline">
+                          <a href={`/api/receipts/${transaction.paymentIntentId}`} target="_blank" rel="noopener noreferrer">
+                            Download receipt
+                          </a>
+                        </Button>
+                      ) : null}
                     </TableCell>
                   </TableRow>
                 )) : (
@@ -162,6 +172,22 @@ export function TransactionHistory() {
                   {Math.abs(transaction.amount)}
                 </span>
               </div>
+              {transaction.type === "PURCHASE" && transaction.paymentIntentId && (
+                <Button
+                  asChild
+                  size="sm"
+                  variant="outline"
+                  className="self-start"
+                >
+                  <a
+                    href={`/api/receipts/${transaction.paymentIntentId}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Download receipt
+                  </a>
+                </Button>
+              )}
               {transaction.type !== "USAGE" && transaction.expirationDate && (
                 <Badge
                   variant="secondary"

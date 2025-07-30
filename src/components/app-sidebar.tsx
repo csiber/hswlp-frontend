@@ -5,18 +5,17 @@ import type { Route } from 'next'
 
 import {
   Building2,
-  Frame,
-  Map,
-  PieChart,
-  Settings2,
+  AppWindow,
+  Boxes,
+  FileText,
+  LayoutDashboard,
+  Settings,
   ShoppingCart,
-  SquareTerminal,
   CreditCard,
   Users,
 } from "lucide-react"
 
 import { NavMain } from "@/components/nav-main"
-import { NavProjects } from "@/components/nav-projects"
 import { NavUser } from "@/components/nav-user"
 import { TeamSwitcher } from "@/components/team-switcher"
 import {
@@ -30,8 +29,10 @@ import { useSessionStore } from "@/state/session"
 
 export type NavItem = {
   title: string
-  url: Route
+  url: Route | string
   icon?: ComponentType
+  iconUrl?: string
+  tooltip?: string
 }
 
 export type NavMainItem = NavItem & {
@@ -50,13 +51,14 @@ type Data = {
     plan: string
   }[]
   navMain: NavMainItem[]
-  projects: NavItem[]
+  apps: NavItem[]
 }
 
 // TODO Add a theme switcher
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { session } = useSessionStore();
   const [formattedTeams, setFormattedTeams] = useState<Data['teams']>([]);
+  const [navItems, setNavItems] = useState<NavMainItem[]>([]);
 
   // Map session teams to the format expected by TeamSwitcher
   useEffect(() => {
@@ -76,75 +78,85 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     }
   }, [session]);
 
+  useEffect(() => {
+    setNavItems([
+      {
+        title: "Dashboard",
+        url: "/dashboard",
+        icon: LayoutDashboard,
+        isActive: true,
+      },
+      {
+        title: "My Applications",
+        url: "/my-apps",
+        icon: AppWindow,
+      },
+      {
+        title: "Contracts",
+        url: "/contracts",
+        icon: FileText,
+      },
+      {
+        title: "Teams",
+        url: "/teams",
+        icon: Users,
+      },
+      {
+        title: "Marketplace",
+        url: "/marketplace",
+        icon: ShoppingCart,
+      },
+      {
+        title: "Billing",
+        url: "/billing",
+        icon: CreditCard,
+      },
+      {
+        title: "Settings",
+        url: "/settings",
+        icon: Settings,
+      },
+      {
+        title: "Applications",
+        url: "/apps",
+        icon: Boxes,
+        items: [],
+      },
+    ]);
+  }, []);
+
+  useEffect(() => {
+    async function fetchApps() {
+      try {
+        const res = await fetch('/api/apps');
+        const allApps: { slug: string; name: string; icon: string | null; description: string | null }[] = await res.json();
+        setNavItems(current =>
+          current.map(item =>
+            item.title === 'Applications'
+              ? { ...item, items: allApps.map(app => ({
+                  title: app.name,
+                  url: `/apps/${app.slug}`,
+                  iconUrl: app.icon ?? undefined,
+                  tooltip: app.description ?? undefined,
+                })) }
+              : item
+          )
+        );
+      } catch (error) {
+        console.error('Failed to fetch apps', error);
+      }
+    }
+    fetchApps();
+  }, []);
+
   const data: Data = {
     user: {
       name: session?.user?.nickname || session?.user?.firstName || "User",
       email: session?.user?.email || "user@example.com",
     },
     teams: formattedTeams,
-    navMain: [
-      {
-        title: "Vezérlőpult",
-        url: "/dashboard",
-        icon: SquareTerminal,
-        isActive: true,
-      },
-      {
-        title: "Csapatok",
-        url: "/dashboard/teams" as Route,
-        icon: Users,
-      },
-      {
-        title: "Piactér",
-        url: "/dashboard/marketplace",
-        icon: ShoppingCart,
-      },
-      {
-        title: "Számlázás",
-        url: "/dashboard/billing",
-        icon: CreditCard,
-      },
-      {
-        title: "Beállítások",
-        url: "/settings",
-        icon: Settings2,
-        items: [
-          {
-            title: "Profil",
-            url: "/settings",
-          },
-          {
-            title: "Biztonság",
-            url: "/settings/security",
-          },
-          {
-            title: "Munkamenetek",
-            url: "/settings/sessions",
-          },
-          {
-            title: "Jelszó módosítása",
-            url: "/forgot-password",
-          },
-        ],
-      },
-    ],
-    projects: [
-      {
-        title: "Design Engineering",
-        url: "#",
-        icon: Frame,
-      },
-      {
-        title: "Sales & Marketing",
-        url: "#",
-        icon: PieChart,
-      },
-      {
-        title: "Travel",
-        url: "#",
-        icon: Map,
-      },
-    ],
+    navMain: navItems,
+    apps: [],
   }
 
   return (
@@ -157,7 +169,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
       <SidebarContent>
         <NavMain items={data.navMain} />
-        <NavProjects projects={data.projects} />
       </SidebarContent>
       <SidebarFooter>
         <NavUser />
