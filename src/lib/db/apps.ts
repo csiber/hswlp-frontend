@@ -1,6 +1,6 @@
 import { getDB, getDBAsync } from '@/db';
 import { appTable } from '@/db/schema';
-import { desc, eq, inArray } from 'drizzle-orm';
+import { desc, eq, inArray, and, not } from 'drizzle-orm';
 import type { App } from '@/db/schema';
 
 export async function getAllApps(): Promise<App[]> {
@@ -38,5 +38,31 @@ export async function getAppBySlug(slug: string): Promise<App | undefined> {
 export async function getAppBySlugAsync(slug: string): Promise<App | undefined> {
   const db = await getDBAsync();
   return db.query.appTable.findFirst({ where: eq(appTable.slug, slug) });
+}
+
+export async function getSimilarApps(
+  category: string,
+  slug: string,
+  limit = 3
+): Promise<App[]> {
+  const db = await getDB();
+  return db.query.appTable.findMany({
+    where: and(eq(appTable.category, category), not(eq(appTable.slug, slug))),
+    orderBy: (apps, { desc }) => [desc(apps.createdAt)],
+    limit,
+  });
+}
+
+export async function getSimilarAppsAsync(
+  category: string,
+  slug: string,
+  limit = 3
+): Promise<App[]> {
+  const db = await getDBAsync();
+  return db.query.appTable.findMany({
+    where: and(eq(appTable.category, category), not(eq(appTable.slug, slug))),
+    orderBy: (apps, { desc }) => [desc(apps.createdAt)],
+    limit,
+  });
 }
 
