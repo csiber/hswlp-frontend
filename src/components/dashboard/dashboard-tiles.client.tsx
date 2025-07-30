@@ -15,7 +15,13 @@ interface DashboardTilesProps {
 }
 
 export function DashboardTiles({ stats }: DashboardTilesProps) {
-  const items = [
+  const items: {
+    icon: string;
+    title: string;
+    description: string;
+    href: string;
+    cta: string;
+  }[] = [
     {
       icon: "🧱",
       title: "Start from a template",
@@ -60,7 +66,8 @@ export function DashboardTiles({ stats }: DashboardTilesProps) {
               </CardHeader>
               <CardFooter>
                 <Button asChild variant="link" className="p-0">
-                  <Link href={item.href}>{item.cta} →</Link>
+                  {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+                  <Link href={item.href as any}>{item.cta} →</Link>
                 </Button>
               </CardFooter>
             </Card>
@@ -108,7 +115,8 @@ export function DashboardTiles({ stats }: DashboardTilesProps) {
           </CardContent>
           <CardFooter>
             <Button asChild variant="link" className="p-0">
-              <Link href="/dashboard/usage">View details →</Link>
+              {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+              <Link href={"/dashboard/usage" as any}>View details →</Link>
             </Button>
           </CardFooter>
         </Card>

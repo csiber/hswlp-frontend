@@ -5,7 +5,7 @@ import { getAppsByCategory, getCategories } from "@/lib/db/apps";
 export const dynamic = "force-dynamic";
 
 interface PageProps {
-  params: { category: string };
+  params: Promise<{ category: string }>;
 }
 
 export async function generateStaticParams() {
@@ -14,15 +14,16 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const category = decodeURIComponent(params.category);
-  const title = `${category} Apps`;
-  return { title };
+  const { category } = await params;
+  const decoded = decodeURIComponent(category);
+  return { title: `${decoded} Apps` };
 }
 
 export default async function CategoryPage({ params }: PageProps) {
-  const category = decodeURIComponent(params.category);
-  const apps = await getAppsByCategory(category);
-  const displayName = category
+  const { category } = await params;
+  const decoded = decodeURIComponent(category);
+  const apps = await getAppsByCategory(decoded);
+  const displayName = decoded
     .split(" ")
     .map(part => part.charAt(0).toUpperCase() + part.slice(1))
     .join(" ");
