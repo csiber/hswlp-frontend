@@ -1,5 +1,6 @@
-const AgenticDevStudioLogo = (props: React.SVGProps<SVGSVGElement>) => (
-<svg
+const HswlpLogo = (props: React.SVGProps<SVGSVGElement>) => {
+  return (
+    <svg
       {...props}
       viewBox="0 0 100 100"
       xmlns="http://www.w3.org/2000/svg"
@@ -8,6 +9,7 @@ const AgenticDevStudioLogo = (props: React.SVGProps<SVGSVGElement>) => (
         🧩
       </text>
     </svg>
-);
+  );
+};
 
-export default AgenticDevStudioLogo;
+export default HswlpLogo;
