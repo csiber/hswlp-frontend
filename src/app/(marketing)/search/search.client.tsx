@@ -3,6 +3,7 @@ import { useMemo, useState } from "react";
 import Fuse from "fuse.js";
 import { SearchInput } from "@/components/search/SearchInput";
 import { SearchResults, SearchResult } from "@/components/search/SearchResults";
+import type { Route } from "next";
 import { AppInfo } from "@/components/app-card";
 
 interface Props {
@@ -22,7 +23,7 @@ export default function SearchClient({ apps, categories, tags }: Props) {
         type: "app" as const,
         name: app.name,
         description: app.description,
-        href: `/apps/${app.slug}`,
+        href: `/apps/${app.slug}` as Route,
         tags: app.category,
       }))
     );
@@ -32,7 +33,7 @@ export default function SearchClient({ apps, categories, tags }: Props) {
         type: "category" as const,
         name: cat.name,
         description: "Category",
-        href: `/apps/category/${cat.id}`,
+        href: `/apps/category/${cat.id}` as Route,
       }))
     );
 
@@ -41,7 +42,7 @@ export default function SearchClient({ apps, categories, tags }: Props) {
         type: "tag" as const,
         name: tag.name,
         description: "Tag",
-        href: `#tag-${tag.id}`,
+        href: `#tag-${tag.id}` as Route,
       }))
     );
 

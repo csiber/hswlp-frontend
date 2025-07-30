@@ -1,6 +1,7 @@
 "use client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
+import type { Route } from "next";
 import { motion } from "framer-motion";
 import { Highlight } from "./Highlight";
 
@@ -10,7 +11,7 @@ export interface SearchResult {
   type: ResultType;
   name: string;
   description?: string;
-  href: string;
+  href: Route;
   tags?: string[];
 }
 
