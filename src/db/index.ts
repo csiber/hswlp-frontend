@@ -21,3 +21,19 @@ export const getDB = () => {
 
   return db;
 };
+
+export const getDBAsync = async () => {
+  if (db) {
+    return db;
+  }
+
+  const { env } = await getCloudflareContext({ async: true });
+
+  if (!env.NEXT_TAG_CACHE_D1) {
+    throw new Error("D1 database not found");
+  }
+
+  db = drizzle(env.NEXT_TAG_CACHE_D1, { schema, logger: true });
+
+  return db;
+};

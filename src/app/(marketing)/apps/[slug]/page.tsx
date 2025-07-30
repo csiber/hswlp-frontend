@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getAppBySlug, getAllApps } from "@/lib/db/apps";
+import { getAppBySlugAsync, getAllAppsAsync } from "@/lib/db/apps";
 import { Button } from "@/components/ui/button";
 import type { App } from "@/db/schema";
 import Link from "next/link";
@@ -10,13 +10,13 @@ interface PageProps {
 }
 
 export async function generateStaticParams() {
-  const apps = await getAllApps();
+  const apps = await getAllAppsAsync();
   return apps.map(app => ({ slug: app.slug }));
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const app = await getAppBySlug(slug);
+  const app = await getAppBySlugAsync(slug);
   return {
     title: app ? `${app.name} – HSWLP` : "App – HSWLP",
     description: app?.description,
@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function AppPage({ params }: PageProps) {
   const { slug } = await params;
-  const app: App | undefined = await getAppBySlug(slug);
+  const app: App | undefined = await getAppBySlugAsync(slug);
   if (!app) return notFound();
   return (
     <div className="pb-12">
