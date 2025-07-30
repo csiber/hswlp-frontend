@@ -35,9 +35,14 @@ export function NavMain({ items }: Props) {
           if (!item.items?.length) {
             return (
               <SidebarMenuItem key={item.title}>
-                <SidebarMenuButton asChild tooltip={item.title}>
+                <SidebarMenuButton asChild tooltip={item.tooltip ?? item.title}>
                   <Link href={item.url as Route}>
-                    {item.icon && <item.icon />}
+                    {item.iconUrl ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img src={item.iconUrl} alt="" className="h-4 w-4 mr-2" />
+                    ) : (
+                      item.icon && <item.icon className="mr-2" />
+                    )}
                     <span>{item.title}</span>
                   </Link>
                 </SidebarMenuButton>
@@ -55,8 +60,13 @@ export function NavMain({ items }: Props) {
             >
               <SidebarMenuItem>
                 <CollapsibleTrigger asChild>
-                  <SidebarMenuButton tooltip={item.title}>
-                    {item.icon && <item.icon />}
+                  <SidebarMenuButton tooltip={item.tooltip ?? item.title}>
+                    {item.iconUrl ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img src={item.iconUrl} alt="" className="h-4 w-4 mr-2" />
+                    ) : (
+                      item.icon && <item.icon className="mr-2" />
+                    )}
                     <span>{item.title}</span>
                     <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
                   </SidebarMenuButton>
@@ -65,13 +75,25 @@ export function NavMain({ items }: Props) {
                   <SidebarMenuSub>
                     {item.items?.map((subItem) => (
                       <SidebarMenuSubItem key={subItem.title}>
-                        <SidebarMenuSubButton asChild>
+                        <SidebarMenuSubButton asChild tooltip={subItem.tooltip ?? subItem.title}>
                           {subItem.url.startsWith("/") ? (
                             <Link href={subItem.url as Route}>
+                              {subItem.iconUrl ? (
+                                // eslint-disable-next-line @next/next/no-img-element
+                                <img src={subItem.iconUrl} alt="" className="h-4 w-4 mr-2" />
+                              ) : (
+                                subItem.icon && <subItem.icon className="mr-2" />
+                              )}
                               <span>{subItem.title}</span>
                             </Link>
                           ) : (
                             <a href={subItem.url}>
+                              {subItem.iconUrl ? (
+                                // eslint-disable-next-line @next/next/no-img-element
+                                <img src={subItem.iconUrl} alt="" className="h-4 w-4 mr-2" />
+                              ) : (
+                                subItem.icon && <subItem.icon className="mr-2" />
+                              )}
                               <span>{subItem.title}</span>
                             </a>
                           )}
