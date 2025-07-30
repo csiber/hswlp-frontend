@@ -309,3 +309,49 @@ export async function sendBugReportEmail({
     });
   }
 }
+
+export async function sendContactEmail({
+  fullName,
+  email,
+  subject,
+  message,
+}: {
+  fullName: string
+  email: string
+  subject?: string
+  message: string
+}) {
+  const html = `
+    <h1>Contact Form Message</h1>
+    <p><strong>Name:</strong> ${fullName}</p>
+    <p><strong>Email:</strong> ${email}</p>
+    ${subject ? `<p><strong>Subject:</strong> ${subject}</p>` : ""}
+    <p>${message.replace(/\n/g, '<br />')}</p>
+  `
+
+  const provider = await getEmailProvider()
+
+  if (!provider && isProd) {
+    throw new Error(
+      "No email provider configured. Set either RESEND_API_KEY or BREVO_API_KEY in your environment."
+    )
+  }
+
+  if (provider === "resend") {
+    await sendResendEmail({
+      to: ["info@hswlp.com"],
+      subject: `Contact form message${subject ? `: ${subject}` : ""}`,
+      html,
+      replyTo: email,
+      tags: [{ name: "type", value: "contact-form" }],
+    })
+  } else {
+    await sendBrevoEmail({
+      to: [{ email: "info@hswlp.com" }],
+      subject: `Contact form message${subject ? `: ${subject}` : ""}`,
+      htmlContent: html,
+      replyTo: email,
+      tags: ["contact-form"],
+    })
+  }
+}
