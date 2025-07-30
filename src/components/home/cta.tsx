@@ -14,10 +14,13 @@ export function CallToAction() {
       className="py-16 sm:py-24 bg-primary text-primary-foreground text-center"
     >
       <p className="text-2xl font-bold mb-6">
-        Csatlakozz a fejlesztői közösséghez – építs, használj, terjeszd!
+        Join our developer community – build, use, share!
       </p>
       <a href={DISCORD_URL} target="_blank" rel="noopener noreferrer">
-        <Button size="lg" className="rounded-full bg-background text-foreground">
+        <Button
+          size="lg"
+          className="rounded-full bg-zinc-900 text-white hover:bg-zinc-800 transition-colors duration-200"
+        >
           Join HSWLP Discord
         </Button>
       </a>
