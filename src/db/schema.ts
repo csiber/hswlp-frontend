@@ -60,6 +60,9 @@ export const userTable = sqliteTable("user", {
   lastCreditRefreshAt: integer({
     mode: "timestamp",
   }),
+  // Usage stats
+  activeAppCount: integer().default(0).notNull(),
+  storageUsage: integer().default(0).notNull(),
 }, (table) => ([
   index('email_idx').on(table.email),
   index('google_account_id_idx').on(table.googleAccountId),
