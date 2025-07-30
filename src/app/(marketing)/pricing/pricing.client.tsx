@@ -110,7 +110,7 @@ export default function PricingClient() {
         </ul>
         <div className="text-center">
           <Button asChild>
-            <Link href="/dashboard/credits">Buy credits</Link>
+            <Link href="/dashboard/billing">Buy credits</Link>
           </Button>
         </div>
       </motion.section>
