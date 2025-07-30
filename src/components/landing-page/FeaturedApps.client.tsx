@@ -32,51 +32,38 @@ export default function FeaturedAppsClient({ apps }: Props) {
           Featured apps
         </h2>
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          {featured.map(app => (
-            <motion.div
-              key={app.slug}
-              whileHover={{ scale: 1.03 }}
-              className="rounded-2xl border shadow-xl overflow-hidden flex flex-col bg-background"
-            >
-              {(() => {
-                const media = (app as unknown as { media?: string[] }).media;
-                if (media && media.length > 0) {
-                  return (
-                    <Image
-                      src={media[0]}
-                      alt={`${app.name} screenshot`}
-                      width={800}
-                      height={450}
-                      className="h-48 w-full object-cover"
-                    />
-                  );
-                }
-                if (app.icon) {
-                  return (
-                    <Image
-                      src={app.icon}
-                      alt={`${app.name} icon`}
-                      width={800}
-                      height={450}
-                      className="h-48 w-full object-cover"
-                    />
-                  );
-                }
-                return null;
-              })()}
-              <div className="p-6 flex flex-col gap-4 flex-1">
-                <div>
-                  <h3 className="text-xl font-semibold">{app.name}</h3>
-                  <p className="text-sm text-muted-foreground">
-                    {app.description}
-                  </p>
+          {featured.map(app => {
+            // Optional screenshots may be defined later
+            const screenshot = (app as unknown as { media?: string[] }).media?.[0]
+            return (
+              <motion.div
+                key={app.slug}
+                whileHover={{ scale: 1.03 }}
+                className="rounded-2xl border shadow-xl overflow-hidden flex flex-col bg-background"
+              >
+                {screenshot && (
+                  <Image
+                    src={screenshot}
+                    alt={`${app.name} screenshot`}
+                    width={800}
+                    height={450}
+                    className="h-48 w-full object-cover"
+                  />
+                )}
+                <div className="p-6 flex flex-col gap-4 flex-1">
+                  <div>
+                    <h3 className="text-xl font-semibold">{app.name}</h3>
+                    <p className="text-sm text-muted-foreground">
+                      {app.description}
+                    </p>
+                  </div>
+                  <Link href={`/apps/${app.slug}` as Route} className="mt-auto">
+                    <Button className="w-full rounded-full">View</Button>
+                  </Link>
                 </div>
-                <Link href={`/apps/${app.slug}` as Route} className="mt-auto">
-                  <Button className="w-full rounded-full">View</Button>
-                </Link>
-              </div>
-            </motion.div>
-          ))}
+              </motion.div>
+            )
+          })}
         </div>
       </div>
     </section>
