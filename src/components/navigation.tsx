@@ -3,7 +3,8 @@
 import Link from "next/link"
 import type { Route } from 'next'
 import { usePathname } from "next/navigation"
-import { ComponentIcon, Menu } from 'lucide-react'
+import { Menu } from 'lucide-react'
+import HswlpLogo from '@/components/hswlp-logo'
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { useSessionStore } from "@/state/session"
@@ -31,22 +32,26 @@ const ActionButtons = () => {
 
   return (
     <Button asChild onClick={() => setIsOpen(false)}>
-      <Link href="/sign-in">Bejelentkezés</Link>
+      <Link href="/sign-in">Sign In</Link>
     </Button>
   )
 }
 
 export function Navigation() {
-  const { session, isLoading } = useSessionStore()
+  const { isLoading } = useSessionStore()
   const { isOpen, setIsOpen } = useNavStore()
   const pathname = usePathname()
 
   const navItems: NavItem[] = [
-    { name: "Főoldal", href: "/" },
-    ...(session ? [
-      { name: "Beállítások", href: "/settings" },
-      { name: "Vezérlőpult", href: "/dashboard" },
-    ] as NavItem[] : []),
+    { name: "Home", href: "/" },
+    { name: "Apps", href: "/apps" },
+    { name: "Categories", href: "/categories" },
+    { name: "Search", href: "/search" },
+    { name: "Docs", href: "/docs" },
+    { name: "About", href: "/about" },
+    { name: "Pricing", href: "/pricing" },
+    { name: "Changelog", href: "/changelog" },
+    { name: "Contact", href: "/contact" },
   ]
 
   const isActiveLink = (itemHref: string) => {
@@ -62,7 +67,7 @@ export function Navigation() {
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
             <Link href="/" className="text-xl md:text-2xl font-bold text-primary flex items-center gap-2 md:gap-3">
-              <ComponentIcon className="w-6 h-6 md:w-7 md:h-7" />
+              <HswlpLogo className="w-6 h-6 md:w-7 md:h-7" />
               {SITE_NAME}
             </Link>
           </div>
@@ -96,7 +101,7 @@ export function Navigation() {
               <SheetTrigger asChild>
                 <Button variant="ghost" size="icon" className="p-6">
                   <Menu className="w-9 h-9" />
-                  <span className="sr-only">Menü megnyitása</span>
+                  <span className="sr-only">Open menu</span>
                 </Button>
               </SheetTrigger>
               <SheetContent side="right" className="w-[240px] sm:w-[300px]">
