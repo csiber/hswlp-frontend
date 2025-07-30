@@ -1,8 +1,7 @@
 "use client";
 
 import { AppCard } from "@/components/apps/AppCard";
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-import { categoryMap } from "@/components/app-card";
+import CategoryFilter from "@/components/apps/CategoryFilter";
 import type { App } from "@/db/schema";
 import { motion } from "framer-motion";
 import { Sparkles } from "lucide-react";
@@ -11,27 +10,24 @@ import { useMemo, useState } from "react";
 export default function AppsClient({ apps }: { apps: App[] }) {
   const [category, setCategory] = useState<string>("all");
 
+  const categories = useMemo(() => {
+    return Array.from(new Set(apps.map(a => a.category))).sort();
+  }, [apps]);
+
   const filteredApps = useMemo(() => {
     return apps.filter(app => {
-      return category === "all" || app.type === category;
+      return category === "all" || app.category === category;
     });
   }, [apps, category]);
 
   return (
     <div className="p-4 space-y-4">
       <div className="flex flex-wrap gap-4">
-        <ToggleGroup
-          type="single"
+        <CategoryFilter
+          categories={categories}
           value={category}
-          onValueChange={val => setCategory(val || "all")}
-          className="flex gap-2"
-        >
-          {Object.entries(categoryMap).map(([id, info]) => (
-            <ToggleGroupItem key={id} value={id} className="capitalize">
-              {info.icon} {info.label}
-            </ToggleGroupItem>
-          ))}
-        </ToggleGroup>
+          onChange={setCategory}
+        />
       </div>
 
       <motion.div
