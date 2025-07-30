@@ -125,7 +125,7 @@ export default function PricingClient() {
         <h2 className="text-3xl font-bold">Start building today</h2>
         <div className="flex justify-center gap-4">
           <Button asChild>
-            <Link href="/register">Create account</Link>
+            <Link href="/sign-up">Create account</Link>
           </Button>
           <Button variant="outline" asChild>
             <Link href="/apps">Explore apps</Link>
