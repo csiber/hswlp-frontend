@@ -103,3 +103,12 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Hide scrollbars for dialog content */
+.dialog-content::-webkit-scrollbar {
+  display: none;
+}
+.dialog-content {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
