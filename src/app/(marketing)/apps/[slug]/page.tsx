@@ -30,7 +30,8 @@ export default async function AppPage({ params }: PageProps) {
   const { slug } = await params;
   const app: App | undefined = await getAppBySlugAsync(slug);
   if (!app) return notFound();
-  const similarApps =
-    app.category ? await getSimilarAppsAsync(app.category, slug) : [];
-  return <AppDetailPage app={app} similarApps={similarApps} />;
+  if (app.category) {
+    await getSimilarAppsAsync(app.category, slug)
+  }
+  return <AppDetailPage />;
 }
