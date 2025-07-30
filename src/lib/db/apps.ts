@@ -4,7 +4,7 @@ import { desc, eq, inArray } from 'drizzle-orm';
 import type { App } from '@/db/schema';
 
 export async function getAllApps(): Promise<App[]> {
-  const db = getDB();
+  const db = await getDB();
   return db
     .select()
     .from(appTable)
@@ -13,7 +13,7 @@ export async function getAllApps(): Promise<App[]> {
 }
 
 export async function getAppsByType(type: string): Promise<App[]> {
-  const db = getDB();
+  const db = await getDB();
   return db
     .select()
     .from(appTable)
@@ -22,7 +22,7 @@ export async function getAppsByType(type: string): Promise<App[]> {
 }
 
 export async function getAppBySlug(slug: string): Promise<App | undefined> {
-  const db = getDB();
+  const db = await getDB();
   return db.query.appTable.findFirst({ where: eq(appTable.slug, slug) });
 }
 

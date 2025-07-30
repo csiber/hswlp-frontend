@@ -6,7 +6,7 @@ import type { App } from "@/db/schema";
 import Link from "next/link";
 
 interface PageProps {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }
 
 export async function generateStaticParams() {
@@ -15,7 +15,8 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const app = await getAppBySlug(params.slug);
+  const { slug } = await params;
+  const app = await getAppBySlug(slug);
   return {
     title: app ? `${app.name} – HSWLP` : "App – HSWLP",
     description: app?.description,
@@ -23,7 +24,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function AppPage({ params }: PageProps) {
-  const app: App | undefined = await getAppBySlug(params.slug);
+  const { slug } = await params;
+  const app: App | undefined = await getAppBySlug(slug);
   if (!app) return notFound();
   return (
     <div className="pb-12">
