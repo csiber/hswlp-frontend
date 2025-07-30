@@ -3,7 +3,7 @@ import type { Route } from "next"
 export const SITE_NAME = "HSWLP.com"
 export const SITE_DESCRIPTION =
   "- Hybrid Service Workflow Launch Platform"
-export const SITE_URL = process.env.NODE_ENV === "development" ? "http://localhost:3000" : "https://hswlp.promnet.workers.dev/"
+export const SITE_URL = process.env.NODE_ENV === "development" ? "http://localhost:3000" : "https://hswlp-frontend.promnet.workers.dev/"
 export const GITHUB_REPO_URL = "https://github.com/csiber/hswlp-next"
 
 export const SITE_DOMAIN = new URL(SITE_URL).hostname
