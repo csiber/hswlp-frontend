@@ -66,3 +66,21 @@ export async function getSimilarAppsAsync(
   });
 }
 
+export async function getFeaturedApps(limit = 4): Promise<App[]> {
+  const db = await getDB();
+  return db.query.appTable.findMany({
+    where: eq(appTable.featured, 1),
+    orderBy: (apps, { desc }) => [desc(apps.createdAt)],
+    limit,
+  });
+}
+
+export async function getFeaturedAppsAsync(limit = 4): Promise<App[]> {
+  const db = await getDBAsync();
+  return db.query.appTable.findMany({
+    where: eq(appTable.featured, 1),
+    orderBy: (apps, { desc }) => [desc(apps.createdAt)],
+    limit,
+  });
+}
+
