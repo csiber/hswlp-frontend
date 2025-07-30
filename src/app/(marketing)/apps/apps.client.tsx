@@ -1,12 +1,14 @@
 "use client";
 
-import { AppCard, AppInfo } from "@/components/app-card";
+import { AppCard } from "@/components/apps/AppCard";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { categoryMap } from "@/components/app-card";
+import type { App } from "@/db/schema";
 import { motion } from "framer-motion";
+import { Sparkles } from "lucide-react";
 import { useMemo, useState } from "react";
 
-export default function AppsClient({ apps }: { apps: AppInfo[] }) {
+export default function AppsClient({ apps }: { apps: App[] }) {
   const [category, setCategory] = useState<string>("all");
 
   const filteredApps = useMemo(() => {
@@ -39,11 +41,12 @@ export default function AppsClient({ apps }: { apps: AppInfo[] }) {
         className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
       >
         {filteredApps.length === 0 ? (
-          <p className="col-span-full text-center text-muted-foreground">
+          <p className="col-span-full flex flex-col items-center gap-2 text-center text-muted-foreground">
+            <Sparkles className="h-5 w-5" />
             No apps found.
           </p>
         ) : (
-          filteredApps.map(app => <AppCard key={app.slug} app={app} />)
+          filteredApps.map(app => <AppCard key={app.id} app={app} />)
         )}
       </motion.div>
     </div>
