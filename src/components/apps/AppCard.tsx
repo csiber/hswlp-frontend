@@ -39,7 +39,7 @@ export function AppCard({ app }: { app: App }) {
               type="button"
               onClick={e => {
                 e.stopPropagation();
-                window.open(app.url, "_blank", "noopener,noreferrer");
+                window.open(app.url ?? undefined, "_blank", "noopener,noreferrer");
               }}
               className="text-sm underline"
             >
