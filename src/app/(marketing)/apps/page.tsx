@@ -3,6 +3,8 @@ import AppsClient from "./apps.client";
 import { getAllApps } from "@/lib/db/apps";
 import type { App } from "@/db/schema";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "Apps – HSWLP",
   description:
