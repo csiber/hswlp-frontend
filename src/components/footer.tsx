@@ -1,7 +1,7 @@
 import Link from "next/link";
 import ThemeSwitch from "@/components/theme-switch";
 import { SITE_NAME } from "@/constants";
-import HswlpLogo from "./hswlp-logo";
+import HswlpLogo from "@/components/hswlp-logo";
 
 // Footer component
 export function Footer() {
