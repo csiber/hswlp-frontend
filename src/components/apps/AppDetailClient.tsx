@@ -4,6 +4,12 @@ import { useMemo } from 'react'
 import { motion } from 'framer-motion'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip'
 import { MotionSection } from '@/components/ui/MotionSection'
 import type { App } from '@/db/schema'
 import * as Icons from 'lucide-react'
@@ -62,13 +68,29 @@ export default function AppDetailClient({ app }: Props) {
         />
       )}
 
-      {app.url && (
+      {app.url && app.status === 1 ? (
         <Button asChild className="mt-4 transition-transform active:scale-95 hover:scale-100">
           <a href={app.url} target="_blank" rel="noopener noreferrer">
             Visit app
           </a>
         </Button>
-      )}
+      ) : app.url ? (
+        <TooltipProvider delayDuration={300}>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <div>
+                <Button
+                  disabled
+                  className="mt-4 cursor-not-allowed opacity-50"
+                >
+                  Visit app
+                </Button>
+              </div>
+            </TooltipTrigger>
+            <TooltipContent side="top">Under development</TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      ) : null}
     </MotionSection>
   )
 }

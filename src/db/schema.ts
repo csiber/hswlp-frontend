@@ -130,6 +130,7 @@ export const appTable = sqliteTable('app', {
   category: text({ length: 100 }),
   type: text({ enum: appTypeTuple }).notNull(),
   featured: integer().default(0).notNull(),
+  status: integer().default(1).notNull(),
 }, (table) => ([
   index('app_slug_idx').on(table.slug),
 ]));
