@@ -8,6 +8,12 @@ import type { LucideIcon } from "lucide-react";
 import Link from "next/link";
 import type { Route } from "next";
 import { cn } from "@/lib/utils";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import type { App } from "@/db/schema";
 
 export function AppCard({ app }: { app: App }) {
@@ -34,7 +40,7 @@ export function AppCard({ app }: { app: App }) {
           <Badge variant="outline" className="capitalize">
             {app.category}
           </Badge>
-          {app.url && (
+          {app.url && app.status === 1 ? (
             <button
               type="button"
               onClick={e => {
@@ -45,7 +51,24 @@ export function AppCard({ app }: { app: App }) {
             >
               Visit
             </button>
-          )}
+          ) : app.url ? (
+            <TooltipProvider delayDuration={300}>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <div>
+                    <button
+                      type="button"
+                      disabled
+                      className="text-sm underline cursor-not-allowed opacity-50 text-muted-foreground"
+                    >
+                      Visit
+                    </button>
+                  </div>
+                </TooltipTrigger>
+                <TooltipContent side="top">Under development</TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          ) : null}
         </CardContent>
         </Card>
       </motion.div>
