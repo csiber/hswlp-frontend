@@ -15,12 +15,12 @@ export function Footer() {
               <h3 className="text-sm font-semibold text-foreground text-center md:text-left">Legal</h3>
               <ul className="space-y-2 flex flex-col items-center md:items-start">
                 <li>
-                  <Link href="/legal/terms" className="text-sm text-muted-foreground hover:text-foreground text-center md:text-left">
+                  <Link href="/terms" className="text-sm text-muted-foreground hover:text-foreground text-center md:text-left">
                     Terms of Service
                   </Link>
                 </li>
                 <li>
-                  <Link href="/legal/privacy" className="text-sm text-muted-foreground hover:text-foreground text-center md:text-left">
+                  <Link href="/privacy" className="text-sm text-muted-foreground hover:text-foreground text-center md:text-left">
                     Privacy Policy
                   </Link>
                 </li>
