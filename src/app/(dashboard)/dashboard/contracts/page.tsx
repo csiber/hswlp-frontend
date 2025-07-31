@@ -1,21 +1,18 @@
 import { PageHeader } from "@/components/page-header";
-import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardFooter,
+} from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { format } from "date-fns";
-
-interface Contract {
-  title: string;
-  status: "active" | "completed" | "pending";
-  createdAt: string;
-}
-
-const contracts: Contract[] = [
-  { title: "Webstudio full package", status: "active", createdAt: "2024-04-01" },
-  { title: "Landing + Builder", status: "completed", createdAt: "2024-02-15" },
-  { title: "DevShell Mini", status: "pending", createdAt: "2024-05-20" },
-];
+import { getSessionFromCookie } from "@/utils/auth";
+import { redirect } from "next/navigation";
+import { getContractsByUser, type Contract } from "@/db/contract";
 
 function statusBadge(status: Contract["status"]) {
   switch (status) {
@@ -32,7 +29,12 @@ function statusBadge(status: Contract["status"]) {
   }
 }
 
-export default function ContractsPage() {
+export default async function ContractsPage() {
+  const session = await getSessionFromCookie();
+  if (!session) {
+    redirect("/auth/login");
+  }
+  const contracts = await getContractsByUser(session.user.id);
   return (
     <>
       <PageHeader
@@ -43,14 +45,18 @@ export default function ContractsPage() {
       />
       <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
         {contracts.length === 0 ? (
-          <p className="text-center text-muted-foreground">You have no contracts yet.</p>
+          <p className="text-center text-muted-foreground">
+            You have no contracts yet.
+          </p>
         ) : (
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {contracts.map((contract) => (
               <Card key={contract.title} className="flex flex-col">
                 <CardHeader>
                   <div className="flex items-center justify-between">
-                    <CardTitle className="text-base">{contract.title}</CardTitle>
+                    <CardTitle className="text-base">
+                      {contract.title}
+                    </CardTitle>
                     {statusBadge(contract.status)}
                   </div>
                 </CardHeader>
