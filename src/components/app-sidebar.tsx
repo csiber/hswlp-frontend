@@ -5,7 +5,6 @@ import type { Route } from 'next'
 
 import {
   Rocket,
-  Building2,
   AppWindow,
   Boxes,
   FileText,
@@ -13,17 +12,14 @@ import {
   Settings,
   ShoppingCart,
   CreditCard,
-  Users,
 } from "lucide-react"
 
 import { NavMain } from "@/components/nav-main"
 import { NavUser } from "@/components/nav-user"
-import { TeamSwitcher } from "@/components/team-switcher"
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
-  SidebarHeader,
   SidebarRail,
 } from "@/components/ui/sidebar"
 import { useSessionStore } from "@/state/session"
@@ -46,11 +42,6 @@ type Data = {
     name: string
     email: string
   }
-  teams: {
-    name: string
-    logo: ComponentType
-    plan: string
-  }[]
   navMain: NavMainItem[]
   apps: NavItem[]
 }
@@ -58,26 +49,7 @@ type Data = {
 // TODO Add a theme switcher
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { session } = useSessionStore();
-  const [formattedTeams, setFormattedTeams] = useState<Data['teams']>([]);
   const [navItems, setNavItems] = useState<NavMainItem[]>([]);
-
-  // Map session teams to the format expected by TeamSwitcher
-  useEffect(() => {
-    if (session?.teams && session.teams.length > 0) {
-      // Map teams from session to the format expected by TeamSwitcher
-      const teamData = session.teams.map(team => {
-        return {
-          name: team.name,
-          // TODO Get the actual logo when we implement team avatars
-          logo: Building2,
-          // Default plan - you might want to add plan data to your team structure
-          plan: team.role.name || "Member"
-        };
-      });
-
-      setFormattedTeams(teamData);
-    }
-  }, [session]);
 
   useEffect(() => {
     setNavItems([
@@ -102,11 +74,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         title: "Contracts",
         url: "/contracts",
         icon: FileText,
-      },
-      {
-        title: "Teams",
-        url: "/teams",
-        icon: Users,
       },
       {
         title: "Marketplace",
@@ -161,19 +128,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       name: session?.user?.nickname || session?.user?.firstName || "User",
       email: session?.user?.email || "user@example.com",
     },
-    teams: formattedTeams,
     navMain: navItems,
     apps: [],
   }
 
   return (
     <Sidebar collapsible="icon" {...props}>
-      {data?.teams?.length > 0 && (
-        <SidebarHeader>
-          <TeamSwitcher teams={data.teams} />
-        </SidebarHeader>
-      )}
-
       <SidebarContent>
         <NavMain items={data.navMain} />
       </SidebarContent>

@@ -1,5 +1,4 @@
-import { Boxes } from "lucide-react"
-import { TeamSwitcher } from "@/components/team-switcher"
+
 import ThemeSwitch from "@/components/theme-switch"
 import SeparatorWithText from "@/components/separator-with-text"
 import { NavUser } from "@/components/nav-user"
@@ -15,40 +14,8 @@ interface MarketplaceComponent {
   preview: () => React.ReactNode
 }
 
-interface Team {
-  name: string
-  iconName: string
-  plan: string
-}
-
-const demoTeams: Team[] = [
-  {
-    name: "Acme Inc",
-    iconName: "boxes",
-    plan: "Pro Plan",
-  },
-  {
-    name: "Monsters Inc",
-    iconName: "boxes",
-    plan: "Free Plan",
-  },
-]
 
 export const COMPONENTS: MarketplaceComponent[] = [
-  {
-    id: "team-switcher",
-    name: "Team Switcher",
-    description: "A sleek dropdown menu for switching between teams with custom logos and plans",
-    credits: 4,
-    containerClass: "w-[300px]",
-    preview: () => {
-      const teams = demoTeams.map(team => ({
-        ...team,
-        logo: Boxes,
-      }))
-      return <TeamSwitcher teams={teams} />
-    },
-  },
   {
     id: "theme-switch",
     name: "Theme Switch",
