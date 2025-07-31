@@ -3,8 +3,11 @@ import { SessionsClient } from "./sessions.client";
 import { Skeleton } from "@/components/ui/skeleton";
 import { getSessionsAction } from "./sessions.actions";
 import { redirect } from "next/navigation";
+import type { Metadata } from "next";
+import { BASE_METADATA } from "@/lib/base-metadata";
 
-export const metadata = {
+export const metadata: Metadata = {
+  ...BASE_METADATA,
   title: "Sessions",
   description: "Manage your active sessions",
 };

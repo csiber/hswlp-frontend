@@ -1,9 +1,11 @@
 import { Metadata } from "next";
+import { BASE_METADATA } from "@/lib/base-metadata";
 import { getSessionFromCookie } from "@/utils/auth";
 import { redirect } from "next/navigation";
 import TeamInviteClientComponent from "./team-invite.client";
 
 export const metadata: Metadata = {
+  ...BASE_METADATA,
   title: "Accept Team Invitation",
   description: "Accept an invitation to join a team",
 };

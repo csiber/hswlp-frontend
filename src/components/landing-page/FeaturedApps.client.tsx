@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
+import { ArrowUpRight } from "lucide-react";
 import type { App } from "@/db/schema";
 import type { Route } from "next";
 
@@ -58,7 +59,9 @@ export default function FeaturedAppsClient({ apps }: Props) {
                     </p>
                   </div>
                   <Link href={`/apps/${app.slug}` as Route} className="mt-auto">
-                    <Button className="w-full rounded-full">View</Button>
+                    <Button className="w-full rounded-full transition-transform hover:scale-105">
+                      View <ArrowUpRight className="h-4 w-4" />
+                    </Button>
                   </Link>
                 </div>
               </motion.div>

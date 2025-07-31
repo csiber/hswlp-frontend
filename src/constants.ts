@@ -1,8 +1,8 @@
 import type { Route } from "next"
 
-export const SITE_NAME = "HSWLP.com"
+export const SITE_NAME = "HSWLP \u2013 Your ideas. Our infrastructure."
 export const SITE_DESCRIPTION =
-  "- Hybrid Service Workflow Launch Platform"
+  "Launchpad for tools, games, blogs, VR and more. Modular, scalable, credit-powered."
 export const SITE_URL = process.env.NODE_ENV === "development" ? "http://localhost:3000" : "https://hswlp-frontend.promnet.workers.dev/"
 export const GITHUB_REPO_URL = "https://github.com/csiber/hswlp-next"
 

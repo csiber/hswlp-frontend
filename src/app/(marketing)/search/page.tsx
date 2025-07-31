@@ -1,10 +1,12 @@
 import { Metadata } from "next";
+import { BASE_METADATA } from "@/lib/base-metadata";
 import SearchClient from "./search.client";
 import { getAllApps, getCategories } from "@/lib/db/apps";
 import type { App } from "@/db/schema";
 
 
 export const metadata: Metadata = {
+  ...BASE_METADATA,
   title: "Search",
 };
 

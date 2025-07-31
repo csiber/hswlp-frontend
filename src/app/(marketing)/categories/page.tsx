@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { BASE_METADATA } from "@/lib/base-metadata";
 import Link from "next/link";
 import type { Route } from "next";
 import { getCategories } from "@/lib/db/apps";
@@ -6,6 +7,7 @@ import { getCategories } from "@/lib/db/apps";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
+  ...BASE_METADATA,
   title: "Categories",
 };
 

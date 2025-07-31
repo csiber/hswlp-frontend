@@ -15,12 +15,12 @@ export function Footer() {
               <h3 className="text-sm font-semibold text-foreground text-center md:text-left">Legal</h3>
               <ul className="space-y-2 flex flex-col items-center md:items-start">
                 <li>
-                  <Link href="/terms" className="text-sm text-muted-foreground hover:text-foreground text-center md:text-left">
+                  <Link href="/legal/terms" className="text-sm text-muted-foreground hover:text-foreground text-center md:text-left">
                     Terms of Service
                   </Link>
                 </li>
                 <li>
-                  <Link href="/privacy" className="text-sm text-muted-foreground hover:text-foreground text-center md:text-left">
+                  <Link href="/legal/privacy" className="text-sm text-muted-foreground hover:text-foreground text-center md:text-left">
                     Privacy Policy
                   </Link>
                 </li>
@@ -56,7 +56,7 @@ export function Footer() {
           <div className="mt-6 pt-6 md:mt-8 md:pt-8 border-t">
             <div className="flex flex-col items-center gap-6 md:flex-row md:justify-between md:gap-4">
               <p className="text-sm text-muted-foreground text-center md:text-left">
-                © {new Date().getFullYear()} {SITE_NAME}. All rights reserved.
+                © 2025 {SITE_NAME}. All rights reserved.
               </p>
               <div className="flex flex-col md:flex-row items-center gap-4">
                 <div className="flex items-center gap-4">

@@ -2,12 +2,14 @@ import { PageHeader } from "@/components/page-header";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import type { Route } from "next";
+import type { Route, Metadata } from "next";
 import { getSessionFromCookie } from "@/utils/auth";
 import { redirect } from "next/navigation";
 import type { App } from "@/db/schema";
+import { BASE_METADATA } from "@/lib/base-metadata";
 
-export const metadata = {
+export const metadata: Metadata = {
+  ...BASE_METADATA,
   title: "My Applications",
 };
 
