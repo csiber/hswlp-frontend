@@ -10,8 +10,6 @@ import {
   FileText,
   LayoutDashboard,
   Settings,
-  ShoppingCart,
-  CreditCard,
 } from "lucide-react"
 
 import { NavMain } from "@/components/nav-main"

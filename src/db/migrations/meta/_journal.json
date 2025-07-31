@@ -85,6 +85,13 @@
       "when": 1753807579311,
       "tag": "0011_add_apps_table",
       "breakpoints": true
+    },
+    {
+      "idx": 12,
+      "version": "6",
+      "when": 1753980124246,
+      "tag": "0015_add_user_apps_table",
+      "breakpoints": true
     }
   ]
 }
