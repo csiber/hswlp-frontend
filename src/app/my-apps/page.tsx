@@ -32,7 +32,7 @@ export default async function MyAppsPage() {
               </CardHeader>
               <CardContent className="flex justify-center pb-8">
                 <Button asChild>
-                  <Link href={"/templates" as Route}>Browse templates</Link>
+                  <Link href={"/dashboard/templates" as Route}>Browse templates</Link>
                 </Button>
               </CardContent>
             </Card>
@@ -42,7 +42,7 @@ export default async function MyAppsPage() {
               </CardHeader>
               <CardContent className="flex justify-center pb-8">
                 <Button asChild>
-                  <Link href={"/start" as Route}>Request now</Link>
+                  <Link href={"/dashboard/start" as Route}>Request now</Link>
                 </Button>
               </CardContent>
             </Card>

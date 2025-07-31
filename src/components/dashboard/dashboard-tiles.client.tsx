@@ -26,14 +26,14 @@ export function DashboardTiles({ stats }: DashboardTilesProps) {
       icon: "🧱",
       title: "Start from a template",
       description: "Build your own website in minutes with our template builder.",
-      href: "/templates",
+      href: "/dashboard/templates",
       cta: "Explore templates",
     },
     {
       icon: "📝",
       title: "Custom project request",
       description: "Need something more specific? Let us build it for you.",
-      href: "/start",
+      href: "/dashboard/start",
       cta: "Request a quote",
     },
     {
