@@ -1,6 +1,9 @@
 import { Metadata } from "next";
 import { AppCard } from "@/components/apps/AppCard";
-import { getAppsByCategory, getCategories } from "@/lib/db/apps";
+import {
+  getAppsByCategoryAsync,
+  getCategoriesAsync,
+} from "@/lib/db/apps";
 
 export const dynamic = "force-dynamic";
 
@@ -9,7 +12,7 @@ interface PageProps {
 }
 
 export async function generateStaticParams() {
-  const categories = await getCategories();
+  const categories = await getCategoriesAsync();
   return categories.map(c => ({ category: c }));
 }
 
@@ -22,7 +25,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function CategoryPage({ params }: PageProps) {
   const { category } = await params;
   const decoded = decodeURIComponent(category);
-  const apps = await getAppsByCategory(decoded);
+  const apps = await getAppsByCategoryAsync(decoded);
   const displayName = decoded
     .split(" ")
     .map(part => part.charAt(0).toUpperCase() + part.slice(1))

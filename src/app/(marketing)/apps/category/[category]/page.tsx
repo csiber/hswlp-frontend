@@ -2,8 +2,8 @@ import { Metadata } from "next";
 import { AppCard } from "@/components/apps/AppCard";
 import { notFound } from "next/navigation";
 import {
-  getAppsByCategory,
-  getCategories,
+  getAppsByCategoryAsync,
+  getCategoriesAsync,
 } from "@/lib/db/apps";
 import type { App } from "@/db/schema";
 
@@ -12,7 +12,7 @@ interface PageProps {
 }
 
 export async function generateStaticParams() {
-  const categories = await getCategories();
+  const categories = await getCategoriesAsync();
   return categories.map(c => ({ category: c }));
 }
 
@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function CategoryPage({ params }: PageProps) {
   const { category } = await params;
-  const apps: App[] = await getAppsByCategory(category);
+  const apps: App[] = await getAppsByCategoryAsync(category);
   if (apps.length === 0) return notFound();
   return (
     <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 p-4">
