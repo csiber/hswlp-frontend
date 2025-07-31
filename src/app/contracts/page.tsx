@@ -13,7 +13,7 @@ export default async function ContractsPage() {
   if (!session) {
     redirect("/auth/login");
   }
-  const contracts: any[] = [];
+  const contracts: Record<string, unknown>[] = [];
 
   return (
     <>
