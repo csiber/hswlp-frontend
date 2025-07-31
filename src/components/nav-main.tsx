@@ -1,6 +1,7 @@
 "use client";
 
 import { ChevronRight } from "lucide-react";
+import React from "react";
 
 import {
   Collapsible,
@@ -41,7 +42,7 @@ export function NavMain({ items }: Props) {
                       // eslint-disable-next-line @next/next/no-img-element
                       <img src={item.iconUrl} alt="" className="h-4 w-4 mr-2" />
                     ) : (
-                      item.icon && <item.icon className="mr-2" />
+                      item.icon && React.createElement(item.icon as React.ElementType, { className: "mr-2" })
                     )}
                     <span>{item.title}</span>
                   </Link>
@@ -65,7 +66,7 @@ export function NavMain({ items }: Props) {
                       // eslint-disable-next-line @next/next/no-img-element
                       <img src={item.iconUrl} alt="" className="h-4 w-4 mr-2" />
                     ) : (
-                      item.icon && <item.icon className="mr-2" />
+                      item.icon && React.createElement(item.icon as React.ElementType, { className: "mr-2" })
                     )}
                     <span>{item.title}</span>
                     <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />

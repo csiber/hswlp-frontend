@@ -2,15 +2,16 @@ import {
   stripeGet,
   StripePaymentIntentWithCharges,
 } from "@/utils/stripe-api";
-import { NextResponse } from "next/server";
-import type { AppRouteHandlerFnContext } from "next/dist/server/route-modules/app-route/module";
+import { NextRequest, NextResponse } from "next/server";
+
 
 export async function GET(
-  _request: Request,
-  context: AppRouteHandlerFnContext
+  _request: NextRequest,
+  context: unknown
 ) {
-  const params = await context.params;
-  const paymentIntentId = params?.paymentIntentId;
+  const { params } = context as { params?: Promise<Record<string, string | string[] | undefined>> };
+  const resolvedParams = await params;
+  const paymentIntentId = resolvedParams?.paymentIntentId;
   if (!paymentIntentId) {
     return new NextResponse(null, { status: 400 });
   }

@@ -2,6 +2,7 @@ import { PageHeader } from "@/components/page-header";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import type { Route } from "next";
 import { getSessionFromCookie } from "@/utils/auth";
 import { redirect } from "next/navigation";
 import type { App } from "@/db/schema";
@@ -29,7 +30,7 @@ export default async function MyAppsPage() {
               </CardHeader>
               <CardContent className="flex justify-center pb-8">
                 <Button asChild>
-                  <Link href="/templates">Browse templates</Link>
+                  <Link href={"/templates" as Route}>Browse templates</Link>
                 </Button>
               </CardContent>
             </Card>
@@ -39,7 +40,7 @@ export default async function MyAppsPage() {
               </CardHeader>
               <CardContent className="flex justify-center pb-8">
                 <Button asChild>
-                  <Link href="/start">Request now</Link>
+                  <Link href={"/start" as Route}>Request now</Link>
                 </Button>
               </CardContent>
             </Card>

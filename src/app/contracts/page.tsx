@@ -1,6 +1,7 @@
 import { PageHeader } from "@/components/page-header";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import type { Route } from "next";
 import { getSessionFromCookie } from "@/utils/auth";
 import { redirect } from "next/navigation";
 
@@ -23,7 +24,7 @@ export default async function ContractsPage() {
           <div className="text-center space-y-4">
             <p>You have not started any project requests yet.</p>
             <Button asChild>
-              <Link href="/start">Start now</Link>
+              <Link href={"/start" as Route}>Start now</Link>
             </Button>
           </div>
         ) : (

@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
+import type { Route } from 'next'
 import { CheckIcon, XIcon } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
@@ -110,7 +111,7 @@ export default function PricingClient() {
         </ul>
         <div className="text-center">
           <Button asChild>
-            <Link href="/dashboard/billing">Buy credits</Link>
+            <Link href={"/dashboard/billing" as Route}>Buy credits</Link>
           </Button>
         </div>
       </motion.section>

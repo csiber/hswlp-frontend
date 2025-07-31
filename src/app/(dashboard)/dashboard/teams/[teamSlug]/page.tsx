@@ -6,6 +6,7 @@ import { hasTeamMembership, hasTeamPermission } from "@/utils/team-auth";
 import { TEAM_PERMISSIONS } from "@/db/schema";
 import { PageHeader } from "@/components/page-header";
 import Link from "next/link";
+import type { Route } from "next";
 import { Button } from "@/components/ui/button";
 import { getSessionFromCookie } from "@/utils/auth";
 import { InviteMemberModal } from "@/components/teams/invite-member-modal";
@@ -92,7 +93,7 @@ export default async function TeamDashboardPage({ params }: TeamPageProps) {
             className="mb-6"
           />
           <Button asChild className="mt-4">
-            <Link href="/dashboard/teams">
+            <Link href={"/dashboard/teams" as Route}>
               Back to teams
             </Link>
           </Button>
