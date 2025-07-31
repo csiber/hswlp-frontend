@@ -35,7 +35,6 @@ export default async function ContractsPage() {
     redirect("/auth/login");
   }
   const contracts = await getContractsByUser(session.user.id);
-
   return (
     <>
       <PageHeader

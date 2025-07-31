@@ -10,8 +10,6 @@ import {
   FileText,
   LayoutDashboard,
   Settings,
-  ShoppingCart,
-  CreditCard,
 } from "lucide-react"
 
 import { NavMain } from "@/components/nav-main"
@@ -74,16 +72,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         title: "Contracts",
         url: "/contracts",
         icon: FileText,
-      },
-      {
-        title: "Marketplace",
-        url: "/marketplace",
-        icon: ShoppingCart,
-      },
-      {
-        title: "Billing",
-        url: "/billing",
-        icon: CreditCard,
       },
       {
         title: "Settings",
