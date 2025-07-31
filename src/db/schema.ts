@@ -314,25 +314,6 @@ export const purchasedItemsTable = sqliteTable(
   ],
 );
 
-export const USER_APP_STATUS = {
-  ACTIVE: 'active',
-  PAUSED: 'paused',
-  DEVELOPING: 'developing',
-} as const;
-
-export const userAppStatusTuple = Object.values(USER_APP_STATUS) as [string, ...string[]];
-
-export const userAppTable = sqliteTable('user_app', {
-  ...commonColumns,
-  id: text().primaryKey().$defaultFn(() => `uapp_${createId()}`).notNull(),
-  userId: text().notNull().references(() => userTable.id),
-  appId: text().notNull().references(() => appTable.id),
-  status: text({ enum: userAppStatusTuple }).notNull(),
-}, (table) => ([
-  index('user_app_user_id_idx').on(table.userId),
-  index('user_app_app_id_idx').on(table.appId),
-  index('user_app_user_app_idx').on(table.userId, table.appId),
-]));
 
 export const USER_APP_STATUS = {
   ACTIVE: 'active',
@@ -619,17 +600,6 @@ export const userAppRelations = relations(userAppTable, ({ one }) => ({
   }),
 }));
 
-export const userAppRelations = relations(userAppTable, ({ one }) => ({
-  user: one(userTable, {
-    fields: [userAppTable.userId],
-    references: [userTable.id],
-  }),
-  app: one(appTable, {
-    fields: [userAppTable.appId],
-    references: [appTable.id],
-  }),
-}));
-
 export const postRelations = relations(postTable, ({ one }) => ({
   user: one(userTable, {
     fields: [postTable.userId],
@@ -680,3 +650,4 @@ export type Post = InferSelectModel<typeof postTable>;
 export type App = InferSelectModel<typeof appTable>;
 export type Request = InferSelectModel<typeof requestTable>;
 export type UserApp = InferSelectModel<typeof userAppTable>;
+export type Contract = InferSelectModel<typeof contractTable>;
