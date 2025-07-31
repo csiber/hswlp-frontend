@@ -14,9 +14,10 @@ export const BASE_METADATA: Metadata = {
     description: SITE_DESCRIPTION,
     images: ["/web-app-manifest-512x512.png"],
     creator: "@LubomirGeorg",
-  },
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-  },
-}
+  }
+};
+
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+};
