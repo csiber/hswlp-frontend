@@ -4,6 +4,7 @@ import { type ComponentType, useEffect, useState } from "react"
 import type { Route } from 'next'
 
 import {
+  Rocket,
   Building2,
   AppWindow,
   Boxes,
@@ -80,6 +81,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
   useEffect(() => {
     setNavItems([
+      {
+        title: "Landing",
+        url: "/",
+        icon: Rocket,
+        isActive: true,
+      },
       {
         title: "Dashboard",
         url: "/dashboard",
