@@ -32,6 +32,7 @@ import {
 import { Skeleton } from "@/components/ui/skeleton"
 import useSignOut from "@/hooks/useSignOut"
 import { useRouter } from "next/navigation"
+import type { Route } from "next"
 import { useSessionStore } from "@/state/session"
 import ThemeSwitch from "./theme-switch"
 
@@ -85,7 +86,11 @@ export function NavUser() {
               <div className="grid flex-1 gap-0.5 text-left text-sm leading-tight">
                 <span className="font-semibold overflow-hidden text-ellipsis whitespace-nowrap">{displayName}</span>
                 <span className="truncate text-xs text-muted-foreground">{user.email}</span>
-                <Badge variant="secondary" className="w-fit text-[10px]" onClick={() => router.push('/dashboard/billing')}>
+                <Badge
+                  variant="secondary"
+                  className="w-fit text-[10px]"
+                  onClick={() => router.push('/dashboard/billing' as Route)}
+                >
                   {user.currentCredits} credits
                 </Badge>
               </div>
@@ -119,11 +124,17 @@ export function NavUser() {
               </ThemeSwitch>
             </div>
             <DropdownMenuGroup>
-              <DropdownMenuItem className="cursor-pointer" onClick={() => router.push('/settings')}>
+              <DropdownMenuItem
+                className="cursor-pointer"
+                onClick={() => router.push('/settings' as Route)}
+              >
                 <BadgeCheck />
                 Account
               </DropdownMenuItem>
-              <DropdownMenuItem className="cursor-pointer" onClick={() => router.push('/dashboard/billing')}>
+              <DropdownMenuItem
+                className="cursor-pointer"
+                onClick={() => router.push('/dashboard/billing' as Route)}
+              >
                 <CreditCard />
                 Billing
               </DropdownMenuItem>
@@ -136,7 +147,7 @@ export function NavUser() {
             <DropdownMenuItem
               onClick={() => {
                 signOut().then(() => {
-                  router.push('/')
+                  router.push('/' as Route)
                 })
               }}
               className="cursor-pointer"
