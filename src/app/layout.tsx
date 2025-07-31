@@ -40,10 +40,6 @@ export const metadata: Metadata = {
     images: ["/web-app-manifest-512x512.png"],
     creator: "@LubomirGeorg",
   },
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-  },
   robots: {
     index: true,
     follow: true,
@@ -55,6 +51,11 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
+};
+
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
 };
 
 export default function BaseLayout({
