@@ -83,7 +83,10 @@ export function NavMain({ items }: Props) {
                                 // eslint-disable-next-line @next/next/no-img-element
                                 <img src={subItem.iconUrl} alt="" className="h-4 w-4 mr-2" />
                               ) : (
-                                subItem.icon && <subItem.icon className="mr-2" />
+                                subItem.icon &&
+                                  React.createElement(subItem.icon as React.ElementType, {
+                                    className: "mr-2",
+                                  })
                               )}
                               <span>{subItem.title}</span>
                             </Link>
@@ -93,7 +96,10 @@ export function NavMain({ items }: Props) {
                                 // eslint-disable-next-line @next/next/no-img-element
                                 <img src={subItem.iconUrl} alt="" className="h-4 w-4 mr-2" />
                               ) : (
-                                subItem.icon && <subItem.icon className="mr-2" />
+                                subItem.icon &&
+                                  React.createElement(subItem.icon as React.ElementType, {
+                                    className: "mr-2",
+                                  })
                               )}
                               <span>{subItem.title}</span>
                             </a>
