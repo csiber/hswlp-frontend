@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 
 export function HeroSection() {
   return (
@@ -21,13 +22,27 @@ export function HeroSection() {
         </p>
         <div className="mt-10 flex justify-center gap-x-6">
           <Link href="/apps">
-            <Button size="lg" className="rounded-full">
+            <Button
+              size="lg"
+              className="rounded-full transition-transform hover:scale-105"
+            >
               Explore apps
             </Button>
           </Link>
-          <Button variant="outline" size="lg" className="rounded-full" asChild>
-            <a href="#">Start building</a>
-          </Button>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Link href="/building">
+                <Button
+                  variant="secondary"
+                  size="lg"
+                  className="rounded-full transition-transform hover:scale-105"
+                >
+                  Start building
+                </Button>
+              </Link>
+            </TooltipTrigger>
+            <TooltipContent>Builder beta</TooltipContent>
+          </Tooltip>
         </div>
       </div>
     </motion.section>

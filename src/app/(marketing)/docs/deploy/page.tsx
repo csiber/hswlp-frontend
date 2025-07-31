@@ -1,7 +1,9 @@
 import { Metadata } from "next";
+import { BASE_METADATA } from "@/lib/base-metadata";
 import { MotionSection } from "@/components/ui/MotionSection";
 
 export const metadata: Metadata = {
+  ...BASE_METADATA,
   title: "Deploy Guide",
 };
 

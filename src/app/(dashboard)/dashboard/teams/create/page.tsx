@@ -2,10 +2,13 @@ import { getSessionFromCookie } from "@/utils/auth";
 import { redirect } from "next/navigation";
 import { CreateTeamForm } from "@/components/teams/create-team-form";
 import { PageHeader } from "@/components/page-header";
+import type { Metadata } from "next";
+import { BASE_METADATA } from "@/lib/base-metadata";
 
-export const metadata = {
-  title: "Csapat létrehozása",
-  description: "Új csapat létrehozása a szervezeted számára",
+export const metadata: Metadata = {
+  ...BASE_METADATA,
+  title: "Create Team",
+  description: "Create a new team for your organization",
 };
 
 export default async function CreateTeamPage() {

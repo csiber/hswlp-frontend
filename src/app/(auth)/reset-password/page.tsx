@@ -1,10 +1,12 @@
 import { Metadata } from "next";
+import { BASE_METADATA } from "@/lib/base-metadata";
 import { notFound } from "next/navigation";
 import { getCloudflareContext } from "@opennextjs/cloudflare";
 import ResetPasswordClientComponent from "./reset-password.client";
 import { getResetTokenKey } from "@/utils/auth-utils";
 
 export const metadata: Metadata = {
+  ...BASE_METADATA,
   title: "Jelszó visszaállítása",
   description: "Új jelszó megadása a fiókhoz",
 };

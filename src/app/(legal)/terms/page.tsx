@@ -1,9 +1,11 @@
 import { Metadata } from "next";
+import { BASE_METADATA } from "@/lib/base-metadata";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { CREDITS_EXPIRATION_YEARS } from "@/constants";
 
 export const metadata: Metadata = {
+  ...BASE_METADATA,
   title: "Terms of Service",
   description: "Read our terms of service and usage agreement",
 };

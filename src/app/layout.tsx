@@ -31,12 +31,18 @@ export const metadata: Metadata = {
     title: SITE_NAME,
     description: SITE_DESCRIPTION,
     siteName: SITE_NAME,
+    images: "/web-app-manifest-512x512.png",
   },
   twitter: {
     card: "summary_large_image",
     title: SITE_NAME,
     description: SITE_DESCRIPTION,
+    images: ["/web-app-manifest-512x512.png"],
     creator: "@LubomirGeorg",
+  },
+  viewport: {
+    width: "device-width",
+    initialScale: 1,
   },
   robots: {
     index: true,

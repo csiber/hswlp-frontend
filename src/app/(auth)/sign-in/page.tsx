@@ -1,10 +1,12 @@
 import { Metadata } from "next";
+import { BASE_METADATA } from "@/lib/base-metadata";
 import { getSessionFromCookie } from "@/utils/auth";
 import { redirect } from "next/navigation";
 import SignInClientPage from "./sign-in.client";
 import { REDIRECT_AFTER_SIGN_IN } from "@/constants";
 
 export const metadata: Metadata = {
+  ...BASE_METADATA,
   title: "Sign in",
   description: "Access your account",
 };

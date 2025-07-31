@@ -5,11 +5,13 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { PlusIcon, Users } from "lucide-react";
-import type { Route } from "next";
+import type { Route, Metadata } from "next";
 import { PageHeader } from "@/components/page-header";
 import { PendingInvitations } from "./pending-invitations";
+import { BASE_METADATA } from "@/lib/base-metadata";
 
-export const metadata = {
+export const metadata: Metadata = {
+  ...BASE_METADATA,
   title: "My Teams",
   description: "Manage teams and collaborations",
 };

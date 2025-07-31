@@ -1,9 +1,11 @@
 import { Metadata } from 'next'
+import { BASE_METADATA } from '@/lib/base-metadata'
 import { changelog } from '@/data/changelog'
 import ChangelogList from '@/components/ChangelogList'
 import { Button } from '@/components/ui/button'
 
 export const metadata: Metadata = {
+  ...BASE_METADATA,
   title: 'Changelog'
 }
 
