@@ -17,11 +17,6 @@ interface MyApp {
   url: string;
 }
 
-const dummyApps: MyApp[] = [
-  { name: "Yumekai", icon: "🎨", status: "active", url: "https://yumekai.app" },
-  { name: "Blogocska", icon: "📝", status: "paused", url: "https://blogocska.hu" },
-  { name: "IdeaBoard", icon: "💡", status: "developing", url: "https://ideaboard.hu" },
-];
 
 const badgeVariant: Record<AppStatus, React.ComponentProps<typeof Badge>["variant"]> = {
   active: "secondary",
@@ -44,7 +39,7 @@ export default async function MyAppsPage() {
   const session = await getSessionFromCookie();
   if (!session) redirect("/auth/login");
 
-  const apps = dummyApps; // TODO: fetch from database
+  const apps: MyApp[] = []; // TODO: fetch from database when available
 
   return (
     <>
