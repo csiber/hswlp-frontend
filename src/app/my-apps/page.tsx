@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { getSessionFromCookie } from "@/utils/auth";
 import { redirect } from "next/navigation";
+import type { App } from "@/db/schema";
 
 export const metadata = {
   title: "My Applications",
@@ -14,7 +15,7 @@ export default async function MyAppsPage() {
   if (!session) {
     redirect("/auth/login");
   }
-  const apps: any[] = [];
+  const apps: App[] = [];
 
   return (
     <>

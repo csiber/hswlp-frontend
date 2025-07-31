@@ -46,3 +46,13 @@ export interface StripePaymentIntent {
   status: string;
   metadata: Record<string, string>;
 }
+
+export interface StripeCharge {
+  receipt_url?: string;
+}
+
+export interface StripePaymentIntentWithCharges extends StripePaymentIntent {
+  charges?: {
+    data?: StripeCharge[];
+  };
+}
