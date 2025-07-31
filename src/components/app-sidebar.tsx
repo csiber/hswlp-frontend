@@ -76,16 +76,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         icon: FileText,
       },
       {
-        title: "Marketplace",
-        url: "/marketplace",
-        icon: ShoppingCart,
-      },
-      {
-        title: "Billing",
-        url: "/billing",
-        icon: CreditCard,
-      },
-      {
         title: "Settings",
         url: "/settings",
         icon: Settings,
