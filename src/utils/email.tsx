@@ -355,3 +355,53 @@ export async function sendContactEmail({
     })
   }
 }
+
+export async function sendStartRequestEmail({
+  name,
+  email,
+  projectName,
+  description,
+  domainType,
+  createdAt,
+}: {
+  name: string;
+  email: string;
+  projectName?: string;
+  description: string;
+  domainType: string;
+  createdAt: Date;
+}) {
+  const html = `
+    <h1>New order request</h1>
+    <p><strong>Name:</strong> ${name}</p>
+    <p><strong>Email:</strong> ${email}</p>
+    <p><strong>Project name:</strong> ${projectName ?? ''}</p>
+    <p><strong>Description:</strong> ${description.replace(/\n/g, '<br />')}</p>
+    <p><strong>Domain request:</strong> ${domainType}</p>
+    <p><strong>Time:</strong> ${createdAt.toISOString()}</p>
+  `;
+
+  const provider = await getEmailProvider();
+
+  if (!provider && isProd) {
+    throw new Error(
+      "No email provider configured. Set either RESEND_API_KEY or BREVO_API_KEY in your environment."
+    );
+  }
+
+  if (provider === "resend") {
+    await sendResendEmail({
+      to: ["info@hswlp.com", email],
+      subject: "Új megrendelés érkezett a HSWLP platformon",
+      html,
+      tags: [{ name: "type", value: "start-request" }],
+    });
+  } else {
+    await sendBrevoEmail({
+      to: [{ email: "info@hswlp.com" }, { email }],
+      subject: "Új megrendelés érkezett a HSWLP platformon",
+      htmlContent: html,
+      tags: ["start-request"],
+    });
+  }
+}

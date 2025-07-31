@@ -111,6 +111,19 @@ export const postTable = sqliteTable("post", {
   index('post_user_id_idx').on(table.userId),
 ]));
 
+export const requestTable = sqliteTable('request', {
+  ...commonColumns,
+  id: text().primaryKey().$defaultFn(() => `req_${createId()}`).notNull(),
+  name: text({ length: 255 }).notNull(),
+  email: text({ length: 255 }).notNull(),
+  projectName: text({ length: 255 }),
+  description: text({ length: 2000 }).notNull(),
+  domainType: text({ length: 50 }).notNull(),
+  status: text({ length: 50 }).default('pending').notNull(),
+}, (table) => ([
+  index('request_email_idx').on(table.email),
+]));
+
 export const APP_TYPE = {
   SHELL: 'shell',
   PAGES: 'pages',
@@ -431,3 +444,4 @@ export type TeamInvitation = InferSelectModel<typeof teamInvitationTable>;
 export type SlowRequestLog = InferSelectModel<typeof slowRequestLogTable>;
 export type Post = InferSelectModel<typeof postTable>;
 export type App = InferSelectModel<typeof appTable>;
+export type Request = InferSelectModel<typeof requestTable>;
