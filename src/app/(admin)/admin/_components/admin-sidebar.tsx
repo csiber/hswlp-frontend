@@ -43,6 +43,11 @@ const adminNavItems: NavMainItem[] = [
     url: "/admin/apps",
     icon: Shield,
   },
+  {
+    title: "Client Apps",
+    url: "/admin/my-apps",
+    icon: Shield,
+  },
 ]
 
 export function AdminSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
