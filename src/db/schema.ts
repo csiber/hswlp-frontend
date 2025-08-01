@@ -106,8 +106,10 @@ export const contractTable = sqliteTable(
     userId: text()
       .notNull()
       .references(() => userTable.id),
+    userAppId: text().references(() => userAppTable.id),
     title: text({ length: 255 }).notNull(),
     status: text({ enum: contractStatusTuple }).default("active").notNull(),
+    fileUrl: text({ length: 600 }),
   },
   (table) => [index("contract_user_id_idx").on(table.userId)],
 );
@@ -329,6 +331,7 @@ export const userAppTable = sqliteTable('user_app', {
   userId: text().notNull().references(() => userTable.id),
   appId: text().notNull().references(() => appTable.id),
   status: text({ enum: userAppStatusTuple }).notNull(),
+  notes: text(),
 }, (table) => ([
   index('user_app_user_id_idx').on(table.userId),
   index('user_app_app_id_idx').on(table.appId),
@@ -586,6 +589,10 @@ export const contractRelations = relations(contractTable, ({ one }) => ({
   user: one(userTable, {
     fields: [contractTable.userId],
     references: [userTable.id],
+  }),
+  userApp: one(userAppTable, {
+    fields: [contractTable.userAppId],
+    references: [userAppTable.id],
   }),
 }));
 

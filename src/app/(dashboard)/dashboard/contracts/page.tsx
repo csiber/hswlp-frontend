@@ -65,9 +65,11 @@ export default async function ContractsPage() {
                   Created {format(new Date(contract.createdAt), "PPP")}
                 </CardContent>
                 <CardFooter className="mt-auto">
-                  <Button asChild size="sm">
-                    <a href="#">View contract</a>
-                  </Button>
+                  {contract.fileUrl && (
+                    <Button asChild size="sm">
+                      <a href={contract.fileUrl} target="_blank" rel="noopener noreferrer">View contract</a>
+                    </Button>
+                  )}
                 </CardFooter>
               </Card>
             ))}
