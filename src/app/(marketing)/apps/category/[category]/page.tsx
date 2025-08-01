@@ -1,20 +1,15 @@
 import { Metadata } from "next";
 import { AppCard } from "@/components/apps/AppCard";
 import { notFound } from "next/navigation";
-import {
-  getAppsByCategoryAsync,
-  getCategoriesAsync,
-} from "@/lib/db/apps";
+import { getAppsByCategoryAsync } from "@/lib/db/apps";
 import type { App } from "@/db/schema";
+
+export const dynamic = "force-dynamic";
 
 interface PageProps {
   params: Promise<{ category: string }>;
 }
 
-export async function generateStaticParams() {
-  const categories = await getCategoriesAsync();
-  return categories.map(c => ({ category: c }));
-}
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { category } = await params;

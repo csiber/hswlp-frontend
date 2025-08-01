@@ -2,20 +2,17 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import {
   getAppBySlugAsync,
-  getAllAppsAsync,
   getSimilarAppsAsync,
 } from "@/lib/db/apps";
 import type { App } from "@/db/schema";
 import AppDetailPage from "@/components/apps/AppDetailPage";
 
+export const dynamic = "force-dynamic";
+
 interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
-export async function generateStaticParams() {
-  const apps = await getAllAppsAsync();
-  return apps.map(app => ({ slug: app.slug }));
-}
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
