@@ -1,96 +1,68 @@
-# HSWLP:Next – Cloudflare alapú újgenerációs SaaS rendszer
+# HSWLP.com – Official Frontend Website
 
-Ez a repository a HSWLP platform `hswlp-next` nevű **új alaprendszere**, amelyre a különböző frontend rétegek (ún. **shellek**) épülnek. A rendszer teljesen Cloudflare-infrastruktúrán fut (Workers, D1, R2, KV), és készen áll SaaS alkalmazások hosztolására – külön back-end nélkül.
+**HSWLP.com** is the official frontend website of the  
+**HSWLP (Hybrid Service Workflow Launch Platform)** ecosystem.  
 
-Ez az alap biztosítja a következőket:
-
-- Bejelentkezés, regisztráció, email hitelesítés
-- Turnstile captcha
-- Cloudflare D1 adatbázis migrációkkal
-- R2 tárhely és KV session kezelés
-- Stripe integráció és emailküldés (Resend vagy Brevo)
-- Alkalmas Cloudflare Pages és Edge funkciók kiszolgálására
+It serves as the **central hub** for presenting HSWLP projects,  
+offering documentation, landing pages, and marketing content.  
 
 ---
 
-## Használat lokálisan
+## ✨ Purpose
 
-1. Telepítés:
-
-   ```bash
-   pnpm install
-   ```
-
-2. Környezeti változók:
-
-   - Másold le a `.env.example` fájlt `.env` néven, majd töltsd ki.
-   - Ha használod: `.dev.vars.example` → `.dev.vars`
-
-3. Lokális migráció és indítás:
-
-   ```bash
-   pnpm db:migrate:dev
-   pnpm dev
-   ```
-
-4. Nyisd meg a böngészőben:
-   [http://localhost:3000](http://localhost:3000)
+- 🌍 **Public Landing Page** – introduce HSWLP to users, partners, and investors  
+- 📖 **Documentation Hub** – guides and instructions for apps and modules  
+- 📰 **Project Showcase** – overview of all HSWLP apps (live and planned)  
+- 💳 **Onboarding** – entry point for subscription, Stripe payments, and sign-ups  
+- 🎨 **Brand Identity** – consistent visual design across the ecosystem  
 
 ---
 
-## Cloudflare deploy
+## 🛠️ Technology Stack
 
-A rendszer automatikusan deployolható Cloudflare Workers-re:
-
-```bash
-pnpm run deploy
-```
-
-Ez lefuttatja az `opennext:build` és `opennextjs-cloudflare deploy` parancsokat, majd feltölti:
-
-- a Worker kódot
-- statikus asseteket (R2)
-- titkos környezeti változókat (`wrangler secret put`)
-- valamint a `wrangler.json` alapján hozzárendeli:
-  - D1 adatbázist
-  - KV namespace-eket
-  - R2 bucketet
-
-A `.env` fájl NEM kerül automatikusan feltöltésre – a titkos adatokat külön kell beállítani `wrangler secret put` paranccsal vagy a Cloudflare dashboardon.
+- **Frontend:** Next.js (React + TailwindCSS)  
+- **Hosting:** Cloudflare Pages (static deploy)  
+- **Backend:** None (static + API calls to HSWLP apps)  
+- **Future Integration:** Workers for edge enhancements  
 
 ---
 
-## Fontos konfigurációs helyek
+## 📅 Current Status
 
-- Állandók: `src/constants.ts`
-- Email sablonok: `src/react-email/`
-- Globális CSS: `src/app/globals.css`
-- Meta adatok: `src/app/layout.tsx`
-- Wrangler config: `wrangler.json`
+✅ **Live (Initial Version)** – [hswlp.com](https://hswlp.com) is online and growing.  
+🚧 Further sections (docs, showcase pages, and pricing) are under development.  
 
 ---
 
-## Email sablonok előnézete
+## 📌 Roadmap
 
-```bash
-pnpm email:dev
-```
+- [x] Public landing page  
+- [ ] Detailed app showcase (Yume, IdeaBoard, Otokai, Talk, PlayCore, etc.)  
+- [ ] Documentation hub for developers and users  
+- [ ] Pricing & subscription page (Stripe integration)  
+- [ ] Blog / news section  
+- [ ] Multi-language support (English + Hungarian)  
 
-→ [http://localhost:3001](http://localhost:3001)
+---
+
+## 🌍 Part of the HSWLP Ecosystem
+
+The HSWLP platform includes multiple projects such as:  
+- **Yume** – music & image sharing  
+- **IdeaBoard** – idea submission & voting platform  
+- **Otokai** – AI-powered music jukebox  
+- **HSWLP:Talk** – video conferencing system  
+- **PlayCore** – game server hosting dashboard  
+
+HSWLP.com ties these projects together into a single, unified identity.  
 
 ---
 
-## A rendszer jövője
+## 📜 License
 
-A `hswlp-next` az alapja minden jövőbeli HSWLP shellnek, ideértve:
-
-- `HSWLP:Cloud` (statikus site deploy)
-- `HSWLP:NAS` (helyi Docker stack manager)
-- `HSWLP:Dev` (fejlesztői központ)
-- `HSWLP:Store` (sablon piactér)
-- `HSWLP:Academy` (oktatási modul)
-
-Egy közös rendszer, több célra.
-Tisztán, Cloudflare-alapon.
+Released under the **MIT License**.  
 
 ---
+
+**HSWLP.com** is the official entry point into the HSWLP ecosystem –  
+presenting its apps, vision, and services to the world.  
