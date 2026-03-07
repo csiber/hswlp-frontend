@@ -24,10 +24,6 @@ export const verifyEmailAction = createServerAction()
 
         const verificationTokenStr = await env.NEXT_INC_CACHE_KV.get(getVerificationTokenKey(input.token));
 
-        if (!env?.NEXT_INC_CACHE_KV) {
-          throw new Error("Nem sikerült csatlakozni a KV tárhoz");
-        }
-
         if (!verificationTokenStr) {
           throw new ZSAError(
             "NOT_FOUND",

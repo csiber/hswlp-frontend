@@ -50,44 +50,95 @@ export function AppCard({ app }: { app: AppInfo }) {
       : app.description;
 
   return (
-    <Link href={`/apps/${app.slug}` as Route}>
-      <motion.div whileHover={{ scale: 1.05 }} layout>
+    <Link href={`/apps/${app.slug}` as Route} className="block h-full">
+      <motion.div
+        whileHover={{
+          y: -5,
+          transition: { duration: 0.2 },
+        }}
+        className="h-full"
+        layout
+      >
         <Card
           className={cn(
-            "cursor-pointer h-full flex flex-col justify-between",
-            app.featured && "border-2 border-primary"
+            "group relative cursor-pointer h-full flex flex-col justify-between overflow-hidden transition-all duration-300",
+            "hover:shadow-2xl hover:shadow-primary/10 hover:border-primary/50",
+            "bg-card/50 backdrop-blur-sm border-muted-foreground/10",
+            app.featured && "border-primary/40 bg-primary/5 shadow-lg shadow-primary/5"
           )}
         >
-          <CardHeader>
-            <div className="flex items-center gap-2">
-              {app.logo_url && (
-                <Image
-                  src={app.logo_url}
-                  alt={`${app.name} logo`}
-                  width={32}
-                  height={32}
-                  className="h-8 w-8 object-contain"
-                />
+          {/* Subtle background glow on hover */}
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+          
+          <CardHeader className="relative z-10">
+            <div className="flex items-center justify-between mb-2">
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-xl bg-muted/50 group-hover:bg-primary/10 transition-colors duration-300">
+                  {app.logo_url ? (
+                    <Image
+                      src={app.logo_url}
+                      alt={`${app.name} logo`}
+                      width={32}
+                      height={32}
+                      className="h-8 w-8 object-contain"
+                    />
+                  ) : (
+                    <span className="text-2xl">{icon}</span>
+                  )}
+                </div>
+                <CardTitle className="group-hover:text-primary transition-colors duration-300">
+                  {app.name}
+                </CardTitle>
+              </div>
+              {app.featured && (
+                <Badge variant="secondary" className="bg-primary/10 text-primary border-primary/20 animate-pulse">
+                  Featured
+                </Badge>
               )}
-              <CardTitle>{app.name}</CardTitle>
             </div>
-            <CardDescription>{shortDescription}</CardDescription>
+            <CardDescription className="line-clamp-3 text-sm leading-relaxed">
+              {shortDescription}
+            </CardDescription>
           </CardHeader>
-          <CardContent className="flex items-center justify-between">
-            <Badge variant="outline" className="capitalize">
-              {icon}
-            </Badge>
-            {app.repo_url && (
-              <button
-                type="button"
-                onClick={e => {
-                  e.stopPropagation();
-                  window.open(app.repo_url, "_blank", "noopener,noreferrer");
-                }}
-              >
-                <GithubIcon className="w-4 h-4" />
-              </button>
-            )}
+
+          <CardContent className="relative z-10 flex items-center justify-between pt-0">
+            <div className="flex gap-2">
+              <Badge variant="outline" className="bg-background/50 backdrop-blur-sm border-muted-foreground/20 group-hover:border-primary/30 transition-colors">
+                {app.type}
+              </Badge>
+            </div>
+            
+            <div className="flex items-center gap-3">
+              {app.repo_url && (
+                <button
+                  type="button"
+                  className="p-2 rounded-full hover:bg-muted transition-colors"
+                  onClick={e => {
+                    e.stopPropagation();
+                    window.open(app.repo_url, "_blank", "noopener,noreferrer");
+                  }}
+                >
+                  <GithubIcon className="w-4 h-4 text-muted-foreground hover:text-foreground transition-colors" />
+                </button>
+              )}
+              <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center opacity-0 group-hover:opacity-100 transform translate-x-2 group-hover:translate-x-0 transition-all duration-300">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="text-primary"
+                >
+                  <path d="M5 12h14" />
+                  <path d="m12 5 7 7-7 7" />
+                </svg>
+              </div>
+            </div>
           </CardContent>
         </Card>
       </motion.div>

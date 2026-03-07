@@ -3,9 +3,8 @@
 import { requireVerifiedEmail } from "@/utils/auth";
 import {
   getCreditTransactions,
-  updateUserCredits,
-  logTransaction,
   getCreditPackage,
+  addCreditsWithLog,
 } from "@/utils/credits";
 import { CREDIT_TRANSACTION_TYPE } from "@/db/schema";
 import {
@@ -137,9 +136,8 @@ export async function confirmPayment({ packageId, paymentIntentId }: PurchaseCre
         throw new Error("Invalid payment intent");
       }
 
-      // Add credits and log transaction
-      await updateUserCredits(session.user.id, creditPackage.credits);
-      await logTransaction({
+      // Add credits and log transaction in a single atomic batch
+      await addCreditsWithLog({
         userId: session.user.id,
         amount: creditPackage.credits,
         description: `Purchased ${creditPackage.credits} credits`,

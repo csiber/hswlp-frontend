@@ -83,23 +83,14 @@ export async function updateUserCredits(userId: string, creditsToAdd: number) {
   await updateAllSessionsOfUser(userId);
 }
 
-async function updateLastRefreshDate(userId: string, date: Date) {
-  const db = getDB();
-  await db
-    .update(userTable)
-    .set({
-      lastCreditRefreshAt: date,
-    })
-    .where(eq(userTable.id, userId));
-}
-
-export async function logTransaction({
+export async function addCreditsWithLog({
   userId,
   amount,
   description,
   type,
   expirationDate,
-  paymentIntentId
+  paymentIntentId,
+  lastCreditRefreshAt
 }: {
   userId: string;
   amount: number;
@@ -107,17 +98,34 @@ export async function logTransaction({
   type: keyof typeof CREDIT_TRANSACTION_TYPE;
   expirationDate?: Date;
   paymentIntentId?: string;
+  lastCreditRefreshAt?: Date;
 }) {
   const db = getDB();
-  await db.insert(creditTransactionTable).values({
-    userId,
-    amount,
-    remainingAmount: amount, // Initialize remaining amount to be the same as amount
-    type,
-    description,
-    expirationDate,
-    paymentIntentId
-  });
+  
+  const updates = [
+    db
+      .update(userTable)
+      .set({
+        currentCredits: sql`${userTable.currentCredits} + ${amount}`,
+        ...(lastCreditRefreshAt ? { lastCreditRefreshAt } : {})
+      })
+      .where(eq(userTable.id, userId)),
+    db.insert(creditTransactionTable).values({
+      userId,
+      amount,
+      remainingAmount: amount,
+      type,
+      description,
+      expirationDate,
+      paymentIntentId
+    })
+  ];
+
+  // Use batch for atomicity in D1
+  await db.batch(updates as any);
+
+  // Update all KV sessions to reflect the new credit balance
+  await updateAllSessionsOfUser(userId);
 }
 
 export async function addFreeMonthlyCreditsIfNeeded(session: KVSession): Promise<number> {
@@ -147,17 +155,14 @@ export async function addFreeMonthlyCreditsIfNeeded(session: KVSession): Promise
     const expirationDate = new Date(currentTime);
     expirationDate.setMonth(expirationDate.getMonth() + 1);
 
-    await updateUserCredits(session.userId, FREE_MONTHLY_CREDITS);
-    await logTransaction({
+    await addCreditsWithLog({
       userId: session.userId,
       amount: FREE_MONTHLY_CREDITS,
       description: 'Free monthly credits',
       type: CREDIT_TRANSACTION_TYPE.MONTHLY_REFRESH,
-      expirationDate
+      expirationDate,
+      lastCreditRefreshAt: currentTime
     });
-
-    // Update last refresh date
-    await updateLastRefreshDate(session.userId, currentTime);
 
     // Get the updated credit balance from the database
     const updatedUser = await db.query.userTable.findFirst({
@@ -215,6 +220,7 @@ export async function consumeCredits({ userId, amount, description }: { userId: 
   });
 
   let remainingToDeduct = amount;
+  const updates: any[] = [];
 
   // Deduct from each transaction until we've deducted the full amount
   for (const transaction of activeTransactionsWithBalance) {
@@ -222,34 +228,43 @@ export async function consumeCredits({ userId, amount, description }: { userId: 
 
     const deductFromThis = Math.min(transaction.remainingAmount, remainingToDeduct);
 
-    await db
-      .update(creditTransactionTable)
-      .set({
-        remainingAmount: transaction.remainingAmount - deductFromThis,
-      })
-      .where(eq(creditTransactionTable.id, transaction.id));
+    updates.push(
+      db
+        .update(creditTransactionTable)
+        .set({
+          remainingAmount: transaction.remainingAmount - deductFromThis,
+        })
+        .where(eq(creditTransactionTable.id, transaction.id))
+    );
 
     remainingToDeduct -= deductFromThis;
   }
 
   // Update total credits
-  await db
-    .update(userTable)
-    .set({
-      currentCredits: sql`${userTable.currentCredits} - ${amount}`,
-    })
-    .where(eq(userTable.id, userId));
+  updates.push(
+    db
+      .update(userTable)
+      .set({
+        currentCredits: sql`${userTable.currentCredits} - ${amount}`,
+      })
+      .where(eq(userTable.id, userId))
+  );
 
   // Log the usage transaction
-  await db.insert(creditTransactionTable).values({
-    userId,
-    amount: -amount,
-    remainingAmount: 0, // Usage transactions don't have remaining amount
-    type: CREDIT_TRANSACTION_TYPE.USAGE,
-    description,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  });
+  updates.push(
+    db.insert(creditTransactionTable).values({
+      userId,
+      amount: -amount,
+      remainingAmount: 0, // Usage transactions don't have remaining amount
+      type: CREDIT_TRANSACTION_TYPE.USAGE,
+      description,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    })
+  );
+
+  // Execute all updates in a batch
+  await db.batch(updates as any);
 
   // Get updated credit balance
   const updatedUser = await db.query.userTable.findFirst({
