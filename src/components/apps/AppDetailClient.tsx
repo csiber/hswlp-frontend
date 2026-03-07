@@ -15,6 +15,8 @@ import type { App } from '@/db/schema'
 import * as Icons from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import { marked } from 'marked'
+import Link from 'next/link'
+import type { Route } from 'next'
 
 interface Props {
   app: App
@@ -29,6 +31,10 @@ export default function AppDetailClient({ app }: Props) {
     if (!app.description) return ''
     return marked.parse(app.description)
   }, [app.description])
+
+  const isInternallyReady = ['shareai', 'talk', 'devshell', 'nas', 'builder'].includes(app.slug);
+  const canLaunch = (app.url && app.status === 1) || isInternallyReady;
+  const launchUrl = isInternallyReady ? `/dashboard/apps/${app.slug}` : app.url;
 
   return (
     <MotionSection
@@ -68,11 +74,17 @@ export default function AppDetailClient({ app }: Props) {
         />
       )}
 
-      {app.url && app.status === 1 ? (
-        <Button asChild className="mt-4 transition-transform active:scale-95 hover:scale-100">
-          <a href={app.url} target="_blank" rel="noopener noreferrer">
-            Visit app
-          </a>
+      {canLaunch && launchUrl ? (
+        <Button asChild className="mt-4 transition-transform active:scale-95 hover:scale-100 h-12 px-8 rounded-xl font-bold">
+          {launchUrl.startsWith('/') ? (
+            <Link href={launchUrl as Route}>
+              Visit app
+            </Link>
+          ) : (
+            <a href={launchUrl} target="_blank" rel="noopener noreferrer">
+              Visit app
+            </a>
+          )}
         </Button>
       ) : app.url ? (
         <TooltipProvider delayDuration={300}>
@@ -81,7 +93,7 @@ export default function AppDetailClient({ app }: Props) {
               <div>
                 <Button
                   disabled
-                  className="mt-4 cursor-not-allowed opacity-50"
+                  className="mt-4 cursor-not-allowed opacity-50 h-12 px-8 rounded-xl"
                 >
                   Visit app
                 </Button>
@@ -92,5 +104,5 @@ export default function AppDetailClient({ app }: Props) {
         </TooltipProvider>
       ) : null}
     </MotionSection>
-  )
+  );
 }
