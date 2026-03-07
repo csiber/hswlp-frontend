@@ -4,6 +4,7 @@ import Link from "next/link"
 import type { Route } from 'next'
 import { usePathname } from "next/navigation"
 import { Menu } from 'lucide-react'
+import { motion } from "framer-motion"
 import HswlpLogo from '@/components/hswlp-logo'
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"

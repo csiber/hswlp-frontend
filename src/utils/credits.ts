@@ -122,6 +122,7 @@ export async function addCreditsWithLog({
   ];
 
   // Use batch for atomicity in D1
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   await db.batch(updates as any);
 
   // Update all KV sessions to reflect the new credit balance
@@ -264,6 +265,7 @@ export async function consumeCredits({ userId, amount, description }: { userId: 
   );
 
   // Execute all updates in a batch
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   await db.batch(updates as any);
 
   // Get updated credit balance
