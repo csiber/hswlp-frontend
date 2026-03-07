@@ -30,7 +30,6 @@ export function AppCard({ app }: { app: App }) {
           transition: { duration: 0.2 },
         }}
         className="h-full"
-        layout
       >
         <Card
           className={cn(

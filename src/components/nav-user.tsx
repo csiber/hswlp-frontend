@@ -88,8 +88,12 @@ export function NavUser() {
                 <span className="truncate text-xs text-muted-foreground">{user.email}</span>
                 <Badge
                   variant="secondary"
-                  className="w-fit text-[10px]"
-                  onClick={() => router.push('/dashboard/billing' as Route)}
+                  className="w-fit text-[10px] cursor-pointer hover:bg-secondary/80 transition-colors"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    router.push('/dashboard/billing' as Route);
+                  }}
                 >
                   {user.currentCredits} credits
                 </Badge>

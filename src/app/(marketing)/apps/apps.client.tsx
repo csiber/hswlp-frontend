@@ -71,7 +71,6 @@ export default function AppsClient({ apps }: { apps: App[] }) {
 
       {/* App Grid */}
       <motion.div
-        layout
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3"

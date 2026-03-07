@@ -57,7 +57,6 @@ export function AppCard({ app }: { app: AppInfo }) {
           transition: { duration: 0.2 },
         }}
         className="h-full"
-        layout
       >
         <Card
           className={cn(
@@ -109,17 +108,26 @@ export function AppCard({ app }: { app: AppInfo }) {
             </div>
             
             <div className="flex items-center gap-3">
-              {app.repo_url && (
-                <button
-                  type="button"
-                  className="p-2 rounded-full hover:bg-muted transition-colors"
-                  onClick={e => {
+            {app.repo_url && (
+                <span
+                  role="button"
+                  tabIndex={0}
+                  className="p-2 rounded-full hover:bg-muted transition-colors cursor-pointer"
+                  onClick={(e) => {
+                    e.preventDefault();
                     e.stopPropagation();
                     window.open(app.repo_url, "_blank", "noopener,noreferrer");
                   }}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      window.open(app.repo_url, "_blank", "noopener,noreferrer");
+                    }
+                  }}
                 >
                   <GithubIcon className="w-4 h-4 text-muted-foreground hover:text-foreground transition-colors" />
-                </button>
+                </span>
               )}
               <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center opacity-0 group-hover:opacity-100 transform translate-x-2 group-hover:translate-x-0 transition-all duration-300">
                 <svg
