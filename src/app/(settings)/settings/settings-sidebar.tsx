@@ -8,7 +8,8 @@ import {
   User,
   Smartphone,
   Lock,
-  LogOut
+  LogOut,
+  ChevronRight
 } from "lucide-react";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import {
@@ -21,10 +22,11 @@ import {
   DialogTrigger,
   DialogClose,
 } from "@/components/ui/dialog";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import { useRef } from "react";
 import type { Route } from "next";
 import useSignOut from "@/hooks/useSignOut";
+import { motion } from "framer-motion";
 
 interface SidebarNavItem {
   title: string;
@@ -63,59 +65,73 @@ export function SettingsSidebar() {
 
   return (
     <ScrollShadow
-      className="w-full lg:w-auto whitespace-nowrap pb-2"
+      className="w-full lg:w-auto whitespace-nowrap pb-4"
       orientation="horizontal"
       isEnabled={isLgAndSmaller}
     >
-      <nav className="flex items-center lg:items-stretch min-w-full space-x-2 pb-2 lg:pb-0 lg:flex-col lg:space-x-0 lg:space-y-1">
-        {sidebarNavItems.map((item) => (
-          <Link
-            key={item.href}
-            href={item.href}
-            className={cn(
-              buttonVariants({ variant: "ghost" }),
-              pathname === item.href
-                ? "bg-muted hover:bg-muted dark:text-foreground dark:hover:text-foreground/70"
-                : "hover:bg-transparent",
-              "justify-start hover:no-underline whitespace-nowrap"
-            )}
-          >
-            <item.icon className="mr-2 h-4 w-4" />
-            {item.title}
-          </Link>
-        ))}
+      <nav className="flex items-center lg:items-stretch min-w-full gap-2 lg:flex-col lg:gap-1">
+        {sidebarNavItems.map((item) => {
+          const isActive = pathname === item.href;
+          return (
+            <Link
+              key={item.href}
+              href={item.href}
+              className={cn(
+                "group flex items-center justify-between px-4 py-3 rounded-xl transition-all duration-200 relative overflow-hidden",
+                isActive 
+                  ? "bg-primary/10 text-primary font-semibold" 
+                  : "text-muted-foreground hover:bg-muted/50 hover:text-foreground"
+              )}
+            >
+              <div className="flex items-center gap-3 relative z-10">
+                <item.icon className={cn("h-4 w-4 transition-colors", isActive ? "text-primary" : "group-hover:text-foreground")} />
+                <span>{item.title}</span>
+              </div>
+              {isActive && (
+                <motion.div 
+                  layoutId="active-settings-nav"
+                  className="absolute left-0 w-1 h-6 bg-primary rounded-r-full"
+                  transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                />
+              )}
+              <ChevronRight className={cn("h-4 w-4 opacity-0 group-hover:opacity-100 transition-all transform translate-x-2 group-hover:translate-x-0 hidden lg:block", isActive && "opacity-100 translate-x-0")} />
+            </Link>
+          )
+        })}
+
+        <div className="h-px bg-muted-foreground/10 my-4 hidden lg:block" />
 
         <Dialog>
           <DialogTrigger asChild>
             <button
               className={cn(
-                buttonVariants({ variant: "destructive" }),
-                "justify-start hover:no-underline whitespace-nowrap lg:mt-4 bg-red-700/25 hover:bg-red-600/40"
+                "flex items-center gap-3 px-4 py-3 rounded-xl text-red-500 hover:bg-red-500/10 transition-all mt-4 lg:mt-0 font-medium"
               )}
             >
-              <LogOut className="mr-2 h-4 w-4" />
-              Log out
+              <LogOut className="h-4 w-4" />
+              <span>Log out</span>
             </button>
           </DialogTrigger>
-          <DialogContent>
+          <DialogContent className="sm:max-w-[425px] rounded-3xl border-muted-foreground/10 bg-background/95 backdrop-blur-xl">
             <DialogHeader>
-              <DialogTitle>Log out?</DialogTitle>
-              <DialogDescription>
-                Are you sure you want to log out?
+              <DialogTitle className="text-2xl font-black">Log out?</DialogTitle>
+              <DialogDescription className="text-base mt-2">
+                Are you sure you want to end your current session?
               </DialogDescription>
             </DialogHeader>
-            <DialogFooter className="mt-4 flex flex-col gap-4">
+            <DialogFooter className="mt-8 flex gap-3">
               <DialogClose ref={dialogCloseRef} asChild>
-                <Button variant="outline">Cancel</Button>
+                <Button variant="ghost" className="rounded-xl h-12 flex-1">Cancel</Button>
               </DialogClose>
               <Button
                 variant="destructive"
+                className="rounded-xl h-12 flex-1 font-bold shadow-lg shadow-red-500/20"
                 onClick={() => {
                   signOut();
                   dialogCloseRef.current?.click();
                 }}
               >
-                Log out
+                End Session
               </Button>
             </DialogFooter>
           </DialogContent>

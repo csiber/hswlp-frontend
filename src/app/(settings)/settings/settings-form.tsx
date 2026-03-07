@@ -23,21 +23,22 @@ import { useServerAction } from "zsa-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useRouter } from "next/navigation";
+import { Save, User } from "lucide-react";
 
 export function SettingsForm() {
   const router = useRouter()
 
-  const { execute: updateUserProfile } = useServerAction(updateUserProfileAction, {
+  const { execute: updateUserProfile, isPending } = useServerAction(updateUserProfileAction, {
     onError: (error) => {
       toast.dismiss()
-      toast.error(error.err?.message)
+      toast.error(error.err?.message || "Failed to update profile")
     },
     onStart: () => {
-      toast.loading("Signing you in...")
+      toast.loading("Updating your profile...")
     },
     onSuccess: () => {
       toast.dismiss()
-      toast.success("Signed in successfully")
+      toast.success("Profile updated successfully")
       router.refresh()
     }
   })
@@ -48,17 +49,18 @@ export function SettingsForm() {
   });
 
   useEffect(() => {
-    form.reset({
-      firstName: session?.user.firstName ?? '',
-      nickname: session?.user.nickname ?? '',
-      lastName: session?.user.lastName ?? '',
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [session])
+    if (session) {
+      form.reset({
+        firstName: session.user.firstName ?? '',
+        nickname: session.user.nickname ?? '',
+        lastName: session.user.lastName ?? '',
+      });
+    }
+  }, [session, form])
 
   if (!session || isLoading) {
     return (
-      <Card>
+      <Card className="border-muted-foreground/10 bg-card/50 backdrop-blur-xl">
         <CardHeader>
           <div className="space-y-2">
             <Skeleton className="h-8 w-[200px]" />
@@ -77,15 +79,12 @@ export function SettingsForm() {
                 <Skeleton className="h-10 w-full" />
               </div>
             </div>
-
             <div className="space-y-2">
               <Skeleton className="h-4 w-[100px]" />
               <Skeleton className="h-10 w-full" />
-              <Skeleton className="h-4 w-[200px]" />
             </div>
-
             <div className="flex justify-end">
-              <Skeleton className="h-10 w-[100px]" />
+              <Skeleton className="h-10 w-[120px]" />
             </div>
           </div>
         </CardContent>
@@ -98,54 +97,42 @@ export function SettingsForm() {
   }
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Profile Settings</CardTitle>
-        <CardDescription>
-          Update your personal information and contact details.
+    <Card className="border-muted-foreground/10 bg-card/50 backdrop-blur-xl overflow-hidden shadow-2xl shadow-primary/5">
+      <div className="absolute top-0 right-0 p-8 opacity-[0.03] pointer-events-none">
+        <User className="w-32 h-32" />
+      </div>
+      
+      <CardHeader className="border-b border-muted-foreground/5 pb-8">
+        <CardTitle className="text-2xl font-black tracking-tight">Profile Settings</CardTitle>
+        <CardDescription className="text-base">
+          Manage your account presence and identity across the HSWLP platform.
         </CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="pt-8">
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-            <div className="grid gap-6 sm:grid-cols-2">
-            <FormField
-              control={form.control}
-              name="firstName"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>First Name</FormLabel>
-                  <FormControl>
-                    <Input {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="nickname"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Nickname</FormLabel>
-                  <FormControl>
-                    <Input {...field} />
-                  </FormControl>
-                  <FormDescription>
-                    A teljes neved rejtve marad mások elől.
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="lastName"
-              render={({ field }) => (
-                <FormItem>
-                    <FormLabel>Last Name</FormLabel>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            <div className="grid gap-8 sm:grid-cols-2">
+              <FormField
+                control={form.control}
+                name="firstName"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-xs uppercase tracking-widest font-bold text-muted-foreground">First Name</FormLabel>
                     <FormControl>
-                      <Input {...field} />
+                      <Input {...field} className="bg-background/50 border-muted-foreground/20 focus:border-primary/50 h-12 rounded-xl" />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="lastName"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-xs uppercase tracking-widest font-bold text-muted-foreground">Last Name</FormLabel>
+                    <FormControl>
+                      <Input {...field} className="bg-background/50 border-muted-foreground/20 focus:border-primary/50 h-12 rounded-xl" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -153,25 +140,48 @@ export function SettingsForm() {
               />
             </div>
 
+            <FormField
+              control={form.control}
+              name="nickname"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-xs uppercase tracking-widest font-bold text-muted-foreground">Display Name / Nickname</FormLabel>
+                  <FormControl>
+                    <Input {...field} className="bg-background/50 border-muted-foreground/20 focus:border-primary/50 h-12 rounded-xl" />
+                  </FormControl>
+                  <FormDescription className="text-xs italic">
+                    This is how other users will see you in the community.
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-            <FormItem>
-              <FormLabel>Email</FormLabel>
-              <FormControl>
-                <Input
-                  type="email"
-                  disabled
-                  value={session.user.email ?? ''}
-                />
-              </FormControl>
-              <FormDescription>
-                This is the email you use to sign in.
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
+            <div className="p-6 rounded-2xl bg-muted/30 border border-muted-foreground/5 space-y-4">
+              <FormItem>
+                <FormLabel className="text-xs uppercase tracking-widest font-bold text-muted-foreground opacity-50">Email Address</FormLabel>
+                <FormControl>
+                  <Input
+                    type="email"
+                    disabled
+                    value={session.user.email ?? ''}
+                    className="bg-background/30 border-dashed border-muted-foreground/20 h-12 rounded-xl cursor-not-allowed"
+                  />
+                </FormControl>
+                <FormDescription className="text-[10px] uppercase tracking-tighter">
+                  Primary account identifier. Contact support to change.
+                </FormDescription>
+              </FormItem>
+            </div>
 
-            <div className="flex justify-end">
-              <Button type="submit">
-                Save changes
+            <div className="flex justify-end pt-4">
+              <Button 
+                type="submit" 
+                disabled={isPending}
+                className="rounded-xl h-12 px-8 font-bold shadow-lg shadow-primary/20 transition-all hover:-translate-y-0.5 active:translate-y-0"
+              >
+                <Save className="mr-2 h-4 w-4" />
+                {isPending ? "Saving..." : "Save Profile"}
               </Button>
             </div>
           </form>

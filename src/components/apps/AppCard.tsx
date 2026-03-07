@@ -15,64 +15,83 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import type { App } from "@/db/schema";
+import { ArrowUpRight } from "lucide-react";
 
 export function AppCard({ app }: { app: App }) {
   const Icon =
     (Icons[app.icon as keyof typeof Icons] as LucideIcon | undefined) ??
     Icons.AppWindow;
+
   return (
-    <Link href={`/apps/${app.slug}` as Route}>
-      <motion.div whileHover={{ scale: 1.05 }} layout>
-        <Card className={cn("cursor-pointer h-full flex flex-col justify-between overflow-hidden", app.featured && "border-2 border-primary")}>
-        <CardHeader>
-          <div className="flex items-center gap-2">
-            <Icon className="h-6 w-6" />
-            <CardTitle>{app.name}</CardTitle>
-            {app.featured ? (
-              <Badge className="ml-auto" variant="secondary">Featured</Badge>
-            ) : null}
-          </div>
-          {app.description && (
-            <CardDescription>{app.description}</CardDescription>
+    <Link href={`/apps/${app.slug}` as Route} className="block h-full">
+      <motion.div
+        whileHover={{
+          y: -5,
+          transition: { duration: 0.2 },
+        }}
+        className="h-full"
+        layout
+      >
+        <Card
+          className={cn(
+            "group relative cursor-pointer h-full flex flex-col justify-between overflow-hidden transition-all duration-300",
+            "hover:shadow-2xl hover:shadow-primary/10 hover:border-primary/50",
+            "bg-card/50 backdrop-blur-sm border-muted-foreground/10",
+            app.featured && "border-primary/40 bg-primary/5 shadow-lg shadow-primary/5"
           )}
-        </CardHeader>
-        <CardContent className="flex items-center justify-between">
-          <Badge variant="outline" className="capitalize">
-            {app.category}
-          </Badge>
-          {app.url && app.status === 1 ? (
-            <button
-              type="button"
-              onClick={e => {
-                e.stopPropagation();
-                window.open(app.url ?? undefined, "_blank", "noopener,noreferrer");
-              }}
-              className="text-sm underline transition-transform active:scale-95 hover:scale-100"
-            >
-              Visit
-            </button>
-          ) : app.url ? (
-            <TooltipProvider delayDuration={300}>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <div>
-                    <button
-                      type="button"
-                      disabled
-                      className="text-sm underline cursor-not-allowed opacity-50 text-muted-foreground"
-                    >
-                      Visit
-                    </button>
-                  </div>
-                </TooltipTrigger>
-                <TooltipContent side="top">Under development</TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-          ) : null}
-        </CardContent>
+        >
+          {/* Subtle background glow on hover */}
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+          
+          <CardHeader className="relative z-10 pb-4">
+            <div className="flex items-center justify-between mb-2">
+              <div className="flex items-center gap-3">
+                <div className="p-2.5 rounded-xl bg-muted/50 group-hover:bg-primary/10 transition-colors duration-300">
+                  <Icon className="h-6 w-6 text-muted-foreground group-hover:text-primary transition-colors" />
+                </div>
+                <CardTitle className="group-hover:text-primary transition-colors duration-300">
+                  {app.name}
+                </CardTitle>
+              </div>
+              {app.featured && (
+                <Badge variant="secondary" className="bg-primary/10 text-primary border-primary/20">
+                  Featured
+                </Badge>
+              )}
+            </div>
+            <CardDescription className="line-clamp-3 text-sm leading-relaxed">
+              {app.description}
+            </CardDescription>
+          </CardHeader>
+
+          <CardContent className="relative z-10 flex items-center justify-between pt-0 mt-auto">
+            <div className="flex gap-2">
+              <Badge variant="outline" className="bg-background/50 backdrop-blur-sm border-muted-foreground/20 group-hover:border-primary/30 transition-colors capitalize">
+                {app.category}
+              </Badge>
+            </div>
+            
+            <div className="flex items-center gap-3">
+              {app.url && app.status === 1 ? (
+                <div className="flex items-center gap-1.5 text-sm font-medium text-primary opacity-0 group-hover:opacity-100 transform translate-x-2 group-hover:translate-x-0 transition-all duration-300">
+                  Launch <ArrowUpRight className="h-4 w-4" />
+                </div>
+              ) : app.url ? (
+                <TooltipProvider delayDuration={300}>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <div className="text-xs text-muted-foreground italic">
+                        Developing...
+                      </div>
+                    </TooltipTrigger>
+                    <TooltipContent side="top">Under development</TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              ) : null}
+            </div>
+          </CardContent>
         </Card>
       </motion.div>
     </Link>
   );
 }
-
