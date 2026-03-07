@@ -76,6 +76,7 @@ export function DashboardTiles({ stats }: DashboardTilesProps) {
               </CardHeader>
               <CardFooter className="relative z-10">
                 <Button asChild variant="ghost" className="p-0 text-primary hover:bg-transparent group-hover:translate-x-1 transition-transform">
+                  {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
                   <Link href={item.href as any}>
                     {item.cta} <span className="ml-1">→</span>
                   </Link>
@@ -150,6 +151,7 @@ export function DashboardTiles({ stats }: DashboardTilesProps) {
           </CardContent>
           <CardFooter className="bg-muted/5 border-t border-muted-foreground/5 py-4">
             <Button asChild variant="link" className="px-0 text-muted-foreground hover:text-primary">
+              {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
               <Link href={"/dashboard/usage" as any}>Detailed resource breakdown →</Link>
             </Button>
           </CardFooter>

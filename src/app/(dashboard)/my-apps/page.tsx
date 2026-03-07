@@ -1,5 +1,5 @@
 import { PageHeader } from "@/components/page-header";
-import { Card, CardTitle, CardContent, CardDescription, CardFooter } from "@/components/ui/card";
+import { Card, CardTitle, CardDescription, CardFooter, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
