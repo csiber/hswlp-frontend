@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Plus, Box, Type, Image as ImageIcon, Trash2 } from "lucide-react";
+import { Plus, Box, Type, Image as ImageIcon, Trash2, Square } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export default function Builder() {
