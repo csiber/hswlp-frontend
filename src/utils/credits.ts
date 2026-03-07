@@ -221,6 +221,7 @@ export async function consumeCredits({ userId, amount, description }: { userId: 
   });
 
   let remainingToDeduct = amount;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const updates: any[] = [];
 
   // Deduct from each transaction until we've deducted the full amount
