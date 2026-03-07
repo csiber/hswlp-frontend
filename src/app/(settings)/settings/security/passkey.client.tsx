@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef} from "react";
+import { useState, useRef } from "react";
 import { startRegistration } from "@simplewebauthn/browser";
 import type { PublicKeyCredentialCreationOptionsJSON } from "@simplewebauthn/types";
 import { Button } from "@/components/ui/button";
@@ -10,7 +10,7 @@ import {
   verifyRegistrationAction,
   deletePasskeyAction,
 } from "./passkey-settings.actions";
-import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { formatDistanceToNow } from "date-fns";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger, DialogClose } from "@/components/ui/dialog";
@@ -19,6 +19,8 @@ import { useServerAction } from "zsa-react";
 import { PASSKEY_AUTHENTICATOR_IDS } from "@/utils/passkey-authenticator-ids";
 import { cn } from "@/lib/utils";
 import type { ParsedUserAgent } from "@/types";
+import { Fingerprint, Trash2, ShieldCheck, Cpu, Globe, Monitor, Smartphone, Plus } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface PasskeyRegistrationButtonProps {
   email: string;
@@ -33,22 +35,13 @@ function PasskeyRegistrationButton({ email, className, onSuccess }: PasskeyRegis
   const handleRegister = async () => {
     try {
       setIsRegistering(true);
-
-      // Get registration options from the server
       const [result] = await generateRegistrationOptionsAction({ email });
-
       const options = result as PublicKeyCredentialCreationOptionsJSON | undefined;
 
-      if (!options) {
-        throw new Error("Failed to get registration options");
-      }
+      if (!options) throw new Error("Failed to get registration options");
 
-      // Start the registration process in the browser
-      const registrationResponse = await startRegistration({
-        optionsJSON: options,
-      });
+      const registrationResponse = await startRegistration({ optionsJSON: options });
 
-      // Send the response back to the server for verification
       await verifyRegistrationAction({
         email,
         response: registrationResponse,
@@ -70,9 +63,16 @@ function PasskeyRegistrationButton({ email, className, onSuccess }: PasskeyRegis
     <Button
       onClick={handleRegister}
       disabled={isRegistering}
-      className={className}
+      className={cn("rounded-xl h-12 px-6 font-bold shadow-lg shadow-primary/20", className)}
     >
-      {isRegistering ? "Registering..." : "Register Passkey"}
+      {isRegistering ? (
+        <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1, ease: "linear" }}>
+          <Fingerprint className="mr-2 h-5 w-5" />
+        </motion.div>
+      ) : (
+        <Plus className="mr-2 h-5 w-5" />
+      )}
+      {isRegistering ? "Registering..." : "Add New Passkey"}
     </Button>
   );
 }
@@ -96,7 +96,7 @@ interface PasskeysListProps {
 export function PasskeysList({ passkeys, currentPasskeyId, email }: PasskeysListProps) {
   const router = useRouter();
   const dialogCloseRef = useRef<HTMLButtonElement>(null);
-  const { execute: deletePasskey } = useServerAction(deletePasskeyAction, {
+  const { execute: deletePasskey, isPending: isDeleting } = useServerAction(deletePasskeyAction, {
     onSuccess: () => {
       toast.success("Passkey deleted");
       dialogCloseRef.current?.click();
@@ -108,81 +108,137 @@ export function PasskeysList({ passkeys, currentPasskeyId, email }: PasskeysList
     passkey.credentialId === currentPasskeyId;
 
   return (
-    <div className="space-y-6">
-      <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-        <div className="space-y-1">
-          <h2 className="text-lg font-semibold">Passkeys</h2>
-          <p className="text-sm text-muted-foreground">
-            Manage your passkeys for passwordless authentication.
+    <div className="space-y-8">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between border-b border-muted-foreground/5 pb-8">
+        <div className="space-y-2">
+          <div className="flex items-center gap-3">
+            <div className="p-2 rounded-lg bg-primary/10 text-primary">
+              <ShieldCheck className="h-6 w-6" />
+            </div>
+            <h1 className="text-3xl font-black tracking-tight">Security & Access</h1>
+          </div>
+          <p className="text-muted-foreground max-w-lg">
+            Manage your passkeys for secure, biometric-based authentication. 
+            Passkeys provide the highest level of protection for your account.
           </p>
         </div>
         {email && (
           <PasskeyRegistrationButton
             email={email}
-            className="w-full sm:w-auto"
           />
         )}
       </div>
 
-      <div className="space-y-4">
-        {passkeys.map((passkey) => (
-          <Card key={passkey.id} className={cn(!isCurrentPasskey(passkey) ? "bg-card/40" : "border-3 border-primary/20 shadow-lg bg-secondary/30")}>
-            <CardHeader>
-              <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-                <div className="space-y-2">
-                  <div className="flex flex-col sm:flex-row sm:items-center sm:gap-2">
-                    <CardTitle className="flex flex-wrap items-center gap-2 text-base">
-                      {passkey.aaguid && (PASSKEY_AUTHENTICATOR_IDS as Record<string, string>)[passkey.aaguid] || "Unknown Authenticator App"}
-                      {isCurrentPasskey(passkey) && <Badge>Current Passkey</Badge>}
-                    </CardTitle>
-                    <div className="text-sm text-muted-foreground whitespace-nowrap">
-                      · {formatDistanceToNow(passkey.createdAt)} ago
+      <div className="grid gap-4">
+        <AnimatePresence mode="popLayout">
+          {passkeys.map((passkey, index) => (
+            <motion.div
+              key={passkey.id}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.05 }}
+              layout
+            >
+              <Card className={cn(
+                "group overflow-hidden border-muted-foreground/10 bg-card/50 backdrop-blur-sm transition-all duration-300",
+                isCurrentPasskey(passkey) ? "border-primary/30 ring-1 ring-primary/10 shadow-lg shadow-primary/5" : "hover:border-primary/20"
+              )}>
+                <CardHeader className="pb-4">
+                  <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+                    <div className="flex gap-4">
+                      <div className={cn(
+                        "h-12 w-12 rounded-xl flex items-center justify-center shrink-0 transition-colors",
+                        isCurrentPasskey(passkey) ? "bg-primary/20 text-primary" : "bg-muted/50 text-muted-foreground group-hover:bg-primary/5 group-hover:text-primary"
+                      )}>
+                        {passkey.parsedUserAgent?.device.type === 'mobile' ? <Smartphone className="h-6 w-6" /> : <Monitor className="h-6 w-6" />}
+                      </div>
+                      <div className="space-y-1">
+                        <div className="flex flex-wrap items-center gap-2">
+                          <CardTitle className="text-lg font-bold">
+                            {passkey.aaguid && (PASSKEY_AUTHENTICATOR_IDS as Record<string, string>)[passkey.aaguid] || "Security Key"}
+                          </CardTitle>
+                          {isCurrentPasskey(passkey) && (
+                            <Badge className="bg-primary/10 text-primary border-primary/20 hover:bg-primary/20">
+                              Current Session
+                            </Badge>
+                          )}
+                        </div>
+                        <div className="text-xs text-muted-foreground font-medium uppercase tracking-wider">
+                          Created {formatDistanceToNow(passkey.createdAt)} ago
+                        </div>
+                      </div>
+                    </div>
+                    
+                    {!isCurrentPasskey(passkey) && (
+                      <Dialog>
+                        <DialogTrigger asChild>
+                          <Button 
+                            size="icon" 
+                            variant="ghost" 
+                            className="text-muted-foreground hover:text-red-500 hover:bg-red-500/10 rounded-full transition-all"
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                        </DialogTrigger>
+                        <DialogContent className="rounded-3xl border-muted-foreground/10 bg-background/95 backdrop-blur-xl">
+                          <DialogHeader>
+                            <DialogTitle className="text-2xl font-black">Delete passkey?</DialogTitle>
+                            <DialogDescription className="text-base mt-2">
+                              This will remove this authentication method. You can always add it again later.
+                            </DialogDescription>
+                          </DialogHeader>
+                          <DialogFooter className="mt-8 flex gap-3">
+                            <DialogClose ref={dialogCloseRef} asChild>
+                              <Button variant="ghost" className="rounded-xl h-12 flex-1">Cancel</Button>
+                            </DialogClose>
+                            <Button
+                              variant="destructive"
+                              disabled={isDeleting}
+                              className="rounded-xl h-12 flex-1 font-bold shadow-lg shadow-red-500/20"
+                              onClick={() => deletePasskey({ credentialId: passkey.credentialId })}
+                            >
+                              {isDeleting ? "Deleting..." : "Delete Passkey"}
+                            </Button>
+                          </DialogFooter>
+                        </DialogContent>
+                      </Dialog>
+                    )}
+                  </div>
+                </CardHeader>
+                
+                <CardContent className="bg-muted/5 border-t border-muted-foreground/5 py-4">
+                  <div className="flex flex-wrap gap-y-2 gap-x-6">
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                      <Globe className="h-3.5 w-3.5" />
+                      <span className="font-semibold text-foreground/70">{passkey.parsedUserAgent?.browser.name}</span>
+                      <span className="opacity-50 text-xs">{passkey.parsedUserAgent?.browser.major}</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                      <Cpu className="h-3.5 w-3.5" />
+                      <span className="font-semibold text-foreground/70">{passkey.parsedUserAgent?.os.name}</span>
+                      <span className="opacity-50 text-xs">{passkey.parsedUserAgent?.os.version}</span>
                     </div>
                   </div>
-                  {passkey.parsedUserAgent && (
-                    <CardDescription className="text-sm">
-                      {passkey.parsedUserAgent.browser.name ?? "Unknown browser"} {passkey.parsedUserAgent.browser.major ?? "Unknown version"} on {passkey.parsedUserAgent.device.vendor ?? "Unknown device"} {passkey.parsedUserAgent.device.model ?? "Unknown model"} {passkey.parsedUserAgent.device.type ?? "Unknown type"} ({passkey.parsedUserAgent.os.name ?? "Unknown OS"} {passkey.parsedUserAgent.os.version ?? "Unknown version"})
-                    </CardDescription>
-                  )}
-                </div>
-                <div>
-                  {!isCurrentPasskey(passkey) && (
-                    <Dialog>
-                      <DialogTrigger asChild>
-                        <Button size="sm" variant="destructive" className="w-full sm:w-auto">Delete passkey</Button>
-                      </DialogTrigger>
-                      <DialogContent>
-                        <DialogHeader>
-                          <DialogTitle>Delete passkey?</DialogTitle>
-                          <DialogDescription>
-                            This will remove this passkey from your account. This action cannot be undone.
-                          </DialogDescription>
-                        </DialogHeader>
-                        <DialogFooter className="mt-6 sm:mt-0">
-                          <DialogClose ref={dialogCloseRef} asChild>
-                            <Button variant="outline">Cancel</Button>
-                          </DialogClose>
-                          <Button
-                            variant="destructive"
-                            className="mb-4 sm:mb-0"
-                            onClick={() => deletePasskey({ credentialId: passkey.credentialId })}
-                          >
-                            Delete passkey
-                          </Button>
-                        </DialogFooter>
-                      </DialogContent>
-                    </Dialog>
-                  )}
-                </div>
-              </div>
-            </CardHeader>
-          </Card>
-        ))}
+                </CardContent>
+              </Card>
+            </motion.div>
+          ))}
+        </AnimatePresence>
 
         {passkeys.length === 0 && (
-          <div className="text-center text-muted-foreground">
-            No passkeys found. Add a passkey to enable passwordless authentication.
-          </div>
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="text-center py-16 bg-muted/5 border-2 border-dashed border-muted-foreground/10 rounded-3xl"
+          >
+            <div className="w-16 h-16 rounded-full bg-primary/5 flex items-center justify-center mx-auto mb-4 text-primary opacity-20">
+              <Fingerprint className="h-8 w-8" />
+            </div>
+            <h3 className="text-xl font-bold">No passkeys found</h3>
+            <p className="text-muted-foreground mt-2 max-w-xs mx-auto">
+              Strengthen your account security by adding a biometric passkey.
+            </p>
+          </motion.div>
         )}
       </div>
     </div>
