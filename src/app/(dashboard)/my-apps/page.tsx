@@ -89,9 +89,9 @@ export default async function MyAppsPage() {
                 </CardHeader>
                 <CardFooter className="flex gap-2 pt-4">
                   <Button asChild variant="default" size="sm" className="flex-1 rounded-lg">
-                    <a href={app.url} target="_blank" rel="noopener noreferrer">
+                    <Link href={`/dashboard/apps/${app.id}` as Route}>
                       <ExternalLink className="mr-2 h-3.5 w-3.5" /> Launch
-                    </a>
+                    </Link>
                   </Button>
                   <Button asChild variant="outline" size="sm" className="px-3 rounded-lg">
                     <Link href={`/dashboard/apps/${app.id}` as Route}>
