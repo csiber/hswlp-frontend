@@ -10,7 +10,6 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import SeparatorWithText from "@/components/separator-with-text";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
-import { Spinner } from "@/components/ui/spinner";
 import { Captcha } from "@/components/captcha";
 
 import { useForm, useWatch } from "react-hook-form";
@@ -20,11 +19,10 @@ import { useServerAction } from "zsa-react";
 import Link from "next/link";
 import { useState } from "react";
 import { startRegistration } from "@simplewebauthn/browser";
-import { KeyIcon, Mail, User, ShieldCheck, Sparkles, ArrowRight } from 'lucide-react'
+import { KeyIcon, Mail, User, ShieldCheck, Sparkles, ArrowRight, Loader2 } from 'lucide-react'
 import { useConfigStore } from "@/state/config";
 import { REDIRECT_AFTER_SIGN_IN } from "@/constants";
 import { motion } from "framer-motion";
-import { cn } from "@/lib/utils";
 
 interface SignUpClientProps {
   redirectPath: string;

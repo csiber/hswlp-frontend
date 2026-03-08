@@ -4,6 +4,7 @@ import { getDB } from "@/db";
 import { userTable, appTable, creditTransactionTable } from "@/db/schema";
 import { PageHeader } from "@/components/page-header";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { Users, Boxes, Activity, Coins, ShieldAlert, ArrowUpRight } from "lucide-react";
 import { count, desc } from "drizzle-orm";
 import { Badge } from "@/components/ui/badge";
