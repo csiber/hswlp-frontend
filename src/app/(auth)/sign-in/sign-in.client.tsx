@@ -14,10 +14,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import { useServerAction } from "zsa-react";
 import Link from "next/link";
-import { KeyIcon } from "lucide-react";
+import { KeyIcon, Mail, Lock, ArrowRight, Fingerprint } from "lucide-react";
 import { generateAuthenticationOptionsAction, verifyAuthenticationAction } from "@/app/(settings)/settings/security/passkey-settings.actions";
 import { startAuthentication } from "@simplewebauthn/browser";
 import type { PublicKeyCredentialRequestOptionsJSON } from "@simplewebauthn/types";
+import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
 
 interface SignInClientProps {
   redirectPath: string;
@@ -34,18 +36,18 @@ function PasskeyAuthenticationButton({ className, disabled, children, redirectPa
   const { execute: generateOptions } = useServerAction(generateAuthenticationOptionsAction, {
     onError: (error) => {
       toast.dismiss();
-        toast.error(error.err?.message || "Failed to retrieve authentication options");
+      toast.error(error.err?.message || "Failed to retrieve authentication options");
     },
   });
 
   const { execute: verifyAuthentication } = useServerAction(verifyAuthenticationAction, {
     onError: (error) => {
       toast.dismiss();
-        toast.error(error.err?.message || "Authentication failed");
+      toast.error(error.err?.message || "Authentication failed");
     },
     onSuccess: () => {
       toast.dismiss();
-        toast.success("Authentication successful");
+      toast.success("Authentication successful");
       window.location.href = redirectPath;
     },
   });
@@ -55,31 +57,23 @@ function PasskeyAuthenticationButton({ className, disabled, children, redirectPa
   const handleAuthenticate = async () => {
     try {
       setIsAuthenticating(true);
-        toast.loading("Authenticating with passkey...");
+      toast.loading("Authenticating with passkey...");
 
-      // Get authentication options from the server
       const [result] = await generateOptions({});
-
       const options = result?.optionsJSON as PublicKeyCredentialRequestOptionsJSON | undefined;
 
-      if (!options) {
-          throw new Error("Failed to retrieve authentication options");
-      }
+      if (!options) throw new Error("Failed to retrieve authentication options");
 
-      // Start the authentication process in the browser
-      const authenticationResponse = await startAuthentication({
-        optionsJSON: options,
-      });
+      const authenticationResponse = await startAuthentication({ optionsJSON: options });
 
-      // Send the response back to the server for verification
       await verifyAuthentication({
         response: authenticationResponse,
         challenge: options.challenge,
       });
     } catch (error) {
-        console.error("Passkey authentication error:", error);
-        toast.dismiss();
-        toast.error("Authentication failed");
+      console.error("Passkey authentication error:", error);
+      toast.dismiss();
+      toast.error("Authentication failed");
     } finally {
       setIsAuthenticating(false);
     }
@@ -89,15 +83,22 @@ function PasskeyAuthenticationButton({ className, disabled, children, redirectPa
     <Button
       onClick={handleAuthenticate}
       disabled={isAuthenticating || disabled}
-      className={className}
+      className={cn("h-14 rounded-2xl font-bold text-lg shadow-xl shadow-primary/20 group transition-all", className)}
     >
-      {isAuthenticating ? "Authenticating..." : children || "Sign in with Passkey"}
+      {isAuthenticating ? (
+        <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1, ease: "linear" }}>
+          <Fingerprint className="mr-2 h-6 w-6" />
+        </motion.div>
+      ) : (
+        <KeyIcon className="mr-2 h-6 w-6 group-hover:scale-110 transition-transform" />
+      )}
+      {isAuthenticating ? "Checking..." : children || "Sign in with Passkey"}
     </Button>
   );
 }
 
 const SignInPage = ({ redirectPath }: SignInClientProps) => {
-  const { execute: signIn } = useServerAction(signInAction, {
+  const { execute: signIn, isPending } = useServerAction(signInAction, {
     onError: (error) => {
       toast.dismiss()
       toast.error(error.err?.message)
@@ -107,7 +108,7 @@ const SignInPage = ({ redirectPath }: SignInClientProps) => {
     },
     onSuccess: () => {
       toast.dismiss()
-      toast.success("Sign in successful")
+      toast.success("Welcome back!")
       window.location.href = redirectPath;
     }
   })
@@ -120,87 +121,116 @@ const SignInPage = ({ redirectPath }: SignInClientProps) => {
   }
 
   return (
-    <div className="min-h-[90vh] flex flex-col items-center px-4 justify-center bg-background my-6 md:my-10">
-      <div className="w-full max-w-md space-y-8 p-6 md:p-10 bg-card rounded-xl shadow-lg border border-border">
-        <div className="text-center">
-            <h2 className="mt-2 text-2xl md:text-3xl font-bold tracking-tight text-foreground">
-            Sign in to your account
-          </h2>
-          <p className="mt-2 text-muted-foreground">
-            Or{" "}
-            <Link href={`/sign-up?redirect=${encodeURIComponent(redirectPath)}`} className="font-medium text-primary hover:text-primary/90 underline">
-              create a new account
-            </Link>
+    <div className="min-h-screen flex flex-col items-center px-4 justify-center relative overflow-hidden bg-background py-12">
+      {/* Decorative background */}
+      <div className="absolute inset-0 -z-10 overflow-hidden">
+        <div className="absolute left-[50%] top-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/5 blur-[120px] rounded-full" />
+      </div>
+
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="w-full max-w-md"
+      >
+        <div className="text-center mb-8">
+          <motion.div 
+            initial={{ scale: 0.5 }}
+            animate={{ scale: 1 }}
+            className="inline-flex p-3 rounded-2xl bg-primary/10 text-primary mb-4"
+          >
+            <Lock className="h-8 w-8" />
+          </motion.div>
+          <h1 className="text-4xl font-black tracking-tight mb-2">Welcome Back</h1>
+          <p className="text-muted-foreground">
+            Continue your journey on the HSWLP platform.
           </p>
         </div>
 
-        <div className="space-y-4">
-
-          <PasskeyAuthenticationButton className="w-full" redirectPath={redirectPath}>
-            <KeyIcon className="w-5 h-5 mr-2" />
+        <div className="space-y-8 p-8 md:p-10 bg-card/50 backdrop-blur-xl rounded-[2.5rem] shadow-2xl border border-muted-foreground/10 relative overflow-hidden">
+          <div className="space-y-4">
+            <PasskeyAuthenticationButton className="w-full" redirectPath={redirectPath}>
               Sign in with Passkey
-          </PasskeyAuthenticationButton>
-        </div>
+            </PasskeyAuthenticationButton>
+          </div>
 
           <SeparatorWithText>
-            <span className="uppercase text-muted-foreground">Or</span>
+            <span className="uppercase text-[10px] font-black tracking-[0.2em] text-muted-foreground/50">Or use credentials</span>
           </SeparatorWithText>
 
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="mt-8 space-y-6">
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <Input
-                      placeholder="Email address"
-                      type="email"
-                      className="w-full px-3 py-2"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <div className="relative group">
+                        <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground group-focus-within:text-primary transition-colors" />
+                        <Input
+                          placeholder="Email address"
+                          type="email"
+                          className="pl-12 h-14 rounded-2xl bg-background/50 border-muted-foreground/20 focus:border-primary/50 transition-all"
+                          {...field}
+                        />
+                      </div>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-            <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <Input
-                      type="password"
-                        placeholder="Password"
-                      className="w-full px-3 py-2"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <div className="relative group">
+                        <Lock className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground group-focus-within:text-primary transition-colors" />
+                        <Input
+                          type="password"
+                          placeholder="Password"
+                          className="pl-12 h-14 rounded-2xl bg-background/50 border-muted-foreground/20 focus:border-primary/50 transition-all"
+                          {...field}
+                        />
+                      </div>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-            <Button
-              type="submit"
-              className="w-full flex justify-center py-2.5"
+              <div className="flex justify-end px-1">
+                <Link href="/forgot-password" title="Reset your password" className="text-sm font-medium text-primary hover:text-primary/80 transition-colors">
+                  Forgot password?
+                </Link>
+              </div>
+
+              <Button
+                type="submit"
+                disabled={isPending}
+                className="w-full h-14 rounded-2xl text-lg font-bold shadow-lg shadow-primary/10 transition-all hover:shadow-primary/20 active:scale-[0.98]"
+              >
+                {isPending ? "Signing in..." : "Access Dashboard"}
+                {!isPending && <ArrowRight className="ml-2 h-5 w-5" />}
+              </Button>
+            </form>
+          </Form>
+        </div>
+
+        <div className="mt-8 text-center">
+          <p className="text-muted-foreground">
+            Don&apos;t have an account yet?{" "}
+            <Link 
+              href={`/sign-up?redirect=${encodeURIComponent(redirectPath)}`} 
+              className="font-bold text-primary hover:text-primary/80 transition-colors underline underline-offset-4"
             >
-                Sign in with password
-            </Button>
-          </form>
-        </Form>
-      </div>
-
-      <div className="mt-6">
-        <p className="text-center text-sm text-muted-foreground">
-              <Link href="/forgot-password" className="font-medium text-primary hover:text-primary/90">
-                Forgot your password?
-              </Link>
-        </p>
-      </div>
+              Create free account
+            </Link>
+          </p>
+        </div>
+      </motion.div>
     </div>
   );
 };
