@@ -13,6 +13,7 @@ type AppStatus = "active" | "paused" | "developing";
 
 interface MyApp {
   id: string;
+  slug: string;
   name: string;
   icon: string;
   status: AppStatus;
@@ -33,9 +34,56 @@ export const metadata: Metadata = {
 
 export default async function MyAppsPage() {
   const session = await getSessionFromCookie();
-  if (!session) redirect("/auth/login");
+  if (!session) redirect("/sign-in");
 
-  const apps: MyApp[] = []; // TODO: fetch from database when available
+  // Virtual apps for demo purposes since database might be empty
+  const apps: MyApp[] = [
+    {
+      id: 'v1',
+      slug: 'shareai',
+      name: 'ShareAI',
+      icon: '🔐',
+      status: 'active',
+      url: '/dashboard/apps/shareai',
+      description: 'Secure AI-powered file sharing'
+    },
+    {
+      id: 'v2',
+      slug: 'talk',
+      name: 'Talk',
+      icon: '💬',
+      status: 'active',
+      url: '/dashboard/apps/talk',
+      description: 'AI Chat Assistant'
+    },
+    {
+      id: 'v3',
+      slug: 'devshell',
+      name: 'DevShell',
+      icon: '🐚',
+      status: 'active',
+      url: '/dashboard/apps/devshell',
+      description: 'Cloud Terminal'
+    },
+    {
+      id: 'v4',
+      slug: 'nas',
+      name: 'NAS',
+      icon: '📂',
+      status: 'active',
+      url: '/dashboard/apps/nas',
+      description: 'Cloud Storage'
+    },
+    {
+      id: 'v5',
+      slug: 'builder',
+      name: 'Builder',
+      icon: '🏗️',
+      status: 'active',
+      url: '/dashboard/apps/builder',
+      description: 'Canvas App Builder'
+    }
+  ];
 
   return (
     <>
@@ -89,12 +137,12 @@ export default async function MyAppsPage() {
                 </CardHeader>
                 <CardFooter className="flex gap-2 pt-4">
                   <Button asChild variant="default" size="sm" className="flex-1 rounded-lg">
-                    <Link href={`/dashboard/apps/${app.id}` as Route}>
+                    <Link href={`/dashboard/apps/${app.slug}` as Route}>
                       <ExternalLink className="mr-2 h-3.5 w-3.5" /> Launch
                     </Link>
                   </Button>
                   <Button asChild variant="outline" size="sm" className="px-3 rounded-lg">
-                    <Link href={`/dashboard/apps/${app.id}` as Route}>
+                    <Link href={`/dashboard/apps/${app.slug}` as Route}>
                       <Settings className="h-3.5 w-3.5" />
                     </Link>
                   </Button>

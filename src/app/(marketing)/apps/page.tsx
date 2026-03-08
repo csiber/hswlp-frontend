@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import { BASE_METADATA } from "@/lib/base-metadata";
 import AppsClient from "./apps.client";
-import { getAllApps } from "@/lib/db/apps";
+import { getAllAppsAsync } from "@/lib/db/apps";
 import type { App } from "@/db/schema";
 
 export const dynamic = "force-dynamic";
@@ -14,6 +14,6 @@ export const metadata: Metadata = {
 };
 
 export default async function AppsPage() {
-  const apps: App[] = await getAllApps();
+  const apps: App[] = await getAllAppsAsync();
   return <AppsClient apps={apps} />;
 }

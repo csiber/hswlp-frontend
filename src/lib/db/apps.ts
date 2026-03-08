@@ -17,11 +17,27 @@ export async function getAllApps(): Promise<App[]> {
 
 export async function getAllAppsAsync(): Promise<App[]> {
   const db = await getDBAsync();
-  return db
+  const dbApps = await db
     .select()
     .from(appTable)
     .where(and(inArray(appTable.type, ['shell', 'pages']), excludeAppsCondition))
     .orderBy(desc(appTable.createdAt));
+    
+  // Add missing internal apps
+  const existingSlugs = new Set(dbApps.map(a => a.slug));
+  const virtualApps = Object.values(INTERNAL_APPS)
+    .filter(a => a.slug && !existingSlugs.has(a.slug))
+    .map(a => ({
+      id: `virtual_${a.slug}`,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      updateCounter: 0,
+      featured: 0,
+      url: null,
+      ...a,
+    } as App));
+
+  return [...dbApps, ...virtualApps];
 }
 
 export async function getAppsByType(type: string): Promise<App[]> {
@@ -39,10 +55,72 @@ export async function getAppBySlug(slug: string): Promise<App | undefined> {
   return db.query.appTable.findFirst({ where: eq(appTable.slug, slug) });
 }
 
+const INTERNAL_APPS: Record<string, Partial<App>> = {
+  shareai: {
+    name: 'ShareAI',
+    slug: 'shareai',
+    description: 'AI-powered secure file sharing and scanning platform.',
+    icon: 'Share2',
+    category: 'Security',
+    type: 'shell',
+    status: 1,
+  },
+  talk: {
+    name: 'Talk',
+    slug: 'talk',
+    description: 'Intelligent AI chat assistant for your workflow.',
+    icon: 'MessageSquare',
+    category: 'Communication',
+    type: 'shell',
+    status: 1,
+  },
+  devshell: {
+    name: 'DevShell',
+    slug: 'devshell',
+    description: 'Interactive cloud terminal for infrastructure management.',
+    icon: 'Terminal',
+    category: 'Development',
+    type: 'shell',
+    status: 1,
+  },
+  nas: {
+    name: 'NAS',
+    slug: 'nas',
+    description: 'Cloud-native file management and storage system.',
+    icon: 'HardDrive',
+    category: 'Storage',
+    type: 'shell',
+    status: 1,
+  },
+  builder: {
+    name: 'Builder',
+    slug: 'builder',
+    description: 'Drag-and-drop website and application builder.',
+    icon: 'Layout',
+    category: 'Development',
+    type: 'shell',
+    status: 1,
+  },
+};
+
 export async function getAppBySlugAsync(slug: string): Promise<App | undefined> {
   if (EXCLUDED_APP_SLUGS.includes(slug)) return undefined;
   const db = await getDBAsync();
-  return db.query.appTable.findFirst({ where: eq(appTable.slug, slug) });
+  const app = await db.query.appTable.findFirst({ where: eq(appTable.slug, slug) });
+  
+  if (!app && INTERNAL_APPS[slug]) {
+    return {
+      id: `virtual_${slug}`,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      updateCounter: 0,
+      featured: 0,
+      url: null,
+      ...INTERNAL_APPS[slug],
+    } as App;
+  }
+  
+  return app;
 }
 
 export async function getSimilarApps(
