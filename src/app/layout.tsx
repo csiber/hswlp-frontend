@@ -66,11 +66,11 @@ export default function BaseLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
-        <NextTopLoader
+        {/* <NextTopLoader
           initialPosition={0.15}
           shadow="0 0 10px #000, 0 0 5px #000"
           height={4}
-        />
+        /> */}
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"

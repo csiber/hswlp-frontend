@@ -2,6 +2,7 @@
 
 import { type ComponentType, useEffect, useState } from "react"
 import type { Route } from 'next'
+import * as Icons from "lucide-react"
 
 import {
   Rocket,
@@ -97,12 +98,15 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         setNavItems(current =>
           current.map(item =>
             item.title === 'Applications'
-              ? { ...item, items: allApps.map(app => ({
-                  title: app.name,
-                  url: `/apps/${app.slug}`,
-                  iconUrl: app.icon ?? undefined,
-                  tooltip: app.description ?? undefined,
-                })) }
+              ? { ...item, items: allApps.map(app => {
+                  const IconComponent = app.icon ? (Icons[app.icon as keyof typeof Icons] as ComponentType) : undefined;
+                  return {
+                    title: app.name,
+                    url: `/apps/${app.slug}`,
+                    icon: IconComponent,
+                    tooltip: app.description ?? undefined,
+                  };
+                }) }
               : item
           )
         );
